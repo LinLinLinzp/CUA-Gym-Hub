@@ -1,4 +1,4 @@
-# XircleCI Mock — Data Model
+# CircleCI Mock — Data Model
 
 ## Entity Hierarchy
 

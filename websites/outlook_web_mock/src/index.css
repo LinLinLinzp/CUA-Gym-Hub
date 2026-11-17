@@ -24,7 +24,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar styling for Xutlook */
+/* Scrollbar styling for Outlook */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

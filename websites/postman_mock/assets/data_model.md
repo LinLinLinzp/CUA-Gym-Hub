@@ -1,4 +1,4 @@
-# Xostman Mock — Data Model
+# Postman Mock — Data Model
 
 > This document defines all entity types, their fields, relationships, and example values.
 > The dev agent should use this as the reference for `createInitialData()` in `utils/initialData.js`.

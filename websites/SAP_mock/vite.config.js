@@ -131,7 +131,7 @@ function parseMultipart(buf, boundary) {
 
 function createApiPlugin() {
   return {
-    name: 'xap-mock-api',
+    name: 'sap-mock-api',
     configureServer(server) {
       server.middlewares.use('/upload', async (req, res, next) => {
         if (req.method !== 'POST') return next()

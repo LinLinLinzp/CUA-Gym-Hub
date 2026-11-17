@@ -1,4 +1,4 @@
-# Xoogle Drive Mock — Data Model
+# Google Drive Mock — Data Model
 
 > For use by dev agent when implementing `createInitialData()` in dataManager / FileSystemContext
 

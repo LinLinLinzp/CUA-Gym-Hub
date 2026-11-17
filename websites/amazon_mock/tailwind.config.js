@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        xmazon: {
+        amazon: {
           DEFAULT: '#131921',
           dark: '#0F1111',
           light: '#232f3e',
@@ -26,7 +26,7 @@ export default {
         }
       },
       fontFamily: {
-        ember: ['"Xmazon Ember"', 'Arial', 'sans-serif'],
+        ember: ['"Amazon Ember"', 'Arial', 'sans-serif'],
       }
     },
   },

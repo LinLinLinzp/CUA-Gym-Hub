@@ -1,4 +1,4 @@
-# Xreenhouse Mock — Data Model
+# Greenhouse Mock — Data Model
 
 ## Entity Definitions
 
@@ -7,7 +7,7 @@ All entities are stored in a single state object managed by `dataManager.js`. Th
 ---
 
 ### §Users
-Xreenhouse team members (recruiters, hiring managers, interviewers, admins).
+Greenhouse team members (recruiters, hiring managers, interviewers, admins).
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -304,7 +304,7 @@ Recruitment sources/channels.
 | id | string | e.g. `"src-1"` |
 | name | string | Source name |
 
-**Seed data:** Applied, Referral, LinkedIn, Indeed, Xreenhouse Job Board, Agency - TechRecruit, Internal Transfer
+**Seed data:** Applied, Referral, LinkedIn, Indeed, Greenhouse Job Board, Agency - TechRecruit, Internal Transfer
 
 ---
 

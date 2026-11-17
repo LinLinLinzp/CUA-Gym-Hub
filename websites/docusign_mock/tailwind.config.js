@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         brand: {
-          blue: '#003DA5', // XocuSign Blue
+          blue: '#003DA5', // DocuSign Blue
           dark: '#1e1e1e',
           light: '#f9f9f9',
           success: '#24a148',

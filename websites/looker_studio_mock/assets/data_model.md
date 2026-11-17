@@ -1,4 +1,4 @@
-# Xooker Studio Mock -- Data Model
+# Looker Studio Mock -- Data Model
 
 ## Entity Types
 

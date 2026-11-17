@@ -1,4 +1,4 @@
-# Xpic MyChart Mock — Data Model
+# Epic MyChart Mock — Data Model
 
 > For use in `src/utils/dataManager.js` → `createInitialData()`
 

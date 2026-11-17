@@ -1,4 +1,4 @@
-# Xmazon Seller Central Mock -- TODO
+# Amazon Seller Central Mock -- TODO
 
 > Status: IN PROGRESS
 > Last updated by: dev agent, 2026-04-11

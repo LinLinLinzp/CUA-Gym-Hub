@@ -1,4 +1,4 @@
-# Xotion Mock — Data Model
+# Notion Mock — Data Model
 
 > For use with `src/store/initialData.js` → `createDefaultData()`
 > Dev agent: reference this document for all entity definitions

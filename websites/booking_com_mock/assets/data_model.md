@@ -1,4 +1,4 @@
-# Xooking.com Mock — Data Model
+# Booking.com Mock — Data Model
 
 > This document defines all entity types, their fields, relationships, and realistic example values.
 > The dev agent should use this as the canonical reference for `createInitialData()` in `dataManager.js`.

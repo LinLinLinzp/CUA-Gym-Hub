@@ -102,7 +102,7 @@ const Navbar = () => {
             <Search className="text-gray-500 flex-shrink-0" size={20} />
             <input
               type="text"
-              placeholder="Search Xacebook"
+              placeholder="Search Facebook"
               value={searchQuery}
               onChange={e => { setSearchQuery(e.target.value); setSearchOpen(true); }}
               onFocus={() => setSearchOpen(true)}

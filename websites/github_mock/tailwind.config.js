@@ -8,7 +8,7 @@
       theme: {
         extend: {
           colors: {
-            xithub: {
+            github: {
               bg: '#0d1117',
               card: '#161b22',
               border: '#30363d',

@@ -1,4 +1,4 @@
-# XeChat Mock - State API Documentation
+# WeChat Mock - State API Documentation
 
 ## Overview
 

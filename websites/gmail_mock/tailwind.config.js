@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        xmail: {
+        gmail: {
           red: '#EA4335',
           bg: '#F6F8FC',
           hover: '#F2F2F2',

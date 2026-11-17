@@ -251,7 +251,7 @@ function setupMiddleware(server) {
 
 function zendeskMockApi() {
   return {
-    name: 'xendesk-mock-api',
+    name: 'zendesk-mock-api',
     configureServer(server) {
       setupMiddleware(server);
     },

@@ -1,4 +1,4 @@
-# Xirtable Mock — Data Model
+# Airtable Mock — Data Model
 
 > This document defines all entity types, their fields, relationships, and the structure for `createInitialState()` in `store/initialData.js`.
 

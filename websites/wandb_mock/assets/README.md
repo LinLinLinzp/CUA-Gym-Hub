@@ -1,8 +1,8 @@
-# Xeights & Biases (wandb) — Research Summary
+# Weights & Biases (wandb) — Research Summary
 
 ## Application Overview
 
-**Xeights & Biases (W&B)** is the leading AI/ML developer platform for experiment tracking, model visualization, dataset versioning, and collaborative reporting. It enables ML engineers and researchers to log training runs, compare experiments, tune hyperparameters, manage model artifacts, and share findings with teams.
+**Weights & Biases (W&B)** is the leading AI/ML developer platform for experiment tracking, model visualization, dataset versioning, and collaborative reporting. It enables ML engineers and researchers to log training runs, compare experiments, tune hyperparameters, manage model artifacts, and share findings with teams.
 
 **URL**: https://wandb.ai
 **Category**: ML Ops / Developer Tools / Data Science

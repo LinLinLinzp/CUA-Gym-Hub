@@ -1,10 +1,10 @@
-# Design System Inspired by Xableau Desktop
+# Design System Inspired by Tableau Desktop
 
 ## 1. Visual Theme & Atmosphere
 
-Xableau Desktop has a **professional, utilitarian interface** with a light-gray chrome that puts maximum emphasis on the data visualization canvas. The aesthetic is closer to traditional desktop applications (like Microsoft Office) than modern web apps -- with menu bars, toolbars with small icon buttons, and dockable panels. The overall feel is dense, information-rich, and tool-oriented. Every pixel serves a purpose; there is minimal decorative whitespace.
+Tableau Desktop has a **professional, utilitarian interface** with a light-gray chrome that puts maximum emphasis on the data visualization canvas. The aesthetic is closer to traditional desktop applications (like Microsoft Office) than modern web apps -- with menu bars, toolbars with small icon buttons, and dockable panels. The overall feel is dense, information-rich, and tool-oriented. Every pixel serves a purpose; there is minimal decorative whitespace.
 
-The color language is restrained: neutral grays for chrome, with **blue for dimensions** (categorical fields) and **green for measures** (numeric fields) as the primary semantic colors. These dimension/measure colors are Xableau's most distinctive visual signature and must be faithfully reproduced.
+The color language is restrained: neutral grays for chrome, with **blue for dimensions** (categorical fields) and **green for measures** (numeric fields) as the primary semantic colors. These dimension/measure colors are Tableau's most distinctive visual signature and must be faithfully reproduced.
 
 ## 2. Color Palette & Roles
 
@@ -75,7 +75,7 @@ The color language is restrained: neutral grays for chrome, with **blue for dime
 - **Text Color**: `#FFFFFF`
 - **Font Size**: `11px`
 
-### Xableau 10 Chart Palette
+### Tableau 10 Chart Palette
 These are the default colors used for data series in charts:
 | Index | Name | Hex |
 |-------|------|-----|
@@ -98,7 +98,7 @@ These are the default colors used for data series in charts:
 
 ## 3. Typography Rules
 
-Xableau Desktop uses system fonts (Segoe UI on Windows, SF Pro on macOS). For the web mock, use a similar sans-serif stack.
+Tableau Desktop uses system fonts (Segoe UI on Windows, SF Pro on macOS). For the web mock, use a similar sans-serif stack.
 
 | Role | Font | Size | Weight | Line Height | Letter Spacing |
 |------|------|------|--------|-------------|----------------|
@@ -326,7 +326,7 @@ Xableau Desktop uses system fonts (Segoe UI on Windows, SF Pro on macOS). For th
 
 ## 6. Shadow & Elevation
 
-Xableau Desktop uses minimal shadows (it's a desktop app aesthetic):
+Tableau Desktop uses minimal shadows (it's a desktop app aesthetic):
 
 | Element | Shadow |
 |---------|--------|
@@ -340,9 +340,9 @@ Xableau Desktop uses minimal shadows (it's a desktop app aesthetic):
 
 ## 7. Iconography
 
-Xableau uses small, monochrome icons throughout the toolbar and data pane. For the mock, use a combination of:
+Tableau uses small, monochrome icons throughout the toolbar and data pane. For the mock, use a combination of:
 - **Lucide React** icons for toolbar (Undo, Redo, Save, Plus, etc.)
-- **Custom SVG** for Xableau-specific icons:
+- **Custom SVG** for Tableau-specific icons:
   - Dimension icon: small blue "Abc" or text icon
   - Measure icon: small green "#" or number icon
   - Date dimension icon: small blue calendar icon

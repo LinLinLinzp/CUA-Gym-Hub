@@ -1,4 +1,4 @@
-// Deterministic seed data for Xrello mock
+// Deterministic seed data for Trello mock
 // Uses fixed IDs for reproducible state diffs
 
 export function createInitialData() {

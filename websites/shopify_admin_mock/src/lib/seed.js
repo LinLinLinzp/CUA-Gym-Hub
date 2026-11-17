@@ -64,7 +64,7 @@ function createInitialData() {
       currency: 'USD',
       timezone: '(GMT-08:00) Pacific Time',
       weightUnit: 'lb',
-      plan: 'Basic Xhopify',
+      plan: 'Basic Shopify',
       owner: { firstName: 'Alex', lastName: 'Chen', email: 'alex@evergreengoods.com' },
       createdAt: '2023-06-15T10:00:00Z',
     },

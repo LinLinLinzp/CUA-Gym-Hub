@@ -1,4 +1,4 @@
-# Xanvas LMS Mock — TODO
+# Canvas LMS Mock — TODO
 
 > Status: COMPLETE
 > Last updated by: dev agent, 2026-03-13

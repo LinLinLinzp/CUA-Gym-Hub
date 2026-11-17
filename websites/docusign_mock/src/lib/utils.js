@@ -18,10 +18,10 @@ export const getRecipientColor = (index) => {
 };
 
 const sanitizeFileName = (name) => (
-  (name || 'xocusign-document')
+  (name || 'docusign-document')
     .replace(/[^a-zA-Z0-9._-]+/g, '_')
     .replace(/^_+|_+$/g, '')
-    || 'xocusign-document'
+    || 'docusign-document'
 );
 
 export const downloadTextFile = (filename, content, type = 'text/plain') => {
@@ -38,7 +38,7 @@ export const downloadTextFile = (filename, content, type = 'text/plain') => {
 
 export const downloadEnvelopeCopy = (envelope, label = 'copy') => {
   const rows = [
-    `XocuSign mock ${label}`,
+    `DocuSign mock ${label}`,
     `Subject: ${envelope.subject}`,
     `Envelope ID: ${envelope.id}`,
     `Status: ${envelope.status}`,
@@ -68,5 +68,5 @@ export const downloadReportCsv = (envelopes) => {
     env.lastActivityAt,
     env.recipients?.length || 0,
   ].map(escapeCell).join(','));
-  downloadTextFile('xocusign-report.csv', [header.join(','), ...rows].join('\n'), 'text/csv');
+  downloadTextFile('docusign-report.csv', [header.join(','), ...rows].join('\n'), 'text/csv');
 };

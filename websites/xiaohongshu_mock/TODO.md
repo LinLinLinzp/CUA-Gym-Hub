@@ -1,4 +1,4 @@
-# Yiaohongshu (小红书) Mock — TODO
+# Xiaohongshu (小红书) Mock — TODO
 
 > Status: IN PROGRESS
 > Last updated by: dev agent, 2026-04-10

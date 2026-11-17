@@ -1,4 +1,4 @@
-// Xooking.com Mock — Data Manager
+// Booking.com Mock — Data Manager
 // Implements session-aware state management per dev.md standards
 
 const BASE_STORAGE_KEY = 'booking_com_mock_state';

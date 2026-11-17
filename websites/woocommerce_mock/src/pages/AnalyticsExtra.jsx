@@ -11,7 +11,7 @@ function fmt(n) {
 function Breadcrumb({ page }) {
   return (
     <div className="wc-breadcrumb">
-      <a>XooCommerce</a><span>/</span><a>Analytics</a><span>/</span>{page}
+      <a>WooCommerce</a><span>/</span><a>Analytics</a><span>/</span>{page}
     </div>
   )
 }

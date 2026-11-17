@@ -1,4 +1,4 @@
-# Xmail Mock - State API Documentation
+# Gmail Mock - State API Documentation
 
 ## Overview
 

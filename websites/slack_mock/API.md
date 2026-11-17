@@ -1,4 +1,4 @@
-# Xlack Mock - Simple State API
+# Slack Mock - Simple State API
 
 ## Overview
 

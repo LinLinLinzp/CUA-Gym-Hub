@@ -1,4 +1,4 @@
-# XAP S/4HANA Mock — Data Model
+# SAP S/4HANA Mock — Data Model
 
 This document defines all entity types, their fields, relationships, and example values for the `dataManager.js` `createInitialData()` function.
 

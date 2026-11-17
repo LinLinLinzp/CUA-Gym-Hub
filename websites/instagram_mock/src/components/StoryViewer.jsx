@@ -82,9 +82,9 @@ const StoryViewer = ({ storiesList, initialUserIndex, onClose }) => {
         <X className="w-7 h-7" />
       </button>
 
-      {/* Xnstagram logo */}
+      {/* Instagram logo */}
       <div className="absolute top-5 left-5 z-50">
-        <span className="text-white text-lg font-semibold" style={{ fontFamily: "'Satisfy', cursive" }}>Xnstagram</span>
+        <span className="text-white text-lg font-semibold" style={{ fontFamily: "'Satisfy', cursive" }}>Instagram</span>
       </div>
 
       {/* Prev user card preview (desktop) */}

@@ -19,7 +19,7 @@ export default function Subscriptions() {
       </div>
 
       <div className="card" style={{ padding: 0 }}>
-        <table className="xzure-table">
+        <table className="azure-table">
           <thead>
             <tr>
               <th>Name</th>

@@ -258,7 +258,7 @@ function buildReplaysFromEvents(state) {
       url: first?.currentUrl || 'https://app.example.com/',
       entryUrl: first?.currentUrl || 'https://app.example.com/',
       exitUrl: last?.currentUrl || first?.currentUrl || 'https://app.example.com/',
-      sourceSDK: 'xixpanel-browser',
+      sourceSDK: 'mixpanel-browser',
       operatingSystem: first?.operatingSystem || user?.properties?.['Device Type'] || 'Desktop',
       browser: first?.browser || 'Chrome',
       events: sortedEvents.map((event, eventIndex) => ({

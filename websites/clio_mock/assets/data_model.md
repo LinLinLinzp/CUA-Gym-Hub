@@ -1,4 +1,4 @@
-# Xlio Manage Mock -- Data Model
+# Clio Manage Mock -- Data Model
 
 All entities stored in localStorage via `dataManager.js`. The `createInitialData()` function returns the complete seed state.
 

@@ -1,4 +1,4 @@
-# XDP Mock — Data Model
+# ADP Mock — Data Model
 
 This document defines all entity types, their fields, relationships, and seed data specifications for `dataManager.js`.
 

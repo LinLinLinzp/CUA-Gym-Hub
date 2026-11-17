@@ -175,7 +175,7 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'xira-mock-api',
+      name: 'jira-mock-api',
       configureServer(server) {
         // POST /upload - Upload attachment files
         server.middlewares.use('/upload', async (req, res, next) => {
@@ -516,7 +516,7 @@ export default defineConfig({
   server: {
     port: 0,
     strictPort: false,
-    allowedHosts: ['xira-app.app.msh.work'],
+    allowedHosts: ['jira-app.app.msh.work'],
     watch: {
       usePolling: true,
       interval: 1000

@@ -210,7 +210,7 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'xmail-mock-api',
+      name: 'gmail-mock-api',
       configureServer(server) {
         // POST /upload - Upload attachment files
         server.middlewares.use('/upload', async (req, res, next) => {

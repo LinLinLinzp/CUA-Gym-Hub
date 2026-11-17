@@ -1,4 +1,4 @@
-# Xeta Ads Manager — Data Model
+# Meta Ads Manager — Data Model
 
 ## Entity Definitions
 

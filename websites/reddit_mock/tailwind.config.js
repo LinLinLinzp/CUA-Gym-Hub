@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        xeddit: {
+        reddit: {
           orange: '#FF4500',
           blue: '#0079D3',
           periwinkle: '#7193FF',

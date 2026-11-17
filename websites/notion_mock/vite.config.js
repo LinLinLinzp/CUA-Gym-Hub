@@ -143,7 +143,7 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'xotion-mock-api',
+      name: 'notion-mock-api',
       configureServer(server) {
         // POST /upload - Upload attachment files
         server.middlewares.use('/upload', async (req, res, next) => {

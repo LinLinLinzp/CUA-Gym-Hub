@@ -50,7 +50,7 @@ function Layout() {
               <div className="navbar-search">
                 <input
                   type="text"
-                  placeholder="Search XpenReview..."
+                  placeholder="Search OpenReview..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />

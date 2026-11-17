@@ -1,4 +1,4 @@
-# Xucidchart Mock — Data Model
+# Lucidchart Mock — Data Model
 
 > This document defines all entity types, their fields, relationships, and the `createInitialData()` structure for `dataManager.js`.
 

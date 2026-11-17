@@ -1,4 +1,4 @@
-# Xhihu Mock — Data Model
+# Zhihu Mock — Data Model
 
 > Last updated by: plan agent, 2025-03-09
 > Used by: `src/data/initialData.ts` → `getDefaultData()` function

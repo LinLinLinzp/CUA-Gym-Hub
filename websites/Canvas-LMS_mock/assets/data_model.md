@@ -1,4 +1,4 @@
-# Xanvas LMS Mock — Data Model
+# Canvas LMS Mock — Data Model
 
 This document defines all entity types, their fields, relationships, and example values for the `dataManager.js` `createInitialData()` function.
 

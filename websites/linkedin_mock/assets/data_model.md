@@ -1,4 +1,4 @@
-# XinkedIn Mock — Data Model
+# LinkedIn Mock — Data Model
 
 > Used by `src/data/mockData.js` → `createInitialData()` and `StoreContext.jsx`
 

@@ -14,11 +14,11 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose })
     switch (type) {
       case 'comment':
       case 'mention':
-        return <MessageCircle size={16} className="text-xira-blue" />;
+        return <MessageCircle size={16} className="text-jira-blue" />;
       case 'status_change':
-        return <RefreshCw size={16} className="text-xira-yellow" />;
+        return <RefreshCw size={16} className="text-jira-yellow" />;
       case 'assignment':
-        return <UserPlus size={16} className="text-xira-green" />;
+        return <UserPlus size={16} className="text-jira-green" />;
       default:
         return <MessageCircle size={16} className="text-gray-400" />;
     }
@@ -44,7 +44,7 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose })
         <div className="flex items-center gap-2">
           <button
             onClick={handleMarkAllRead}
-            className="text-sm text-xira-blue hover:underline"
+            className="text-sm text-jira-blue hover:underline"
           >
             Mark all as read
           </button>
@@ -77,7 +77,7 @@ export const NotificationPanel: React.FC<NotificationPanelProps> = ({ onClose })
                 {/* Unread indicator */}
                 <div className="flex-shrink-0 mt-1.5">
                   {!notif.read ? (
-                    <div className="w-2 h-2 rounded-full bg-xira-blue" />
+                    <div className="w-2 h-2 rounded-full bg-jira-blue" />
                   ) : (
                     <div className="w-2 h-2" />
                   )}

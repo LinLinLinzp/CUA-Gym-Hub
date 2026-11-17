@@ -92,7 +92,7 @@ function EventPickerDropdown({ onSelect, onClose, eventDefinitions }) {
             onChange={e => setSearch(e.target.value)}
             autoFocus
           />
-          <div className="event-picker-section-label">Xmplitude</div>
+          <div className="event-picker-section-label">Amplitude</div>
           {filtered.map(evtDef => (
             <button
               key={evtDef.id}

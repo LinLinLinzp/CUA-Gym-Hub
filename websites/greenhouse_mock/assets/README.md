@@ -1,8 +1,8 @@
-# Xreenhouse Recruiting Mock — Research Summary
+# Greenhouse Recruiting Mock — Research Summary
 
 ## App Overview
 
-**Xreenhouse** is a leading Applicant Tracking System (ATS) and recruiting platform used by mid-market and enterprise companies. It provides structured hiring workflows, candidate pipeline management, interview scheduling, scorecard-based evaluations, offer management, and recruiting analytics. Xreenhouse is known for its emphasis on structured, bias-reducing hiring practices.
+**Greenhouse** is a leading Applicant Tracking System (ATS) and recruiting platform used by mid-market and enterprise companies. It provides structured hiring workflows, candidate pipeline management, interview scheduling, scorecard-based evaluations, offer management, and recruiting analytics. Greenhouse is known for its emphasis on structured, bias-reducing hiring practices.
 
 **URL:** https://www.greenhouse.com
 **Category:** HR Tech / Recruiting / ATS
@@ -54,7 +54,7 @@
 
 ### Top Navigation Bar
 - Dark green bar (`#1B3A2D`) spanning full width
-- Left: Xreenhouse "g" logo + "Recruiting" text
+- Left: Greenhouse "g" logo + "Recruiting" text
 - Center/Left tabs: **Job dashboard**, **Sourcing**, **Candidates**, **CRM**, **Reports**, **Integrations**, **Job setup**
 - Right: Search icon, settings/gear icon, notifications icon, "Hi Jules" + user avatar
 
@@ -144,6 +144,6 @@ See `data_model.md` for full entity specifications.
 - Real calendar integration
 - File uploads to server
 - AI-powered features (job description generator, etc.)
-- Onboarding module (separate Xreenhouse product)
+- Onboarding module (separate Greenhouse product)
 - CRM/prospect nurturing campaigns
 - Third-party integrations

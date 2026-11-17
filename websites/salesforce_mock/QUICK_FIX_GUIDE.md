@@ -195,7 +195,7 @@ useEffect(() => {
 
 ```tsx
 const handleLogout = () => {
-  localStorage.removeItem('xalesforce-crm-state');
+  localStorage.removeItem('salesforce-crm-state');
   window.location.reload(); // 简单但有效
 };
 

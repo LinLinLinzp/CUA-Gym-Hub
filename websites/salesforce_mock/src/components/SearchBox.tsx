@@ -169,7 +169,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onShowToast }) => {
 
       <input
         type="text"
-        placeholder="Search Xalesforce (press Enter)"
+        placeholder="Search Salesforce (press Enter)"
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);

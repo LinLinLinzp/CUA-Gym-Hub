@@ -1,4 +1,4 @@
-// Utility functions for Xeibo Mock
+// Utility functions for Weibo Mock
 
 /**
  * Format relative time in Chinese

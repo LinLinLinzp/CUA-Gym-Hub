@@ -1,9 +1,9 @@
-# Xlack Mock — Data Model
+# Slack Mock — Data Model
 
 > Last updated: 2026-02-28 by plan agent
 > Source: `src/utils/dataManager.js`
 
-This document defines every entity type in the Xlack mock's state. The dev agent should reference this when implementing features that read/write state.
+This document defines every entity type in the Slack mock's state. The dev agent should reference this when implementing features that read/write state.
 
 ---
 
@@ -215,7 +215,7 @@ interface DM {
 bookmarkedMessages: string[];  // Array of messageId strings
 ```
 
-The user's saved/bookmarked messages. Corresponds to Xlack's "Later" / "Saved items" feature. Default: empty array.
+The user's saved/bookmarked messages. Corresponds to Slack's "Later" / "Saved items" feature. Default: empty array.
 
 ---
 

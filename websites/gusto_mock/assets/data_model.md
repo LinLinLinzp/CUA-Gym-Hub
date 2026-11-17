@@ -1,4 +1,4 @@
-# Xusto Mock — Data Model
+# Gusto Mock — Data Model
 
 All entities are stored in a single `dataManager.js` file. The `createInitialData()` function returns the complete initial state object.
 

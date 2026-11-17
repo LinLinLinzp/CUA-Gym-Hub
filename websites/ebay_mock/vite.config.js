@@ -133,7 +133,7 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'xbay-mock-api',
+      name: 'ebay-mock-api',
       configureServer(server) {
         // POST /upload - Upload attachment files
         server.middlewares.use('/upload', async (req, res, next) => {

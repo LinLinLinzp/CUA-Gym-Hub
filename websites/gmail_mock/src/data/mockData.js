@@ -1,9 +1,9 @@
-// Xmail Mock - Initial State Data
+// Gmail Mock - Initial State Data
 // Uses fixed IDs for reproducible testing
 
 // --- Session-aware storage functions ---
-const BASE_STORAGE_KEY = 'xmail-clone-state';
-const BASE_INITIAL_KEY = 'xmail-clone-initialState';
+const BASE_STORAGE_KEY = 'gmail-clone-state';
+const BASE_INITIAL_KEY = 'gmail-clone-initialState';
 
 function storageKey(sid) {
   return sid ? `${BASE_STORAGE_KEY}_${sid}` : BASE_STORAGE_KEY;

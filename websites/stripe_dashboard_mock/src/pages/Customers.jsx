@@ -78,7 +78,7 @@ export default function Customers() {
   }
 
   function handleExport() {
-    downloadCsv('xtripe-customers.csv', filtered, [
+    downloadCsv('stripe-customers.csv', filtered, [
       { label: 'Customer ID', value: c => c.id },
       { label: 'Name', value: c => c.name },
       { label: 'Email', value: c => c.email },

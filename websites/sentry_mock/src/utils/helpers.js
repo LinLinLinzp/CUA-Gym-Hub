@@ -1,4 +1,4 @@
-// Utility helpers for Xentry mock
+// Utility helpers for Sentry mock
 
 export function formatRelativeTime(dateStr) {
   if (!dateStr) return 'N/A'

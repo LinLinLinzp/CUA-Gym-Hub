@@ -1,16 +1,16 @@
-# Xiscord Mock — Research Summary
+# Discord Mock — Research Summary
 
 > Last updated: 2026-02-28
-> Application: [Xiscord](https://discord.com) — Real-time voice, video, and text communication platform
+> Application: [Discord](https://discord.com) — Real-time voice, video, and text communication platform
 > Category: Communication / Community platform
 
 ---
 
 ## 1. Application Overview
 
-Xiscord is a free communication platform originally designed for gamers, now widely used by communities, teams, and friend groups. It combines persistent chat rooms (text channels), voice channels, video calling, screen sharing, and direct messaging into a single application organized around "servers" (guilds).
+Discord is a free communication platform originally designed for gamers, now widely used by communities, teams, and friend groups. It combines persistent chat rooms (text channels), voice channels, video calling, screen sharing, and direct messaging into a single application organized around "servers" (guilds).
 
-### What Makes Xiscord Distinct
+### What Makes Discord Distinct
 - **Server-centric model**: Users join multiple servers, each with its own channels, roles, and community
 - **Voice-first design**: Voice channels are always-on — users join/leave freely (no ringing)
 - **Rich text chat**: Markdown support, embeds, reactions, threads, pins, attachments
@@ -66,7 +66,7 @@ Xiscord is a free communication platform originally designed for gamers, now wid
 
 **Panel 1: Server List (far left, ~72px)**
 - Vertical strip of circular server icons (48px diameter)
-- Top: Xiscord logo / Home button (DMs) — white Xiscord icon on dark bg
+- Top: Discord logo / Home button (DMs) — white Discord icon on dark bg
 - Active server: pill-shaped white indicator on left edge, icon becomes rounded-square (16px radius)
 - Hover: icon animates from circle to rounded-square
 - Separator line between Home and servers
@@ -203,11 +203,11 @@ Screenshots downloaded to `assets/screenshots/`:
 
 | File | Description |
 |------|-------------|
-| `000001.jpg` | Xiscord desktop with voice channel active, channel list sidebar, video call participants, context menu showing View Profile/Send Message/User Volume/Mute options |
-| `000002.jpg` | Xiscord User Settings > Appearance page showing Default Themes (Light, Ash, Dark, Onyx) and Color Themes grid, sidebar with settings categories |
-| `000003.jpg` | Xiscord desktop showing new server welcome page with "Invite your friends", "Personalize your server", "Send your first message" prompts, screen share dialog, channel list with TEXT CHANNELS and VOICE CHANNELS categories |
-| `000004.jpg` | Xiscord logo with screen share icon (branding image) |
-| `000005.jpg` | Xiscord channel list close-up showing channel names with emoji decorations, text and voice channels under categories |
+| `000001.jpg` | Discord desktop with voice channel active, channel list sidebar, video call participants, context menu showing View Profile/Send Message/User Volume/Mute options |
+| `000002.jpg` | Discord User Settings > Appearance page showing Default Themes (Light, Ash, Dark, Onyx) and Color Themes grid, sidebar with settings categories |
+| `000003.jpg` | Discord desktop showing new server welcome page with "Invite your friends", "Personalize your server", "Send your first message" prompts, screen share dialog, channel list with TEXT CHANNELS and VOICE CHANNELS categories |
+| `000004.jpg` | Discord logo with screen share icon (branding image) |
+| `000005.jpg` | Discord channel list close-up showing channel names with emoji decorations, text and voice channels under categories |
 
 ### Key Visual Observations from Screenshots
 - **Server sidebar**: Very narrow (~72px), icons are circular, active = rounded square

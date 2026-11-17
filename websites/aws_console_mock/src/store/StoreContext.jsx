@@ -335,7 +335,7 @@ export const StoreProvider = ({ children }) => {
   if (loading || !state) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', fontFamily: '"Helvetica Neue", -apple-system, sans-serif', color: '#545B64' }}>
-        Loading XWS Console...
+        Loading AWS Console...
       </div>
     );
   }

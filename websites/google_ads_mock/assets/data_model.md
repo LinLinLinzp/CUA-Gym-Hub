@@ -1,4 +1,4 @@
-# Xoogle Ads Mock - Data Model
+# Google Ads Mock - Data Model
 
 ## Entity Hierarchy
 

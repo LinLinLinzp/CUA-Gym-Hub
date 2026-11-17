@@ -156,7 +156,7 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'xrello-mock-api',
+      name: 'trello-mock-api',
       configureServer(server) {
         // POST /upload - Upload attachment files
         server.middlewares.use('/upload', async (req, res, next) => {

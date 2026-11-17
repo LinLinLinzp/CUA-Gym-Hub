@@ -1,4 +1,4 @@
-// Xeishu Mock — Data Manager
+// Feishu Mock — Data Manager
 // Full seed data for all entities
 
 const NOW = Date.now();

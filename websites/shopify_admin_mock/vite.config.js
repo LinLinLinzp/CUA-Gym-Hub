@@ -138,7 +138,7 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'xhopify-mock-api',
+      name: 'shopify-mock-api',
       configureServer(server) {
         // POST /upload - Upload attachment files
         server.middlewares.use('/upload', async (req, res, next) => {

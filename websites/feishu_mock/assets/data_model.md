@@ -1,4 +1,4 @@
-# Xeishu Mock — Data Model
+# Feishu Mock — Data Model
 
 > This document defines all entity types, their fields, relationships, and realistic seed data for `dataManager.js`.
 

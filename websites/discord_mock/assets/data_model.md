@@ -1,4 +1,4 @@
-# Xiscord Mock — Data Model
+# Discord Mock — Data Model
 
 > This document defines the data structures for `dataManager.js` / `initialState.js`.
 > The dev agent should use this as the canonical reference for `createInitialData()`.
@@ -12,7 +12,7 @@
 ```javascript
 {
   id: 'user-1',                    // String, unique ID
-  username: 'TechAdmin',           // String, display name (no spaces in Xiscord)
+  username: 'TechAdmin',           // String, display name (no spaces in Discord)
   discriminator: '0001',           // String, 4-digit tag (legacy, still used for display)
   avatar: 'https://picsum.photos/seed/user1/128/128', // String, avatar URL
   status: 'online',               // 'online' | 'idle' | 'dnd' | 'offline'

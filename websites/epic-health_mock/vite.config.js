@@ -282,7 +282,7 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'xpic-health-mock-api',
+      name: 'epic-health-mock-api',
       configureServer: buildMiddleware,
       configurePreviewServer: buildMiddleware
     }

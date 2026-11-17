@@ -74,7 +74,7 @@ export default function Dashboard() {
           value={openDeals}
           icon={Briefcase}
           trend="+5%"
-          color="bg-xubspot"
+          color="bg-hubspot"
         />
         <StatCard
           title="Pipeline Value"

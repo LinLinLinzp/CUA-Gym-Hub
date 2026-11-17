@@ -1,4 +1,4 @@
-# XubSpot Marketing Hub — Data Model
+# HubSpot Marketing Hub — Data Model
 
 This document defines all entity types, their fields, relationships, and example values for `dataManager.js`.
 

@@ -1,10 +1,10 @@
-# xonday.com Mock — Research Summary
+# Monday.com Mock — Research Summary
 
 ## App Overview
 
-**xonday.com** is a cloud-based Work Operating System (Work OS) that enables teams to build custom workflows for managing projects, tasks, and everyday work. It is a highly visual, colorful, and flexible platform where the primary data abstraction is the **board** — a customizable spreadsheet-like table with rows (items), column groups (groups), and typed columns (status, people, dates, numbers, etc.).
+**Monday.com** is a cloud-based Work Operating System (Work OS) that enables teams to build custom workflows for managing projects, tasks, and everyday work. It is a highly visual, colorful, and flexible platform where the primary data abstraction is the **board** — a customizable spreadsheet-like table with rows (items), column groups (groups), and typed columns (status, people, dates, numbers, etc.).
 
-xonday.com serves 225,000+ customers across 200+ industries. Its core strength is the combination of a structured data table with colorful, visual status indicators and multiple view types (Table, Kanban, Timeline/Gantt, Calendar, Chart, Dashboard).
+Monday.com serves 225,000+ customers across 200+ industries. Its core strength is the combination of a structured data table with colorful, visual status indicators and multiple view types (Table, Kanban, Timeline/Gantt, Calendar, Chart, Dashboard).
 
 ## Key User Personas
 
@@ -16,7 +16,7 @@ xonday.com serves 225,000+ customers across 200+ industries. Its core strength i
 
 ## Core Architecture: The Board Model
 
-xonday.com's data hierarchy is:
+Monday.com's data hierarchy is:
 
 ```
 Workspace
@@ -112,7 +112,7 @@ Workspace
    - "+ Add" row at bottom of each group
    - Summary/aggregation row at very bottom
 
-### Color Palette (xonday.com Vibe Design System)
+### Color Palette (monday.com Vibe Design System)
 | Token | Hex | Usage |
 |-------|-----|-------|
 | Primary / Brand Blue | `#0073EA` | Primary buttons, links, active states |
