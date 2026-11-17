@@ -67,6 +67,7 @@
 | `tags` | array | Order tags |
 | `discountCodes` | array | Each: `{code, amount, type}` |
 | `timeline` | array | Activity log; each: `{id, type, message, createdAt, user}` |
+| `refunds` | array | Each: `{id, createdAt, lineItems:[{lineItemId, sku, quantity, amount}], shipping, total, note}`; amounts are strings with 2 decimals |
 | `createdAt` | string | ISO 8601 timestamp |
 | `updatedAt` | string | ISO 8601 timestamp |
 
@@ -207,6 +208,7 @@
 | Change product status | `products[i].status` updated (active/draft/archived) |
 | Fulfill order | `orders[i].fulfillmentStatus` → `"fulfilled"`; `timeline` grows |
 | Update order tags/note | `orders[i].tags` or `orders[i].note` updated |
+| Issue refund | `orders[i].refunds` grows; `financialStatus` → `partially_refunded`/`refunded` by cumulative total; `timeline` grows |
 | Add customer | `customers` array grows |
 | Update customer details | `customers[i]` fields updated |
 | Create discount | `discounts` array grows |

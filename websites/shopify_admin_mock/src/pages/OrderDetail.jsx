@@ -82,26 +82,36 @@ export default function OrderDetail() {
 
   const handleRefund = (e) => {
     e.preventDefault();
-    const refundTotal = refundItems.reduce((sum, item) => {
-      const li = order.lineItems.find(l => l.id === item.id);
-      return sum + (li ? parseFloat(li.price) * item.qty : 0);
-    }, 0) + (refundShipping ? parseFloat(order.totalShippingPrice || 0) : 0);
-
-    const newFinancialStatus = refundTotal >= parseFloat(order.totalPrice) ? 'refunded' : 'partially_refunded';
+    const lines = refundItems
+      .filter(item => item.qty > 0)
+      .map(item => {
+        const li = order.lineItems.find(l => l.id === item.id);
+        return { lineItemId: item.id, sku: li?.sku || '', quantity: item.qty, amount: (li ? parseFloat(li.price) * item.qty : 0).toFixed(2) };
+      });
+    const shippingAmount = refundShipping ? parseFloat(order.totalShippingPrice || 0) : 0;
+    const refundTotal = lines.reduce((sum, l) => sum + parseFloat(l.amount), 0) + shippingAmount;
+    const now = new Date().toISOString();
+    const refunds = [
+      ...(order.refunds || []),
+      { id: `refund_${Date.now()}`, createdAt: now, lineItems: lines, shipping: shippingAmount.toFixed(2), total: refundTotal.toFixed(2), note: refundNote }
+    ];
+    const refundedSoFar = refunds.reduce((sum, r) => sum + parseFloat(r.total), 0);
+    const newFinancialStatus = refundedSoFar >= parseFloat(order.totalPrice) - 0.005 ? 'refunded' : 'partially_refunded';
     const newTimeline = [
       ...(order.timeline || []),
       {
         id: `evt_${Date.now()}`,
         type: 'refund',
         message: `Refund of $${refundTotal.toFixed(2)} was issued${refundNote ? ': ' + refundNote : ''}`,
-        createdAt: new Date().toISOString(),
+        createdAt: now,
         user: 'Alex Chen'
       }
     ];
     updateOrder(id, {
       financialStatus: newFinancialStatus,
+      refunds,
       timeline: newTimeline,
-      updatedAt: new Date().toISOString()
+      updatedAt: now
     });
     setShowRefundModal(false);
     setRefundItems([]);
@@ -177,6 +187,8 @@ export default function OrderDetail() {
   };
 
   const lineItems = order.lineItems || [];
+  const refundedQty = (lineItemId) => (order.refunds || []).reduce(
+    (sum, r) => sum + (r.lineItems || []).filter(l => l.lineItemId === lineItemId).reduce((n, l) => n + l.quantity, 0), 0);
   const timeline = [...(order.timeline || [])].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   const shippingAddr = formatAddress(order.shippingAddress);
   const billingAddr = formatAddress(order.billingAddress);
@@ -408,20 +420,25 @@ export default function OrderDetail() {
                 <div className="space-y-2">
                   {(order.lineItems || []).map((li, idx) => {
                     const refundItem = refundItems.find(r => r.id === li.id) || { qty: 0 };
+                    const remaining = li.quantity - refundedQty(li.id);
                     return (
                       <div key={li.id} className="flex items-center gap-3">
-                        <div className="flex-1 text-[13px] text-[#303030]">{li.title} {li.variantTitle ? `- ${li.variantTitle}` : ''}</div>
+                        <div className="flex-1 text-[13px] text-[#303030]">
+                          {li.title} {li.variantTitle ? `- ${li.variantTitle}` : ''}
+                          {remaining < li.quantity && <span className="ml-1 text-[12px] text-[#616161]">({li.quantity - remaining} already refunded)</span>}
+                        </div>
                         <div className="text-[12px] text-[#616161]">${parseFloat(li.price).toFixed(2)}</div>
                         <div className="flex items-center gap-1">
                           <span className="text-[12px] text-[#616161]">Qty:</span>
                           <input
                             type="number"
                             min="0"
-                            max={li.quantity}
+                            max={remaining}
+                            disabled={remaining <= 0}
                             className="w-14 text-[13px]"
                             value={refundItem.qty}
                             onChange={e => {
-                              const qty = Math.min(parseInt(e.target.value) || 0, li.quantity);
+                              const qty = Math.max(0, Math.min(parseInt(e.target.value) || 0, remaining));
                               setRefundItems(prev => prev.map(r => r.id === li.id ? { ...r, qty } : r));
                             }}
                           />
