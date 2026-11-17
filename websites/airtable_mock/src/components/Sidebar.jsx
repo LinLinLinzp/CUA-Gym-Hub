@@ -26,7 +26,7 @@ const Sidebar = () => {
     <div className="w-[260px] bg-[#333333] text-white flex flex-col h-full border-r border-gray-800">
       <div className="p-4 flex items-center gap-2 border-b border-gray-700">
         <div className="w-8 h-8 bg-primary rounded flex items-center justify-center font-bold text-xl">A</div>
-        <span className="font-bold text-lg tracking-tight">AirTableMock</span>
+        <span className="font-bold text-lg tracking-tight">Airtable</span>
       </div>
 
       <div className="p-3">
@@ -104,7 +104,7 @@ const Sidebar = () => {
 
             {panel === 'settings' && (
               <div className="space-y-3 text-sm">
-                <div className="rounded border p-3"><div className="font-medium">Workspace</div><div className="text-gray-500">AirTableMock workspace, local sandbox mode.</div></div>
+                <div className="rounded border p-3"><div className="font-medium">Workspace</div><div className="text-gray-500">Airtable workspace, local sandbox mode.</div></div>
                 <label className="flex items-center justify-between rounded border p-3"><span>Email notifications</span><input type="checkbox" defaultChecked /></label>
                 <label className="flex items-center justify-between rounded border p-3"><span>Compact rows</span><input type="checkbox" /></label>
               </div>

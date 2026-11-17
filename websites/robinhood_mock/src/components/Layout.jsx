@@ -37,7 +37,7 @@ export default function Layout() {
     <div className="min-h-screen bg-background text-text flex flex-col md:flex-row">
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between p-4 border-b border-surface bg-background sticky top-0 z-50">
-        <Link to="/" className="font-bold text-primary text-xl">TradeFlow</Link>
+        <Link to="/" className="font-bold text-primary text-xl">Robinhood</Link>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
           {isMobileMenuOpen ? <X /> : <Menu />}
         </button>
@@ -50,7 +50,7 @@ export default function Layout() {
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
         <div className="p-6 hidden md:block">
-          <Link to="/" className="font-bold text-primary text-2xl tracking-tight">TradeFlow</Link>
+          <Link to="/" className="font-bold text-primary text-2xl tracking-tight">Robinhood</Link>
         </div>
 
         <div className="flex-1 px-4 py-4 space-y-2">

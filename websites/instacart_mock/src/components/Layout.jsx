@@ -45,7 +45,7 @@ export default function Layout() {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xl">G</span>
               </div>
-              <span className="text-primary font-bold text-xl hidden md:block">GroceryGo</span>
+              <span className="text-primary font-bold text-xl hidden md:block">Instacart</span>
             </Link>
           </div>
 

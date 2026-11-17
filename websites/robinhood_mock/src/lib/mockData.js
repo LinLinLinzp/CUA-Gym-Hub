@@ -299,7 +299,7 @@ function createDefaultState() {
     notifications: [
       {
         id: 'notif_welcome',
-        title: 'Welcome to TradeFlow',
+        title: 'Welcome to Robinhood',
         message: 'Your simulated brokerage account is ready.',
         date: new Date().toISOString(),
         read: false,

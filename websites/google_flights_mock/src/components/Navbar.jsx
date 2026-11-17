@@ -24,7 +24,7 @@
                 <div className="flex-shrink-0 flex items-center">
                   <Link to="/" className="flex items-center gap-2">
                     <Plane className="h-8 w-8 text-primary" />
-                    <span className="text-xl font-bold text-gray-700">SkySearch</span>
+                    <span className="text-xl font-bold text-gray-700">Google Flights</span>
                   </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">

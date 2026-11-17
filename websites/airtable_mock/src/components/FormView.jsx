@@ -59,7 +59,7 @@ const FormView = ({ table }) => {
           </form>
         </div>
         <div className="bg-gray-50 p-6 text-center text-gray-400 text-sm">
-          Powered by AirTableMock
+          Powered by Airtable
         </div>
       </div>
     </div>

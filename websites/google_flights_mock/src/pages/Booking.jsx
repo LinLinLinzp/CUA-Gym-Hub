@@ -23,7 +23,7 @@
 
       const downloadItinerary = () => {
         const lines = [
-          'SkySearch itinerary',
+          'Google Flights itinerary',
           `Booking reference: ${bookingRef}`,
           `Passenger: ${passenger.firstName} ${passenger.lastName}`,
           `Route: ${flight.origin.city} (${flight.origin.code}) to ${flight.destination.city} (${flight.destination.code})`,

@@ -64,7 +64,7 @@
               <h1 className="text-2xl font-semibold text-white mb-4">Home</h1>
               <div className="bg-github-card border border-github-border rounded-md p-8 text-center">
                 <h3 className="text-xl font-bold text-white mb-2">Discover interesting projects</h3>
-                <p className="text-github-muted mb-4">Explore what others are building on GitMock.</p>
+                <p className="text-github-muted mb-4">Explore what others are building on GitHub.</p>
                 <Link
                   to={repos[0] ? `/${state.users.find(u => u.id === repos[0].ownerId)?.username}/${repos[0].name}` : '/'}
                   className="inline-block bg-github-success text-white px-4 py-1.5 rounded-md font-semibold text-sm hover:bg-opacity-90"
