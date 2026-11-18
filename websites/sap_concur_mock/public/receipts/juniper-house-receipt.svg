@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 390" role="img" aria-label="Juniper House Hotel receipt for 224.40 dollars">
+<rect width="420" height="390" fill="#dce8e4"/>
+<path d="M34 24h352v338l-16-8-16 8-16-8-16 8-16-8-16 8-16-8-16 8-16-8-16 8-16-8-16 8-16-8-16 8-16-8-16 8-16-8-16 8-16-8-16 8-16-8-16 8-16-8-16 8z" fill="#fffdf6"/>
+<g font-family="Segoe UI, sans-serif" fill="#192b3b">
+<text x="210" y="78" text-anchor="middle" font-size="23" font-weight="700">Juniper House Hotel</text>
+<text x="210" y="102" text-anchor="middle" font-size="14" fill="#536477">Denver, CO</text>
+<path d="M61 124h298M61 250h298" fill="none" stroke="#80948c" stroke-dasharray="3 4"/>
+<text x="62" y="157" font-size="15">Receipt JH-48291</text><text x="358" y="157" text-anchor="end" font-size="15">Nov 8, 2026</text>
+<text x="62" y="209" font-size="15">Workshop accommodation</text><text x="358" y="209" text-anchor="end" font-size="15">$224.40</text>
+<text x="62" y="283" font-size="16" font-weight="700">Total paid</text><text x="358" y="283" text-anchor="end" font-size="20" font-weight="700">$224.40</text>
+<text x="210" y="326" text-anchor="middle" font-size="12" fill="#536477">USD | Customer copy</text>
+</g></svg>

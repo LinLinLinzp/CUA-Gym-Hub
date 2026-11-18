@@ -1,0 +1,38 @@
+.overview {
+  position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center;
+  min-height: 140px; padding: 22px 25px; border-radius: 12px; color: white; background: #132942;
+}
+.overview h2 { margin-bottom: 15px; }
+.overview .primary { background: #7ee0ca; border-color: #7ee0ca; color: #132942; }
+.overview .primary:hover { background: #a4ecdc; }
+.overview .button:not(.primary) { border-color: #7c95aa; background: #223e59; color: white; }
+.overview .button:not(.primary):hover { background: #395771; }
+.overview :focus-visible { outline-color: #7ee0ca; }
+.waypoints {
+  position: absolute; z-index: -1; right: 5%; top: 50%; width: 24%; display: flex; justify-content: space-between;
+  transform: rotate(-10deg); border-top: 2px dotted #658797;
+}
+.waypoints i { display: block; width: 14px; height: 14px; border: 2px solid #7ee0ca; background: #132942; border-radius: 50%; margin-top: -8px; }
+.waypoints i:nth-child(2) { width: 11px; height: 11px; margin-top: -6px; }
+.counts { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); }
+.counts a { display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 12px 20px 15px; text-decoration: none; }
+.counts a:hover { background: #edf6f3; }
+.counts a + a { border-left: 1px solid var(--border); }
+.counts a strong { color: #192b3b; font-size: 26px; line-height: 32px; font-variant-numeric: tabular-nums; grid-column: 1 / -1; }
+.counts a span { font-weight: 650; }
+.counts a svg { margin-left: 6px; }
+.stack { display: grid; gap: 12px; min-width: 0; }
+.toolbar { display: flex; align-items: end; flex-wrap: wrap; gap: 10px; padding: 13px; }
+.toolbar .field:first-child { flex: 1 1 185px; max-width: 440px; }
+.view-switch { display: flex; flex-wrap: wrap; gap: 6px; }
+.view-switch button { border-color: transparent; background: transparent; }
+.view-switch button[aria-pressed="true"] { border-color: #a2c9bc; color: #06594f; background: #e4f3ec; }
+.view-switch button:hover { border-color: #a2c9bc; }
+.view-switch button span { color: #215646; background: #d3e8df; padding: 0 7px; border-radius: 20px; font-size: 12px; }
+@media (max-width: 1050px) { .waypoints { opacity: .35; } }
+@media (max-width: 760px) {
+  .waypoints { display: none; }
+  .counts a { padding: 10px; }
+  .counts a svg { display: none; }
+  .toolbar .field:first-child { flex-basis: 100%; }
+}
