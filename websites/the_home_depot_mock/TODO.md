@@ -1,0 +1,40 @@
+# The Home Depot account implementation plan
+
+> READY FOR DEV · Plan agent · 2026-11-18  
+> [Build brief](SEED.md) · [Harbor contract](../../HARBOR_CONTRACT.md) · [Workflow research](assets/README.md) · [State model](assets/data_model.md) · [Design system](DESIGN.md)
+
+## Status legend
+
+- `[ ]` Not started
+- `[~]` In progress
+- `[x]` Done
+
+## P0 — Core shell and runtime
+
+- [x] Scaffold React and Vite in this directory, with a tracked `package-lock.json`, `npm run build`, and localhost dev server configured with `port: 5315` and `strictPort: true`. Use the repo `stateApi(createInitialData)` import in `vite.config.js` for dev and preview, and copy the shared `dataManager.js` to `src/utils/dataManager.js` unchanged. The state API owns `/go`, `/state`, and `/post`, alongside the production SPA output in `dist/`.
+- [x] Build the original responsive account shell in [DESIGN.md](DESIGN.md). Show The Home Depot in plain text, navigation for Overview, Orders, Tool Rental, Project Lists, and Returns, plus the synthetic account name. The overview links to all four workflows and surfaces recent orders, reservations and lists using current state. Navigation, searches, filters, drafts and dashboard summaries produce no business-state writes.
+- [x] Route `/` to Overview, `/orders` and `/orders/:orderId`, `/rentals` and `/rentals/:rentalId`, `/project-lists` and `/project-lists/:listId`, `/returns`, `/returns/new/:orderId`, and `/returns/:returnId`. Mount all routes inside their providers. Retain `?sid=` across links, redirects and back actions, using `withSid()` on internal links outside the router. Provide a recovery link for unknown routes and missing record IDs. Verify direct loads and hard reloads.
+- [x] Implement `src/data/seed.js` with deterministic `createInitialData()`. Await `loadState(APP, createInitialData)` behind a neutral loading view before rendering routes. Send a single whole-state `saveState` from the centralized store per successful user mutation. Keep inputs and view state transient. Opening views, idle tabs, derived time displays and invalid or dismissed actions produce no `set_current` writes. Preserve injected keys and fields unrelated to the action. Handle empty arrays, singletons, hundreds of records, and missing optional fields or related records through render-time fallbacks.
+- [x] Create `SCHEMA.md` from the implemented data model, covering every top-level key, nested record and value set. Include an **Observable State Changes** table listing exact paths, fields, IDs, values and timestamps for each mutating UI action. Keep the schema, implementation and Playwright assertions aligned.
+
+## P1 — Required account workflows
+
+- [x] **Orders.** Search purchases by order number, item name or SKU. Filter by status and fulfillment, and sort by date. Details show the receipt totals, line items, shipment tracking summary or pickup information, and applicable actions. On an eligible `processing` or `ready_for_pickup` order, open **Cancel order**, collect a reason, and confirm. Persist `orders[id].status = "cancelled"` and `orders[id].cancellation` with `reason`, `actorId` and `createdAt` on the original order. Keep the original line items and totals for the receipt. Disable repeat cancellation and expose **Start a return** for eligible fulfilled orders. Test cancellation, filtering by Cancelled and persistence through reload.
+- [x] **Tool rental.** Provide Equipment and My Reservations views. Search and filter equipment by category and pickup store. Select an available tool, a listed pickup store, a future pickup date/time and a duration. Review the calculated equipment estimate and separate deposit, then confirm. Append a `rentals[]` record with `id`, `toolId`, `toolName`, `storeId`, `pickupAt`, `durationHours`, `quantity`, `estimatedAmount`, `depositAmount`, `status = "reserved"`, `actorId` and `createdAt`. Reject unavailable store/tool combinations, past pickup times, invalid durations and overlapping reserved or active bookings at the same store for that tool. In My Reservations, confirm cancellation of a `reserved` booking and set `status = "cancelled"` and `cancellation.{actorId,createdAt}` on that record. Test reservation, linked IDs and amount, reload, and cancellation.
+- [x] **Project lists.** Show searchable lists with item counts, then a detail view with materials, quantities, notes and estimated total. Create from **New list** with a required trimmed name and optional description. Append a `projectLists[]` record with `id`, `name`, `description`, `status = "active"`, `items: []`, `actorId`, `createdAt` and `updatedAt`. Edit the name/description in place. In **Add materials**, search local products by name or SKU and save a positive whole quantity. Append `items[]` with stable `id`, `productId`, `name`, `sku`, `unitPrice`, `quantity`, `note`, `status = "active"`, `actorId`, `createdAt` and `updatedAt`. Re-adding an active product increments the existing line. Edit quantity or note in place and confirm removals by setting line status to `removed`. Confirm list deletion by setting list status to `deleted`. For each edit, update the changed record's `updatedAt` and `updatedBy`, and also stamp the parent list for item changes. Keep removed items and deleted lists in state for verification and omit them from active views and totals. Test create, add, edit, remove and delete with state checks at each stage.
+- [x] **Returns.** Open **Start a return** from an eligible order or use the Returns order picker. Show available quantities after prior non-cancelled returns. Select one or more eligible lines, quantities and reasons, choose a supported method (`in_store` or `mail`), and review the estimated refund before submitting. Append a `returns[]` record with `id`, `orderId`, `method`, `status = "requested"`, `items[]`, `refundAmount`, `actorId` and `createdAt` (include `storeId` when selected for an in-store return). Persist each line as `{ orderItemId, productId, quantity, reason, unitPrice, amount }` and calculate the numeric return total from the line amounts. Recheck quantities and method eligibility at submission, reject over-returns and keep both source order and request linked. Show the new return reference, instructions and status in Returns history and detail. Test a partial return, eligible remaining quantity, reload and over-return prevention.
+- [x] **Local acceptance.** Run `npm run build` and use installed Node Playwright via `PILOT_PLAYWRIGHT` with Chromium against localhost port 5315 only. Check all four workflows via the UI and use `/go?sid=…` to verify their exact record changes. Check clean boot, injection, sparse data, hard reload, SID isolation and absence of idle POSTs after the boot baseline, including an idle tab while another tab mutates the same SID. Verify responsive navigation, keyboard operation, error and empty states, and absence of external runtime requests. Record actual results and field assertions in `TEST.md`. Store runner scratch files under a gitignored directory or clean them up. For a persistent server use PowerShell `Start-Process -WindowStyle Hidden` and an absolute Vite entry point. The parent runner owns Docker certification and commits after `TEST.md`.
+
+## P2 — Secondary features
+
+- No P2 features scheduled for this build.
+
+## Seed data
+
+- [x] Seed one English-language synthetic account and three pickup stores. Use fixed IDs and fixed timestamps throughout the baseline.
+- [x] Seed at least 36 products, 36 orders, 30 rental tools, 24 reservations, 24 project lists and 24 returns. Use [the fixture matrix](assets/data_model.md#seed-fixture-matrix) for representative cases and stable Playwright targets.
+
+## Scope limits
+
+- Account starts signed in as Casey Morgan. Retail checkout, account enrollment, identity collection, payment capture, email and SMS delivery, and carrier integrations are outside this account slice.
+- The app uses synthetic content, text branding and original local visuals. Research uses public documentation. Functional tests use localhost. Leave commit and push operations to the parent pipeline.
