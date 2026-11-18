@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900">
+  <defs>
+    <radialGradient id="light" cx="34%" cy="28%" r="85%"><stop stop-color="#eac1bb"/><stop offset=".55" stop-color="#242449"/><stop offset="1" stop-color="#171529"/></radialGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".62" numOctaves="3" stitchTiles="stitch"/></filter>
+  </defs>
+  <rect width="900" height="900" fill="url(#light)"/>
+  
+    <g transform="rotate(-8 450 450)"><path d="M88 320h726v269H88z" fill="#252b45" stroke="#5a6791" stroke-width="9"/>
+    <path d="M110 343h680v220H110z" fill="none" stroke="#ed8879" stroke-width="4"/>
+    <path d="M126 359h648v188H126z" fill="none" stroke="#ed8879" stroke-width="1" opacity=".5"/>
+    <g font-family="Georgia,serif" text-anchor="middle"><text x="450" y="477" fill="#ffc794" stroke="#fc997e" stroke-width="1.5" font-size="100" letter-spacing="11">CINEMA</text><text x="450" y="520" fill="#be95b6" font-size="24" letter-spacing="9">EVENING SHOWS</text></g>
+    <path d="M185 590v166m507-166v166" stroke="#151b30" stroke-width="12"/></g>
+    <path d="M0 690h900m0 25H0m0 25h900" stroke="#9b647d" stroke-width="1" opacity=".2"/>
+  <rect width="900" height="900" filter="url(#grain)" opacity=".25" style="mix-blend-mode:multiply"/>
+  </svg>

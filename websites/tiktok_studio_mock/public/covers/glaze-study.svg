@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900">
+  <defs>
+    <radialGradient id="light" cx="34%" cy="28%" r="85%"><stop stop-color="#d1c697"/><stop offset=".55" stop-color="#637964"/><stop offset="1" stop-color="#243e32"/></radialGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".62" numOctaves="3" stitchTiles="stitch"/></filter>
+  </defs>
+  <rect width="900" height="900" fill="url(#light)"/>
+  
+    <g transform="rotate(-15 450 450)">
+    <ellipse cx="257" cy="393" rx="122" ry="98" fill="#193b2e" opacity=".4"/><circle cx="238" cy="367" r="111" fill="#ab774c" stroke="#30483a" stroke-width="2"/><circle cx="238" cy="367" r="92" fill="#efd3a3"/><circle cx="238" cy="367" r="69" fill="#ab774c" /><path d="M184 343q54-73 103-9m-96 62q41 62 92 10" stroke="#efd3a3" stroke-width="3" fill="none" opacity=".63"/><path d="M197 353q43-55 88 1" stroke="#efd3a3" stroke-width="6" fill="none" opacity=".32"/><ellipse cx="513" cy="355" rx="122" ry="98" fill="#193b2e" opacity=".4"/><circle cx="494" cy="329" r="111" fill="#36665f" stroke="#30483a" stroke-width="2"/><circle cx="494" cy="329" r="92" fill="#98baa0"/><circle cx="494" cy="329" r="69" fill="#36665f" /><path d="M440 305q54-73 103-9m-96 62q41 62 92 10" stroke="#98baa0" stroke-width="3" fill="none" opacity=".63"/><path d="M453 315q43-55 88 1" stroke="#98baa0" stroke-width="6" fill="none" opacity=".32"/><ellipse cx="634" cy="558" rx="122" ry="98" fill="#193b2e" opacity=".4"/><circle cx="615" cy="532" r="111" fill="#75917d" stroke="#30483a" stroke-width="2"/><circle cx="615" cy="532" r="92" fill="#cee0b9"/><circle cx="615" cy="532" r="69" fill="#75917d" /><path d="M561 508q54-73 103-9m-96 62q41 62 92 10" stroke="#cee0b9" stroke-width="3" fill="none" opacity=".63"/><path d="M574 518q43-55 88 1" stroke="#cee0b9" stroke-width="6" fill="none" opacity=".32"/><ellipse cx="351" cy="594" rx="122" ry="98" fill="#193b2e" opacity=".4"/><circle cx="332" cy="568" r="111" fill="#7a5947" stroke="#30483a" stroke-width="2"/><circle cx="332" cy="568" r="92" fill="#c49876"/><circle cx="332" cy="568" r="69" fill="#7a5947" /><path d="M278 544q54-73 103-9m-96 62q41 62 92 10" stroke="#c49876" stroke-width="3" fill="none" opacity=".63"/><path d="M291 554q43-55 88 1" stroke="#c49876" stroke-width="6" fill="none" opacity=".32"/>
+    </g>
+  <rect width="900" height="900" filter="url(#grain)" opacity=".25" style="mix-blend-mode:multiply"/>
+  </svg>

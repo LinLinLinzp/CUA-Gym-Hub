@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900">
+  <defs>
+    <radialGradient id="light" cx="34%" cy="28%" r="85%"><stop stop-color="#cee2be"/><stop offset=".55" stop-color="#6e8979"/><stop offset="1" stop-color="#1c3f36"/></radialGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".62" numOctaves="3" stitchTiles="stitch"/></filter>
+  </defs>
+  <rect width="900" height="900" fill="url(#light)"/>
+  
+    <g transform="rotate(-17 450 450)"><rect x="175" y="213" width="553" height="469" rx="14" fill="#1e3b32"/>
+    <path d="M209 233h220c24 0 40 11 49 29 14-17 30-29 57-29h163v407H534c-26 0-43 11-57 23-14-13-30-23-55-23H209z" fill="#f5e0ad"/>
+    <path d="M477 263v389" stroke="#a76c4f" stroke-width="11"/>
+    <path d="M259 310h122m154 0h111" stroke="#8b8168" stroke-width="2.5" stroke-dasharray="23 7 45 6"/><path d="m467 301 20 18m0-18-20 18" stroke="#824d39" stroke-width="3" /><path d="M259 355h122m154 0h111" stroke="#8b8168" stroke-width="2.5" stroke-dasharray="23 7 45 6"/><path d="m467 346 20 18m0-18-20 18" stroke="#824d39" stroke-width="3" /><path d="M259 400h122m154 0h111" stroke="#8b8168" stroke-width="2.5" stroke-dasharray="23 7 45 6"/><path d="m467 391 20 18m0-18-20 18" stroke="#824d39" stroke-width="3" /><path d="M259 445h122m154 0h111" stroke="#8b8168" stroke-width="2.5" stroke-dasharray="23 7 45 6"/><path d="m467 436 20 18m0-18-20 18" stroke="#824d39" stroke-width="3" /><path d="M259 490h122m154 0h111" stroke="#8b8168" stroke-width="2.5" stroke-dasharray="23 7 45 6"/><path d="m467 481 20 18m0-18-20 18" stroke="#824d39" stroke-width="3" /><path d="M259 535h122m154 0h111" stroke="#8b8168" stroke-width="2.5" stroke-dasharray="23 7 45 6"/><path d="m467 526 20 18m0-18-20 18" stroke="#824d39" stroke-width="3" /><path d="M259 580h122m154 0h111" stroke="#8b8168" stroke-width="2.5" stroke-dasharray="23 7 45 6"/><path d="m467 571 20 18m0-18-20 18" stroke="#824d39" stroke-width="3" />
+    </g>
+  <rect width="900" height="900" filter="url(#grain)" opacity=".25" style="mix-blend-mode:multiply"/>
+  </svg>
