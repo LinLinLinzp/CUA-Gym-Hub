@@ -95,10 +95,11 @@ export function CollectorList() {
 function CollectorSettings({ collector }) {
   const { change } = useWorkspace()
   const [draft, setDraft] = useState(() => settingsFor(collector))
+  const [original, setOriginal] = useState(() => settingsFor(collector))
   const [message, setMessage] = useState('')
-  const live = settingsFor(collector)
   const settings = { ...draft, closedMessage: (draft.closedMessage ?? '').trim() }
-  const dirty = Object.keys(defaultSettings).some(key => settings[key] !== live[key])
+  const changed = Object.keys(defaultSettings).filter(key => settings[key] !== original[key])
+  const dirty = changed.length > 0
 
   function update(key, value) {
     setDraft(current => ({ ...current, [key]: value }))
@@ -108,9 +109,17 @@ function CollectorSettings({ collector }) {
   function save(event) {
     event.preventDefault()
     if (!dirty) return
-    if (change(current => replaceRecord(current, 'collectors', collector.id, item => ({
-      ...item, settings: { ...item.settings, ...settings }, ...updated(current),
-    })))) setMessage('Settings saved.')
+    const patch = Object.fromEntries(changed.map(key => [key, settings[key]]))
+    let saved
+    if (change(current => replaceRecord(current, 'collectors', collector.id, item => {
+      saved = { ...item.settings, ...patch }
+      return { ...item, settings: saved, ...updated(current) }
+    }))) {
+      const next = { ...defaultSettings, ...saved }
+      setOriginal(next)
+      setDraft(next)
+      setMessage('Settings saved.')
+    }
   }
 
   return <form className="surface stack collector-settings" onSubmit={save}>

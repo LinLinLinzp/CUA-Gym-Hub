@@ -62,9 +62,9 @@ export function Confirmation({ title, submit, onClose, onConfirm, children }) {
   const [error, setError] = useState(null)
   return <Modal title={title} onClose={onClose}>
     <p>{children}</p>
-    <form onSubmit={event => {
+    <form onSubmit={async event => {
       event.preventDefault()
-      const problem = onConfirm()
+      const problem = await onConfirm()
       if (problem) setError(problem)
       else onClose()
     }}>
@@ -79,9 +79,9 @@ export function ShelfEditor({ shelf, onClose }) {
   const [name, setName] = useState(shelf?.name || '')
   const [error, setError] = useState(null)
   return <Modal title={shelf ? 'Rename shelf' : 'New shelf'} onClose={onClose}>
-    <form onSubmit={event => {
+    <form onSubmit={async event => {
       event.preventDefault()
-      const problem = commit(state => saveShelf(state, shelf?.id, name), shelf ? 'Shelf renamed.' : 'Shelf created.')
+      const problem = await commit(state => saveShelf(state, shelf?.id, name), shelf ? 'Shelf renamed.' : 'Shelf created.')
       if (problem) setError(problem)
       else onClose()
     }}>
@@ -98,8 +98,8 @@ export function ShelfEditor({ shelf, onClose }) {
 
 export function ShelfDeletion({ shelf, onClose, onDeleted }) {
   const { commit } = useReader()
-  return <Confirmation title="Delete custom shelf?" submit="Delete shelf" onClose={onClose} onConfirm={() => {
-    const problem = commit(state => deleteShelf(state, shelf.id), 'Shelf deleted.')
+  return <Confirmation title="Delete custom shelf?" submit="Delete shelf" onClose={onClose} onConfirm={async () => {
+    const problem = await commit(state => deleteShelf(state, shelf.id), 'Shelf deleted.')
     if (!problem) onDeleted()
     return problem
   }}>

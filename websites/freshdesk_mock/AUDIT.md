@@ -70,3 +70,9 @@ Docker dynamic certification remains with the parent runner. The targeted Playwr
 ## SCHEMA.md Updates
 
 Added the endpoint and reset behavior, the default ID ranges, a minimal injection example, and the `/go.state_diff` envelope. The observable state change table retains the exact fields and event types used by ticket, SLA and canned-response actions.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** Chromium held the initial POST and verified that edit controls waited for acknowledgement. The core agent workflows also passed.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

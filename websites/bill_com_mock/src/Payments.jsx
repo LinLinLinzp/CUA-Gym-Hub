@@ -87,8 +87,8 @@ function PaymentForm({ billId, vendorId }) {
     setError('')
     if (Object.keys(result.errors).length === 0) setReview(true)
   }
-  function confirm() {
-    const result = transact(schedulePayment, form)
+  async function confirm() {
+    const result = await transact(schedulePayment, form)
     if (!result.state) {
       setReview(false)
       setErrors(result.errors || {})
@@ -184,8 +184,8 @@ function PaymentRecord({ payment }) {
   const bill = byId(state.bills, payment.billId)
   const funding = byId(state.fundingAccounts, payment.fundingAccountId)
 
-  function cancel() {
-    const result = transact(cancelPayment, payment.id)
+  async function cancel() {
+    const result = await transact(cancelPayment, payment.id)
     if (result.error) {
       setError(result.error)
       return

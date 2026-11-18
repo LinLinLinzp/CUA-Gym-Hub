@@ -51,3 +51,9 @@
 ## Design alignment
 
 The existing account interface uses the text Recreation.gov wordmark, the original local landscape illustration, the evergreen and cream palette, serif headings, and a responsive account rail. The source review found no empty handlers, stub links, remote assets, or timer-driven state writes. Local acceptance details are in [TEST.md](TEST.md).
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The injected selected application that already had a reservation showed that it could not be claimed. A valid permit claim produced its linked reservation.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

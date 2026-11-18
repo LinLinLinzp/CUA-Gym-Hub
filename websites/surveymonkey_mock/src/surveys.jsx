@@ -218,7 +218,9 @@ function QuestionDialog({ question, type: initialType, onSave, onClose }) {
   const [type, setType] = useState(initialType)
   const [prompt, setPrompt] = useState(question?.prompt ?? '')
   const [required, setRequired] = useState(Boolean(question?.required))
-  const [options, setOptions] = useState(() => (question?.options?.length ? question.options.map(option => ({ ...option })) : [emptyOption(), emptyOption()]))
+  const [options, setOptions] = useState(() => (question?.options?.length
+    ? question.options.map(option => ({ ...option, label: typeof option.label === 'string' ? option.label : '' }))
+    : [emptyOption(), emptyOption()]))
   const [errors, setErrors] = useState({})
   const showChoices = choiceTypes.has(type)
 

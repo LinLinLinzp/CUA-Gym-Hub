@@ -65,3 +65,9 @@ The repository certifier passed the production bundle in run `166272`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `people → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The browser suite recovered pending feedback from Harbor after reload. It also verified that a rejected save retained the draft and succeeded on retry.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

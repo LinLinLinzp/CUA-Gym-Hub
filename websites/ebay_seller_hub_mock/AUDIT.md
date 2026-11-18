@@ -48,3 +48,9 @@ No open findings.
 ## Schema updates
 
 Added the API contract, fixed seed IDs, an empty-world injection example, and the stock validation rules to `SCHEMA.md`. Reviewed each business mutation against the observable fields documented there.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The audit injected an active listing without an ID and verified that the bulk-select control stayed disabled.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

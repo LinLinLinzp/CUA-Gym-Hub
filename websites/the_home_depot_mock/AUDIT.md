@@ -60,3 +60,9 @@ None identified.
 ## SCHEMA.md Updates
 
 Added endpoint and reset behavior, typed top-level keys, default identifiers and a minimal injection example. Verified the mutation table against the action handlers and the acceptance suite.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The built-preview suite exercised stale return rejection in tabs and isolated contexts. The separate report’s simultaneous isolated-context race remains outside that sequential fix.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

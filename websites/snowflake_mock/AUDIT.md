@@ -72,3 +72,9 @@ None found.
 ## SCHEMA.md Updates
 
 Added endpoint and reset details, seed IDs, a minimal worksheet injection, and a description of the initial/current diff behavior. Verified the declared seed counts against `createInitialData()`. The existing `TEST.md` records the earlier workflow run. Docker dynamic certification remains assigned to the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The browser regression exercised Ctrl+S and Ctrl+Enter inside both confirmations and in the worksheet editor.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

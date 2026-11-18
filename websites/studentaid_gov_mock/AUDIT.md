@@ -65,3 +65,9 @@ None found.
 | SCHEMA.md accuracy | Pass | Verified top-level collections, nested fields and user-action mappings against the seed and implementation. |
 
 Docker dynamic certification is assigned to the parent runner. See [TEST.md](TEST.md) for the local run.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The browser workflow suite disabled crypto.randomUUID and verified 18 writes with reload and receipts.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

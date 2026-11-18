@@ -55,3 +55,9 @@ None verified.
 - The existing Playwright suite passed on localhost port 5360. It covered video upload, editing and cascading deletion, showcase creation and membership, both Share panels, review comments and thread status, and the injected-state smoke checks.
 - `tests/test_audit_edges.mjs` reproduced both findings in Chromium and confirmed the Harbor baseline reset. The runner uses the installed Playwright package.
 - Docker certification remains with the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The browser suite recovered pending feedback from Harbor after reload. It also verified that a rejected save retained the draft and succeeded on retry.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

@@ -94,9 +94,9 @@ function GoalEditor({ year, goal, onClose }) {
   const [error, setError] = useState(null)
   return <Modal title={goal ? 'Edit reading goal' : 'Set reading goal'} onClose={onClose}>
     <p className="dialog-context">{year} Reading Challenge</p>
-    <form noValidate onSubmit={event => {
+    <form noValidate onSubmit={async event => {
       event.preventDefault()
-      const problem = commit(state => saveGoal(state, year, value), 'Reading goal saved.')
+      const problem = await commit(state => saveGoal(state, year, value), 'Reading goal saved.')
       if (problem) setError(problem)
       else onClose()
     }}>
@@ -121,9 +121,9 @@ export function DateEditor({ bookId: fixedBookId, log, onClose }) {
   const matches = books.filter(book => book.id === bookId || matchesBook(book, query))
   return <Modal title={log ? 'Edit date read' : fixedBookId ? 'Add date read' : 'Log a finished book'} onClose={onClose}>
     {fixedBookId && <p className="dialog-context">{bookName(bookById.get(fixedBookId))}</p>}
-    <form noValidate onSubmit={event => {
+    <form noValidate onSubmit={async event => {
       event.preventDefault()
-      const problem = commit(state => saveFinish(state, bookId, log?.id, date), 'Date read saved.')
+      const problem = await commit(state => saveFinish(state, bookId, log?.id, date), 'Date read saved.')
       if (problem) setError(problem)
       else onClose()
     }}>

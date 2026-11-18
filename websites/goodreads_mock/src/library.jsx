@@ -143,9 +143,9 @@ function LibraryGrid({ entries, bookById, logsByBook, shelves, onDate }) {
       }}>{selectMode ? 'Cancel selection' : 'Select books'}</button>}
     </div>
     {selectMode && shelves.length > 0 && entries.length > 0 &&
-      <form className="bulk-toolbar" onSubmit={event => {
+      <form className="bulk-toolbar" onSubmit={async event => {
         event.preventDefault()
-        const problem = commit(state => changeShelving(state, checkedIds, { [operation]: tag }), 'Selected books updated.')
+        const problem = await commit(state => changeShelving(state, checkedIds, { [operation]: tag }), 'Selected books updated.')
         if (!problem) { setSelected([]); setSelectMode(false) }
       }}>
         <label className="check-option"><input type="checkbox" checked={checkedIds.length === entries.length}

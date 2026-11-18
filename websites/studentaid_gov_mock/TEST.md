@@ -102,3 +102,9 @@ The repository certifier passed the production bundle in run `136900`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `schools → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The browser workflow suite disabled crypto.randomUUID and verified 18 writes with reload and receipts.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

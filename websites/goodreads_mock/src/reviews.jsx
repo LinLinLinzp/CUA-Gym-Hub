@@ -31,9 +31,9 @@ export function ReviewEditor({ bookId, onClose }) {
   const [error, setError] = useState(null)
   return <Modal title={review ? 'Edit review' : 'Write a review'} onClose={onClose}>
     <p className="dialog-context">{bookName(bookById.get(bookId))}</p>
-    <form onSubmit={event => {
+    <form onSubmit={async event => {
       event.preventDefault()
-      const problem = commit(state => saveReview(state, bookId, rating, body, spoilers), 'Review saved.')
+      const problem = await commit(state => saveReview(state, bookId, rating, body, spoilers), 'Review saved.')
       if (problem) setError(problem)
       else onClose()
     }}>

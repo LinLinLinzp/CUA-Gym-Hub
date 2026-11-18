@@ -124,3 +124,11 @@ The repository certifier passed the production bundle in run `144048`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `users → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Independent rating and comment edits from two tabs both remained in Harbor.
+- **AUDIT-002 · Fixed and retested.** Saving a stale closed-message draft preserved the identity setting changed by the other tab.
+- **AUDIT-003 · Fixed and retested.** An injected choice with no label displayed validation and sent no write. Survey creation, collector settings and response workflows passed.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

@@ -53,3 +53,9 @@ None found.
 ## SCHEMA.md Updates
 
 Added the localhost API and reset details, fixed fixture IDs, and a minimal injected world. Verified the recorded shapes and action-to-field mappings against the seed, store, and workflow results.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** A confirmation opened before the other tab edited the draft was rejected, preserving the other edit. Builder, branching and response workflows passed.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

@@ -97,9 +97,16 @@ export default function Build({ form, workspace }) {
     })
     function apply() {
       if (editForm(form.id, key + '_updated', (current) => {
+        const live = draftOf(current)
+        if (JSON.stringify(live) !== JSON.stringify(draftOf(form))) {
+          setMessage('')
+          setError('The draft changed while you were reviewing it. Review the current draft and try again.')
+          return null
+        }
         if (JSON.stringify(items(current[key])) === JSON.stringify(records) && !removed.length) return null
+        const removedIds = new Set(removed.map(rule => rule.id || JSON.stringify(rule)))
         return {
-          fields: { [key]: records, ...(removed.length ? { logic: items(current.logic).filter((rule) => !removed.includes(rule)) } : {}) },
+          fields: { [key]: records, ...(removed.length ? { logic: live.logic.filter(rule => !removedIds.has(rule.id || JSON.stringify(rule))) } : {}) },
           entityIds: [...ids, ...removed.map((rule) => rule.id)],
         }
       })) {

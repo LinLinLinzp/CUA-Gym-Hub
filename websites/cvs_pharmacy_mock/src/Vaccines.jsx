@@ -53,8 +53,8 @@ function VaccineRecord({ id }) {
   const patient = patientName(state, visit.patientId)
   const upcoming = isUpcoming(visit, now)
 
-  function cancel() {
-    const { error } = commit((current) => cancelAppointment(current, id))
+  async function cancel() {
+    const { error } = await commit((current) => cancelAppointment(current, id))
     setError(error || '')
     if (!error) {
       setConfirm(false)
@@ -140,7 +140,7 @@ function VisitFlow({ id }) {
     clearTime()
   }
 
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
     setError('')
     if (!review) {
@@ -149,7 +149,7 @@ function VisitFlow({ id }) {
       else setError('Choose an available patient, one to three vaccines, a pharmacy, and a time.')
       return
     }
-    const outcome = commit((current) => saveAppointment(current, { id, patientId: patient, vaccineIds, storeId, scheduledFor }))
+    const outcome = await commit((current) => saveAppointment(current, { id, patientId: patient, vaccineIds, storeId, scheduledFor }))
     if (outcome.error) setError(outcome.error)
     else setResult(outcome.appointment)
   }

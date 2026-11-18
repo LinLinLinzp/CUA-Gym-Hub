@@ -70,8 +70,8 @@ function PrescriptionRecord({ id }) {
   const patient = patientName(state, rx.patientId)
   const reason = refillReason(state, rx, new Date())
 
-  function update(hidden) {
-    const result = commit((current) => setVisibility(current, id, hidden))
+  async function update(hidden) {
+    const result = await commit((current) => setVisibility(current, id, hidden))
     setError(result.error || '')
     if (!result.error) {
       setConfirm(false)

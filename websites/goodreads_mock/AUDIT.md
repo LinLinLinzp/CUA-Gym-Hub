@@ -69,3 +69,10 @@ The account layout uses the text wordmark, original cover motifs, synthetic book
 ## SCHEMA.md Updates
 
 Added the local endpoints, reset and injection behavior, stable default IDs, and a minimal injected world. The state shapes and action footprints were checked against the mutation code.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The initial POST was withheld and the workspace exposed no action controls until acknowledgement. Shelf and review workflows then passed.
+- **AUDIT-002 · Fixed and retested.** An injected HTTP 500 left the shelf dialog open, showed no success, and created no shelf in Harbor or after reload. A retry reached Harbor.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

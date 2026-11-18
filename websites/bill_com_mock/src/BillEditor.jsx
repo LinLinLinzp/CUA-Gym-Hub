@@ -43,8 +43,8 @@ function BillForm({ bill }) {
     }))
     setErrors(previous => ({ ...previous, [`line-${index}-${key}`]: undefined, lineItems: undefined }))
   }
-  function save(approverId) {
-    const result = transact(saveBill, form, { billId: bill?.id, approverId })
+  async function save(approverId) {
+    const result = await transact(saveBill, form, { billId: bill?.id, approverId })
     if (result.error || result.errors) {
       setErrors(result.errors || {})
       setError(result.error || '')

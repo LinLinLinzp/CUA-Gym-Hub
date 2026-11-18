@@ -70,3 +70,11 @@ None identified.
 ## SCHEMA.md Updates
 
 Added the localhost API contract, reset and cache behavior, fixed-ID patterns, and a minimal injected world. Clarified the scope of the identified single-response setting and CSV filter values. The existing action-to-state mappings remain accurate for successful saves.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Independent rating and comment edits from two tabs both remained in Harbor.
+- **AUDIT-002 · Fixed and retested.** Saving a stale closed-message draft preserved the identity setting changed by the other tab.
+- **AUDIT-003 · Fixed and retested.** An injected choice with no label displayed validation and sent no write. Survey creation, collector settings and response workflows passed.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

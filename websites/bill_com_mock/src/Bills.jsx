@@ -229,8 +229,8 @@ function BillRecord({ bill }) {
         </section>
       </div>
     </div>
-    {dialog === 'submit' && <ApproverDialog title="Send for approval" confirmLabel="Send for approval" onClose={close} onSubmit={approverId => {
-      const result = transact(submitApproval, bill.id, approverId)
+    {dialog === 'submit' && <ApproverDialog title="Send for approval" confirmLabel="Send for approval" onClose={close} onSubmit={async approverId => {
+      const result = await transact(submitApproval, bill.id, approverId)
       if (result.state) {
         close()
         notify({ message: 'Bill sent for approval' })

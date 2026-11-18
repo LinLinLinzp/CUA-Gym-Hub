@@ -48,9 +48,9 @@ export function DecisionDialog({ approval, bill, decision, onClose }) {
   const deny = decision === 'denied'
 
   return <Dialog title={deny ? 'Deny bill' : 'Approve bill'} onClose={onClose}>
-    <form noValidate onSubmit={event => {
+    <form noValidate onSubmit={async event => {
       event.preventDefault()
-      const response = transact(decideApproval, approval?.id, decision, note)
+      const response = await transact(decideApproval, approval?.id, decision, note)
       if (!response.state) {
         setResult(response)
         return

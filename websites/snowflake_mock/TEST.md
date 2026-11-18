@@ -62,3 +62,9 @@ The repository certifier passed the production bundle in run `93244`. The local 
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `warehouses → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The browser regression exercised Ctrl+S and Ctrl+Enter inside both confirmations and in the worksheet editor.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

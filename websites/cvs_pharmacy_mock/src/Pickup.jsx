@@ -44,9 +44,9 @@ function PickupRecord({ id }) {
   const store = find(state.stores, order.storeId)
   const patient = patientName(state, order.patientId)
 
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
-    const { error } = commit((current) => checkIn(current, id, method))
+    const { error } = await commit((current) => checkIn(current, id, method))
     if (error) setError(error)
     else setConfirm(false)
   }

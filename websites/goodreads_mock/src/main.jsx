@@ -4,13 +4,13 @@ import { BrowserRouter } from 'react-router-dom'
 import { App } from './App.jsx'
 import { Store, APP } from './store.jsx'
 import { createInitialData } from './data/seed.js'
-import { loadState } from './utils/dataManager.js'
+import { loadInitialState } from './utils/loadInitialState.js'
 import './styles.css'
 
 const root = document.getElementById('root')
 
 async function start() {
-  const initial = await loadState(APP, createInitialData)
+  const initial = await loadInitialState(APP, createInitialData)
   createRoot(root).render(
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Store initial={initial}>

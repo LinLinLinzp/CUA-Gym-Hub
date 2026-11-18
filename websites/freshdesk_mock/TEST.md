@@ -66,3 +66,9 @@ The repository certifier passed the production bundle in run `151728`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `agents → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** Chromium held the initial POST and verified that edit controls waited for acknowledgement. The core agent workflows also passed.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

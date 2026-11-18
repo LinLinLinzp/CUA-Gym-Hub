@@ -41,7 +41,7 @@ function RefillFlow({ initialRx }) {
       return item?.patientId === patient && !refillReason(state, item, now)
     }) && slots.some((slot) => slot.instant === startsAt))
 
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
     setError('')
     if (!review) {
@@ -49,7 +49,7 @@ function RefillFlow({ initialRx }) {
       else setError('Choose a patient, an eligible prescription, and an available pickup window.')
       return
     }
-    const result = commit((current) => submitRefill(current, { patientId: patient, ids, storeId, startsAt }))
+    const result = await commit((current) => submitRefill(current, { patientId: patient, ids, storeId, startsAt }))
     if (result.error) setError(result.error)
     else setResult(result.refill)
   }

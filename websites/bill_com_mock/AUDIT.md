@@ -56,3 +56,9 @@ None found.
 Added localhost endpoint details, reset semantics, seeded ID ranges, and a minimal injection payload. Retained the record shapes and the field-by-field transaction mapping.
 
 Docker dynamic certification is assigned to the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The original stale-tab probe confirmed the first bill and its activity survive the second tab’s save. The full payable workflow suite passed.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

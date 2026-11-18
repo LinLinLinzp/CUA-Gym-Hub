@@ -81,3 +81,9 @@ The repository certifier passed the production bundle in run `68532`. The local 
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `patients → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** A stale tab hid a prescription without reversing its pickup check-in. A stale duplicate check-in preserved the original drive-through method.
+
+Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

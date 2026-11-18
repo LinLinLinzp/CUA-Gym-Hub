@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, useRef, useState } from 'react'
-import { persist } from './utils/persist.js'
+import { readCurrentState, saveAcknowledged, withSessionWrite } from './utils/persist.js'
 import { readerView } from './model.js'
 
 export const APP = 'goodreads_mock'
@@ -12,17 +12,26 @@ export function Store({ initial, children }) {
   const view = useMemo(() => readerView(state), [state])
 
   function commit(update, message) {
-    try {
-      const next = update(latest.current)
-      if (next === latest.current) return null
-      persist(APP, next)
-      latest.current = next
-      setState(next)
-      setNotice(previous => ({ message, sequence: (previous?.sequence ?? 0) + 1 }))
-      return null
-    } catch (error) {
-      return error.message
-    }
+    return withSessionWrite(APP, async () => {
+      try {
+        const snapshot = await readCurrentState(latest.current)
+        let next
+        try {
+          next = update(snapshot)
+        } catch (error) {
+          return error.message
+        }
+        if (next === snapshot) return null
+        await saveAcknowledged(APP, next)
+        latest.current = next
+        setState(next)
+        setNotice(previous => ({ message, sequence: (previous?.sequence ?? 0) + 1 }))
+        return null
+      } catch (error) {
+        setNotice(previous => ({ message: error.message, sequence: (previous?.sequence ?? 0) + 1 }))
+        return error.message
+      }
+    })
   }
 
   return <StoreContext.Provider value={{ ...view, commit }}>

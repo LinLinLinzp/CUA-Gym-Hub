@@ -176,7 +176,8 @@ export function Analyze() {
 function ResponseEditor({ response, survey, onClose }) {
   const { change } = useWorkspace()
   const questions = questionsFor(survey)
-  const [answers, setAnswers] = useState(response.answers ?? {})
+  const [originalAnswers] = useState(() => response.answers ?? {})
+  const [answers, setAnswers] = useState(originalAnswers)
   const [errors, setErrors] = useState({})
   const completed = response.status === 'completed'
 
@@ -185,7 +186,7 @@ function ResponseEditor({ response, survey, onClose }) {
     const nextErrors = validateAnswers(questions, answers, completed)
     // Preserve historical values with missing option references if the answer was left alone.
     for (const [id, message] of Object.entries(nextErrors)) {
-      if (message !== 'Please answer this question.' && JSON.stringify(answers[id]) === JSON.stringify(response.answers?.[id])) delete nextErrors[id]
+      if (message !== 'Please answer this question.' && JSON.stringify(answers[id]) === JSON.stringify(originalAnswers[id])) delete nextErrors[id]
     }
     if (Object.keys(nextErrors).length) {
       setErrors(nextErrors)
@@ -195,8 +196,13 @@ function ResponseEditor({ response, survey, onClose }) {
     change(current => {
       const live = current.responses.find(record => record.id === response.id && record.surveyId === survey.id)
       if (!live) return current
-      const nextAnswers = { ...live.answers, ...cleanAnswers(questions, answers) }
-      for (const { id } of questions) if (!hasAnswer(answers[id])) delete nextAnswers[id]
+      const normalized = cleanAnswers(questions, answers)
+      const nextAnswers = { ...live.answers }
+      for (const { id } of questions) {
+        if (JSON.stringify(answers[id]) === JSON.stringify(originalAnswers[id])) continue
+        if (hasAnswer(answers[id])) nextAnswers[id] = normalized[id]
+        else delete nextAnswers[id]
+      }
       if (JSON.stringify(live.answers ?? {}) === JSON.stringify(nextAnswers)) return current
       return replaceRecord(current, 'responses', response.id, record => ({ ...record, answers: nextAnswers, ...updated(current) }))
     })
