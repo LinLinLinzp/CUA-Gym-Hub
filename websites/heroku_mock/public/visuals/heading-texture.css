@@ -1,0 +1,16 @@
+.heading-texture {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: min(30%, 14rem);
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(150deg, transparent 0 12px, rgb(105 66 166 / 12%) 12px 13px),
+    repeating-linear-gradient(30deg, transparent 0 28px, rgb(105 66 166 / 7%) 28px 29px);
+  mask-image: linear-gradient(to right, transparent, #000);
+}
+
+@media (max-width: 720px) {
+  .heading-texture {
+    display: none;
+  }
+}
