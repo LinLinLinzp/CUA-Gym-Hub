@@ -1,0 +1,8 @@
+{
+  "queue": "Service Desk",
+  "routes": {
+    "equipment": "Workplace Support",
+    "access": "Identity Operations",
+    "network": "Infrastructure"
+  }
+}
