@@ -1,0 +1,18 @@
+export const products = {
+  sectional: ['Alder Grove Modular Sectional', 'ALD-SEC-OAT', 'Oatmeal weave', 1189],
+  sideboard: ['Bramley Fluted Sideboard', 'BRM-SBD-OAK', 'Natural oak', 589],
+  lamp: ['Harbor Ceramic Table Lamp', 'HBR-LMP-SND', 'Sand / linen shade', 64],
+  rug: ['Wren Border Area Rug', 'WRN-RUG-SGE', 'Sage / ivory, 5 × 7 ft.', 110],
+  pillow: ['Sable Woven Accent Pillow', 'SBL-PLW-ROS', 'Dusty rose', 22],
+  sideTable: ['Juniper Round Side Table', 'JNP-TBL-WAL', 'Smoked walnut', 45],
+  basket: ['Cove Woven Storage Basket', 'COV-BSK-NAT', 'Honey seagrass', 34],
+  chair: ['Marlow Upholstered Dining Chair', 'MRL-CHR-OLV', 'Olive velvet', 139],
+  bench: ['Linden Entryway Bench', 'LND-BEN-ASH', 'Light ash', 158],
+  console: ['Briar Slim Console Table', 'BRR-CNS-WAL', 'Walnut', 189],
+  armchair: ['Rowan Reading Chair', 'RWN-CHR-PLM', 'Mulberry fabric', 329],
+  bedding: ['Dune Washed Cotton Quilt', 'DUN-QLT-IVY', 'Warm ivory, queen', 89],
+  floorLamp: ['Moss Arc Floor Lamp', 'MSS-LMP-SGE', 'Soft sage', 105],
+  desk: ['Haven Writing Desk', 'HVN-DSK-OAK', 'White oak', 249],
+  dresser: ['Cedar Lane Six-Drawer Dresser', 'CDR-DRS-ASH', 'Ash brown', 499],
+  ottoman: ['Cleo Tufted Storage Ottoman', 'CLE-OTT-SLT', 'Slate linen', 149],
+}
