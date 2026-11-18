@@ -1,0 +1,82 @@
+.service-page { display: grid; gap: 24px; }
+.breadcrumb { font-size: 14px; font-weight: 600; }
+.page-heading { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.page-heading h1:focus { outline: none; }
+.page-heading p { margin-top: 8px; color: var(--muted); }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 16px; border: 1px solid transparent; border-radius: 8px; background: var(--action); color: white; font: inherit; font-weight: 650; cursor: pointer; text-decoration: none; text-align: center; }
+.button:hover, .button:active { background: var(--hover); color: white; }
+.button.secondary { background: white; color: var(--action); border-color: #76889a; }
+.button.secondary:hover, .button.secondary:active { background: var(--tint); }
+.button:disabled { background: #edf0f3; color: #506276; cursor: default; border-color: var(--border); }
+.button-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.content-panel { padding: 24px; }
+.page-section { display: grid; gap: 16px; }
+.section-links { display: flex; align-items: center; gap: 12px 24px; flex-wrap: wrap; font-weight: 650; }
+.charge { display: flex; justify-content: space-between; gap: 16px; font-variant-numeric: tabular-nums; }
+.standalone { justify-self: start; }
+.content-panel > * + *, dialog > * + * { margin-top: 16px; }
+.content-panel form { max-width: 640px; }
+.filters { display: flex; flex-wrap: wrap; gap: 16px; align-items: end; }
+.filters input { width: min(320px, 100%); }
+.field { display: grid; align-content: start; gap: 6px; font-weight: 650; }
+.field input, .field select, .field textarea { background: white; border: 1px solid #76889a; border-radius: 8px; color: #182c40; font: inherit; font-weight: 400; min-height: 44px; min-width: 0; padding: 7px 12px; }
+.field select { padding-right: 28px; }
+.field textarea { resize: vertical; }
+.field input[type="file"] { max-width: 100%; }
+.field [aria-invalid="true"] { border-color: #9c3028; }
+.field-error { color: #9c3028; font-size: 14px; }
+.form-stack { display: grid; gap: 16px; }
+.form-stack fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.form-stack legend { padding: 0; font-weight: 700; }
+.condition-list { display: grid; gap: 12px; margin-top: 10px; }
+.condition-input { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 10px; }
+.condition-input .field { flex: 1; }
+.check { display: flex; align-items: baseline; gap: 9px; }
+.check input { width: 17px; height: 17px; margin: 0; flex-shrink: 0; accent-color: var(--action); }
+.details { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(170px,100%),1fr)); gap: 16px 24px; }
+.details div { overflow-wrap: anywhere; }
+.details dt { font-size: 14px; color: var(--muted); }
+.details dd { margin: 3px 0 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.content-panel > h2 + .details { margin-top: 16px; }
+.notice { border: 1px solid #a8d4bb; background: #e5f4eb; color: #1f6147; padding: 13px 16px; border-radius: 8px; overflow-wrap: anywhere; }
+.notice.error { color: #9c3028; background: #fbe9e6; border-color: #e3a39c; }
+.callout { background: var(--tint); border-radius: 8px; padding: 12px 16px; }
+.badge { display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 13px; font-weight: 650; background: var(--tint); color: #24476c; white-space: normal; }
+.status-received, .status-paid, .status-available, .status-delivered, .status-completed { background: #e5f4eb; color: #1f6147; }
+.status-open, .status-requested, .status-in_transit, .status-evidence_gathering, .status-no_refills { background: #f8edce; color: #774d0b; }
+.status-canceled, .status-expired, .status-discontinued { background: #eef0f2; color: #4b6073; }
+.status-returned { background: #fbe9e6; color: #9c3028; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.tabs button { min-height: 44px; padding: 8px 14px; background: white; border: 1px solid var(--border); color: var(--action); border-radius: 8px; cursor: pointer; font: inherit; font-weight: 650; }
+.tabs button:hover, .tabs button[aria-pressed="true"] { background: var(--tint); border-color: #8faed4; }
+.tabs button[aria-pressed="true"] { box-shadow: inset 0 -3px var(--action); }
+table { width: 100%; border-collapse: collapse; text-align: left; font-variant-numeric: tabular-nums; }
+th { font-size: 14px; color: var(--muted); }
+th, td { padding: 13px 16px; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
+tr:hover td { background: #f8fafd; }
+.cell-label { display: none; }
+.record-title { font-weight: 650; }
+.record-title small { display: block; font-weight: 400; }
+.pagination { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; gap: 12px; font-size: 14px; color: var(--muted); }
+.subrows { list-style: none; margin-bottom: 0; padding: 0; }
+.subrows li { border-top: 1px solid var(--border); padding: 10px 0; overflow-wrap: anywhere; }
+.subrows li > small { display: block; }
+.subrows li:last-child { padding-bottom: 0; }
+.shipment-list details { border-top: 1px solid var(--border); padding: 12px 0; }
+.shipment-list summary { color: var(--action); cursor: pointer; font-weight: 650; }
+.shipment-list summary:hover { color: var(--hover); }
+.shipment-list details .details { padding-top: 14px; }
+dialog { width: min(480px, calc(100% - 32px)); padding: 24px; border: 1px solid var(--border); border-radius: 12px; color: #182c40; box-shadow: 0 16px 44px #142a4338; }
+dialog::backdrop { background: #142a437a; }
+@media (max-width: 699px) {
+  .record-panel thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .record-panel table, .record-panel tbody, .record-panel tr { display: block; }
+  .record-panel tr { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .record-panel td { border: 0; display: grid; grid-template-columns: minmax(84px, 32%) minmax(0,1fr); align-items: baseline; gap: 8px; padding: 3px 0; }
+  .cell-label { display: block; color: var(--muted); font-size: 13px; }
+  .record-panel .badge { justify-self: start; }
+}
+@media (max-width: 559px) {
+  .content-panel { padding: 16px; }
+  .filters, .filters .field, .filters input, .filters select { width: 100%; }
+}
