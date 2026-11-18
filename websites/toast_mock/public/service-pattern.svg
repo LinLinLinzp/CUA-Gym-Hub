@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="350" height="130" viewBox="0 0 350 130">
+  <defs>
+    <pattern id="tiles" width="42" height="42" patternUnits="userSpaceOnUse" patternTransform="rotate(-27)">
+      <rect x="3" y="3" width="34" height="34" rx="7" fill="none" stroke="#bc6954" stroke-opacity=".27" stroke-width="1.5"/>
+      <circle cx="20" cy="20" r="5" fill="#c87860" fill-opacity=".22"/>
+    </pattern>
+    <linearGradient id="fade"><stop stop-color="white" stop-opacity="0"/><stop offset=".65" stop-color="white"/></linearGradient>
+    <mask id="mask"><rect width="350" height="130" fill="url(#fade)"/></mask>
+  </defs>
+  <rect width="350" height="130" fill="url(#tiles)" mask="url(#mask)"/>
+</svg>
