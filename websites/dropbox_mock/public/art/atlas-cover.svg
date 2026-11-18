@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Atlas cover study">
+  <rect width="640" height="420" fill="#f6efe1"/>
+  <rect x="36" y="36" width="568" height="348" rx="8" fill="#1d2b50"/>
+  <path d="M68 328 184 138l69 110 72-124 123 204H68Z" fill="#437a70"/>
+  <path d="M202 328 325 124l123 204Z" fill="#709388"/>
+  <path d="m325 124 29 48h-58Z" fill="#f6efe1"/>
+  <circle cx="480" cy="116" r="31" fill="#e4aa71"/>
+  <path d="M66 348h506" stroke="#e2c7a7" stroke-width="2"/>
+  <text x="468" y="315" fill="#f6efe1" font-family="Georgia,serif" font-size="40">Atlas</text>
+</svg>

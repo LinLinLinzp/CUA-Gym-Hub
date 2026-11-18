@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-label="Print layout grid">
+  <rect width="600" height="400" fill="#f6efe1"/>
+  <rect x="72" y="48" width="456" height="304" fill="#fffaf0" stroke="#437a70" stroke-width="2"/>
+  <path d="M90 85h420m-420 47h420m-420 47h420m-420 47h420m-420 47h420m-420 47h420M98 70v258m101-258v258m101-258v258m101-258v258m101-258v258" stroke="#91b4ac" stroke-dasharray="4 4"/>
+  <rect x="105" y="91" width="188" height="81" fill="#1d2b50"/>
+  <rect x="307" y="185" width="188" height="82" fill="#ddb37d"/>
+  <rect x="105" y="279" width="390" height="32" fill="#437a70"/>
+</svg>
