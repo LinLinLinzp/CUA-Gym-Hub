@@ -1,0 +1,48 @@
+.reading-desk-art {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: min(100%, 26rem);
+  aspect-ratio: 16 / 9;
+  border: 1px solid #d8dace;
+  border-radius: 12px;
+  background-color: #e5e7d9;
+  background-image:
+    radial-gradient(ellipse at 22% 78%, #c3cdc0 0%, transparent 57%),
+    repeating-linear-gradient(0deg, #70847b18 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(90deg, #70847b18 0 1px, transparent 1px 16px);
+}
+
+.reading-desk-art::before {
+  position: absolute;
+  z-index: -1;
+  inset: 19% 21% 18% 20%;
+  border: 1px solid #8e9b89;
+  border-radius: 7px;
+  background:
+    linear-gradient(#99aa9b, #99aa9b) 85% 22% / 19% 2px no-repeat,
+    linear-gradient(#66877a, #66877a) 15% 22% / 30% 4px no-repeat,
+    linear-gradient(#bdc7ba, #bdc7ba) 50% 40% / 76% 1px no-repeat,
+    linear-gradient(#bdc7ba, #bdc7ba) 50% 53% / 76% 1px no-repeat,
+    linear-gradient(#bdc7ba, #bdc7ba) 50% 66% / 76% 1px no-repeat,
+    linear-gradient(#bdc7ba, #bdc7ba) 50% 79% / 76% 1px no-repeat,
+    #fffcf5;
+  box-shadow: 8px 9px 0 #142a3820, 0 0 0 6px #e9e2cf;
+  content: '';
+  transform: rotate(-9deg);
+}
+
+.reading-desk-art::after {
+  position: absolute;
+  top: 20%;
+  right: 22%;
+  width: 13%;
+  height: 66%;
+  background:
+    linear-gradient(#d0e6d3, #d0e6d3) 50% 24% / 40% 1px no-repeat,
+    linear-gradient(#d0e6d3, #d0e6d3) 50% 30% / 40% 1px no-repeat,
+    #13594c;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%);
+  content: '';
+  transform: rotate(13deg);
+}
