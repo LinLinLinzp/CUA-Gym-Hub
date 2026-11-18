@@ -1,0 +1,52 @@
+[
+  {
+    "file": "official/filter-menu.png",
+    "url": "https://support.microsoft.com/en-us/excel/media/xlweb-numberfilter.png",
+    "dimensions": [
+      274,
+      305
+    ],
+    "downloadedAt": "2026-11-18",
+    "source": "Microsoft Support"
+  },
+  {
+    "file": "official/filter-number-options.png",
+    "url": "https://support.microsoft.com/en-us/excel/media/xlweb-numberfilteroptions.png",
+    "dimensions": [
+      345,
+      333
+    ],
+    "downloadedAt": "2026-11-18",
+    "source": "Microsoft Support"
+  },
+  {
+    "file": "official/filter-number-result.png",
+    "url": "https://support.microsoft.com/en-us/excel/media/xlweb-applynumberfilter.png",
+    "dimensions": [
+      401,
+      161
+    ],
+    "downloadedAt": "2026-11-18",
+    "source": "Microsoft Support"
+  },
+  {
+    "file": "official/format-as-table.png",
+    "url": "https://support.microsoft.com/en-us/excel/media/xlweb-mytablehasheaders.png",
+    "dimensions": [
+      345,
+      200
+    ],
+    "downloadedAt": "2026-11-18",
+    "source": "Microsoft Support"
+  },
+  {
+    "file": "official/autosum-formula.png",
+    "url": "https://support.microsoft.com/en-us/excel/media/excel-for-the-web-autosum2.png",
+    "dimensions": [
+      408,
+      234
+    ],
+    "downloadedAt": "2026-11-18",
+    "source": "Microsoft Support"
+  }
+]
