@@ -1,0 +1,20 @@
+export const routes = {
+  home: '/portal/',
+  online: '/portal/dmv-online/',
+  account: '/portal/mydmv-account/',
+  appointments: '/portal/appointments/',
+  appointmentTypes: '/portal/appointments/select-appointment-type/',
+  schedule: '/portal/appointments/schedule/',
+  appointmentLookup: '/portal/appointments/appt-edit/',
+  appointmentConfirmation: '/portal/appointments/confirmation/',
+  locations: '/portal/locations/',
+  renewal: '/portal/vehicle-registration/vehicle-registration-renewal/',
+  // Harbor treats a literal file extension as a static asset request.
+  renewalStart: '/wasapp/vrir/start%2Edo',
+  renewalStatus: '/portal/vehicle-registration/vehicle-registration-status/',
+  cart: '/portal/shopping-cart/',
+  receipt: '/portal/vehicle-registration/receipt/',
+  address: '/portal/online-change-of-address-coa-system/',
+  addressStart: '/portal/mydmv-account/change-of-address/',
+  addressStatus: '/portal/mydmv-account/change-of-address/status/',
+}
