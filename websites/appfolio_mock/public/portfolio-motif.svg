@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 125" fill="none">
+  <defs><linearGradient id="fade"><stop stop-color="#8462a4" stop-opacity="0"/><stop offset="1" stop-color="#8462a4" stop-opacity=".42"/></linearGradient></defs>
+  <g stroke="url(#fade)" stroke-width="1">
+    <path d="M4 101h466M34 113h436M103 89h366M180 77h290m-212-1V48l36-22 36 22v29m-55 0V51h38v26m-19-26v25m36-23 36-23 36 23v23m-55 0V55h38v21m-19-21v21m36-35 30-18 38 23m-53 32V46h30v31m-15-31v30M132 90V69l29-18 29 18v20m-46 0V72h34v17m-17-17v17"/>
+    <path d="M233 90v11m47-11v11m47-11v11m47-11v11m47-11v11m-167 0v12m47-12v12m47-12v12m47-12v12m47-12v12"/>
+  </g>
+</svg>
