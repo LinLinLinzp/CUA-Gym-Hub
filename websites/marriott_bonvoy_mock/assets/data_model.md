@@ -1,0 +1,35 @@
+# Proposed Harbor state model
+
+The seed factory returns plain JSON with the seven keys below. Ids are strings. Calendar dates use `YYYY-MM-DD`, event times use ISO timestamps, points are signed integers and money is numeric with two-decimal rounding. Use fixed ids in seed data and generate unique ids for user-created records in the action handler.
+
+| Key | Shape | Example record |
+| --- | --- | --- |
+| `member` | Object with string fields `id`, `firstName`, `lastName`, `email`, `memberNumber`, `tier` | `{"id":"member-001","firstName":"Avery","lastName":"Morgan","email":"avery.morgan@example.com","memberNumber":"900041872","tier":"Gold Elite"}` |
+| `stays` | Array of objects with string `id`, `memberId`, `propertyName`, `city`, `country`, `confirmationNumber`, `checkIn`, `checkOut`, `status`, `roomType`; integer `guests`; optional ISO `updatedAt`, `cancelledAt` | `{"id":"stay-001","memberId":"member-001","propertyName":"Courtyard Harbor Quarter","city":"Boston","country":"US","confirmationNumber":"73004518","checkIn":"2026-09-14","checkOut":"2026-09-17","status":"completed","roomType":"King Room","guests":2}` |
+| `pointsActivity` | Array of objects with string `id`, `memberId`, `date`, `type`, `description`; signed integer `points`; optional string `stayId` | `{"id":"points-001","memberId":"member-001","stayId":"stay-001","date":"2026-09-21","type":"stay","description":"Courtyard Harbor Quarter","points":4840}` |
+| `folios` | Array of objects with string `id`, `stayId`, `number`, `status`, `currency`; optional `issuedAt` (ISO), `lineItems` (array), `total` (number) | `{"id":"folio-001","stayId":"stay-001","number":"F-2026-0148","status":"available","currency":"USD","issuedAt":"2026-09-17T15:00:00.000Z","lineItems":[{"id":"charge-001","date":"2026-09-14","description":"Room","quantity":3,"unitAmount":179,"amount":537},{"id":"charge-002","date":"2026-09-17","description":"Room tax","quantity":1,"unitAmount":78.66,"amount":78.66}],"total":615.66}` |
+| `requests` | Array of common case records with the type-specific fields below | `{"id":"REQ-001","type":"hotel_service","stayId":"stay-014","status":"submitted","actorId":"member-001","createdAt":"2026-11-18T16:20:00.000Z","updatedAt":"2026-11-18T16:20:00.000Z","notes":"Leave at the door","service":"extra_towels","quantity":2,"history":[{"status":"submitted","actorId":"member-001","createdAt":"2026-11-18T16:20:00.000Z"}]}` |
+| `stayActions` | Array of objects with string `id`, `stayId`, `actorId`, `action`, `status`, ISO `createdAt`; `before` and `after` snapshots | `{"id":"stay-action-001","stayId":"stay-014","actorId":"member-001","action":"modify","status":"applied","createdAt":"2026-11-18T16:20:00.000Z","before":{"checkIn":"2026-12-01","checkOut":"2026-12-03","guests":1,"status":"upcoming"},"after":{"checkIn":"2026-12-01","checkOut":"2026-12-04","guests":2,"status":"upcoming"}}` |
+| `folioActions` | Array of objects with string `id`, `folioId`, `stayId`, `actorId`, `action`, `status`, ISO `createdAt`, numeric `total`, string `currency`, `filename` | `{"id":"folio-action-001","folioId":"folio-001","stayId":"stay-001","actorId":"member-001","action":"download","status":"initiated","createdAt":"2026-11-18T16:20:00.000Z","total":615.66,"currency":"USD","filename":"folio-F-2026-0148.pdf"}` |
+
+## Enumerations and record links
+
+- Stay status is `upcoming`, `in_progress`, `completed` or `cancelled`. Store a status explicitly for stable fixture selection. Use the runtime clock for relative date wording. A stay action is `modify` or `cancel` and captures the same four fields in each snapshot.
+- Points types are `stay`, `bonus`, `redemption` and `adjustment`. Derive the balance from the sum of ledger points. A `stay` type points entry linked to a completed stay means the stay was credited. Missing-credit submission requires a completed, uncredited stay with an available folio and no outstanding claim for that stay. Seed checkouts well beyond the posting window and within the preceding year. Display the posting window and validate it against the runtime date using weekdays.
+- A folio has status `available` or `unavailable` and belongs to one stay. Available folios include line items. Each line item has a string id, date and description, integer quantity and numeric unit amount and line total. A folio total equals the sum of the line amounts. Seed unavailable records without line items so their copy-request path is meaningful.
+- A request has string `id`, `type`, `stayId`, `status`, `actorId`, ISO `createdAt` and `updatedAt`, and `history[]` entries with status, actor id and ISO timestamp. Optional fields are `notes` and ISO `cancelledAt`. Statuses are `submitted`, `in_review`, `resolved` and `cancelled`. Seed historical statuses, and change status only on an accepted user action.
+
+| Request type | Additional fields and example values |
+| --- | --- |
+| `hotel_service` | `service` must be `extra_towels`, `extra_pillows` or `housekeeping`. Towels and pillows require positive integer `quantity` such as `2`. Housekeeping requires `requestedDate` such as `2026-11-19` within the reservation dates and local `requestedTime` such as `14:30`. |
+| `missing_stay_credit` | `folioId` such as `folio-024` identifies the evidence. Optional `estimatedPoints` is a nonnegative integer such as `4200`. |
+| `folio_copy` | Optional `folioId` such as `folio-026` links an unavailable placeholder. Required `contactEmail` such as `avery.morgan@example.com` records the requested delivery address. |
+
+## Seed distribution
+
+- Build `createInitialData()` in `src/data/seed.js`. Generate deterministic collections from fixed English fixture inputs. Keep the ids and date strings stable across calls and sessions. Use fictional properties, e.g. Courtyard Harbor Quarter, Residence Inn Alder Park and Westin Stone Quay, and synthetic contact data.
+- Include 40 stays across multiple cities, date ranges, room types and party sizes. Include several completed, uncredited stays with available folios and several completed stays with unavailable folios. Include upcoming reservations that can be modified and cancelled.
+- Seed 48 ledger entries covering bonuses, earned points, adjustments and redemptions. Keep a positive net balance and enough credited stays to make ledger filtering useful.
+- Seed 30 folios across multiple properties, including at least six unavailable records and both USD and CAD examples. Include a mix of room charges, tax, parking, dining and lodging credits.
+- Seed 30 cases across all three types and four statuses with coherent history. Reserve some eligible stays without an open case so new submissions can succeed. Seed 24 or more stay action entries and 24 or more folio action entries with linked fixtures and chronological ordering.
+- Use default collection arrays as defined above. Render an empty result when injected arrays are empty and allow lists to show partial records. Optional missing details render a placeholder or omit that detail. Missing required relations disable the affected write and keep the record readable.
