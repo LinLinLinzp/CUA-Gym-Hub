@@ -1,0 +1,47 @@
+# Patreon creator workspace — TODO
+
+> Status: READY FOR PARENT CERTIFICATION  
+> Updated by the plan agent on 2026-11-18  
+> [Design](DESIGN.md) · [Workflow research](assets/README.md) · [State model](assets/data_model.md)
+
+## Status legend
+
+- [ ] Pending
+- [~] In progress
+- [x] Complete
+
+## P0 — App shell and Harbor runtime
+
+- [x] **Scaffold and serve.** Set up Vite, React and React Router in this directory with a lockfile and working production build. Bind dev and preview to localhost port 5365 with strict port enforcement. For a persistent dev server, start Node with PowerShell `Start-Process -WindowStyle Hidden`, the app as its working directory, and the absolute path to Vite's entry point. Keep runner scratch files in a gitignored location or clean them up.
+- [x] **Creator account and routes.** Use the original workspace in [DESIGN.md](DESIGN.md), with Patreon as text in the header and page title. Open `/` on the Posts library. Support direct visits and hard reloads at `/posts`, `/posts/new`, `/posts/:postId`, `/tiers`, `/tiers/new`, `/tiers/:tierId`, `/members`, `/members/:memberId`, `/messages`, and `/messages/:threadId`. Keep the collection section active on nested routes. Put every route under its required providers and show a recovery link for unknown paths and IDs.
+- [x] **Load and persist state.** Copy `templates/dataManager.js` unchanged to `src/utils/dataManager.js` and import the unmodified shared `stateApi(createInitialData)` in Vite config. Use `patreon_mock` as the app key. Await `loadState(APP, createInitialData)` before mounting routes, with neutral loading UI. Let the template perform the baseline push. Centralize user mutations in one store path, using the latest state and passing the whole resulting JSON-serializable state to `saveState` once per action. Preserve unknown keys. Preserve `sid` across SPA navigation and query updates and use `withSid()` for internal links outside the SPA router. The API owns `GET /state`, `POST /post` and JSON `GET /go`.
+- [x] **Render injected worlds and work offline.** Handle zero, one and hundreds of records, omitted optional fields, and missing linked objects without changing state during render. Use local assets and fonts with same-origin Harbor calls. Use `new Date()` for relative labels and new timestamps. Opening a screen, searching, filtering, sorting, changing selection, previewing, canceling and leaving a tab idle cause zero saves. Keep due scheduled posts in the persisted Scheduled state until a user explicitly publishes or changes them.
+
+## P1 — SEED workflows
+
+- [x] **Posts — find and review.** Display title, excerpt, format, audience, status and relevant date in a searchable library. Provide All, Published, Drafts and Scheduled tabs, audience and format filters, and date/title sorting. Open a post from its row and show its actual content in Preview before committing an edit. All these interactions are read-only.
+- [x] **Posts — write, edit, schedule, publish and delete.** Provide an editor with title, body, format (Text, Image or Audio), optional local media choice, audience (Public, Free members, Paid members or Selected tiers), and scheduling date/time. Ensure a selected-tier publication has at least one target and that scheduling requires a valid future time. Save draft, Schedule, Publish now and Save changes upsert one `posts` record with `id`, `authorId`, `title`, `body`, `format`, `mediaId`, `audience`, `tierIds`, `status`, `createdAt`, `updatedAt`, `updatedBy`, `scheduledAt` and `publishedAt`. Allow title-only drafts and require body text or matching local media at publication or scheduling. Clear the schedule when publishing now or returning to draft. Preserve the first publication timestamp when editing a published post. Duplicate as draft creates a separate record with a fresh ID and timestamps and clears scheduling and publication dates. Confirmed deletion sets `status: 'deleted'`, `deletedAt`, `updatedAt` and `updatedBy` and hides the post from the library. See [post records](assets/data_model.md#posts).
+- [x] **Tiers — create and edit membership levels.** List tiers with monthly price, benefits, status and derived member count. Offer New tier and Edit tier with name, USD monthly price, description and repeatable benefit inputs. Reject a blank name, a name already used by a non-retired tier, and invalid amounts. Saving adds or edits a `tiers` record with `id`, `name`, `description`, `monthlyPrice`, `currency`, `benefits`, `status`, `createdAt`, `createdBy`, `updatedAt` and `updatedBy`. Preserve identity and creation metadata across edits. Existing member pledge amounts are independent of edits to the tier price.
+- [x] **Tiers — control availability.** Confirm Unpublish and Republish. Update the same tier's `status`, `updatedAt`, `updatedBy` and `unpublishedAt`. Keep existing memberships and selected-tier post references. Allow Delete tier when it has no linked member or non-deleted post records, using a confirmation that writes `status: 'retired'`, `retiredAt`, `updatedAt` and `updatedBy`. Hide retired tiers in the default listing and in new tier selections. Show the dependency and offer unpublishing when a tier is still linked. See [tier records](assets/data_model.md#tiers).
+- [x] **Members — find and review relationships.** Search by name or email and combine type, tier, status and join date filters. Sort by newest join date, name or lifetime paid. Show result count, accessible row selection, and a detail panel listing membership, pledge, lifetime paid and notes. Download the currently filtered result set as a local CSV with name, email, type, tier, status, join date, pledge and lifetime paid. Escape CSV cells and neutralize formula prefixes. Search, filtering, selection, opening details and download write no state.
+- [x] **Members — keep internal notes.** On member detail, support Add note, Edit and confirmed Remove. Append a `memberNotes` record with `id`, `memberId`, `authorId`, `body`, `createdAt`, `updatedAt` and `updatedBy`; edit body and edit metadata in place; removal sets `deletedAt` and advances edit metadata. Reject whitespace-only notes and omit removed notes from the panel. The member's membership and billing fields stay intact. See [member notes](assets/data_model.md#membernotes).
+- [x] **Messages — compose and send privately.** Start from Member detail, selected Member rows or New message in Messages. Allow current and former paid members, and show how many selected recipients are eligible. Require trimmed non-empty text and at least one eligible recipient. A single commit upserts one `threads` record per recipient and appends one `messages` record per recipient with sender, recipient, thread, text, `status: 'sent'` and an ISO creation time. A send to multiple recipients also appends a `messageBatches` record with resolved recipient, thread and message IDs and count. UI confirmation uses that count. Reuse the existing member thread and open it after a single send. See [messages and batches](assets/data_model.md#messages).
+- [x] **Messages — read and reply.** List threads newest activity first with member name, latest message and unread indicator derived from `threads.unreadCount`. Search by member name or message text. Open a thread and read its messages in chronological order with clear sender and timestamp. Offer explicit Mark as read/Mark as unread controls. They update `unreadCount`, `readAt`, `updatedAt` and `updatedBy` without changing the inbox ordering. Reply appends a `messages` record and updates the parent thread's `lastMessageAt`, `updatedAt` and `updatedBy`. Preserve the existing read flag until the user changes it. Opening the inbox or a deep-linked thread causes no save.
+
+## P2 — Optional library convenience
+
+- [x] Add a Clear filters action that restores current section defaults and retains the session ID. It writes no records.
+
+## Data seed
+
+- [x] Seed one creator, Mara Chen, and her fictional culture publication, Lantern Room. Use deterministic IDs and dates, English copy, and synthetic addresses under `example.com`.
+- [x] Seed 36 posts with distinct titles and bodies across all statuses, audiences and formats; 24 tiers with several currently published, unpublished and historical tiers; and 84 members with free, current paid and former paid records. Include linked notes, varied pledge amounts and missing optional emails.
+- [x] Seed 30 threads, at least 90 messages, 28 member notes and three bulk sends. Include paid-member threads with no unread messages and some with multiple unread messages. Leave eligible recipients without threads so new-thread creation can be exercised. See [seed requirements](assets/data_model.md#seed-requirements).
+
+## Verification and handoff
+
+- [x] Publish `SCHEMA.md` with every top-level key and record shape plus the **Observable State Changes** table aligned to the implementation.
+- [x] Run `npm run build`. Test only on localhost port 5365 with the installed Node Playwright from `PILOT_PLAYWRIGHT` and Chromium. Exercise each P1 workflow, then poll `/go?sid=` for exact IDs, fields and dependencies. Verify reload persistence, direct routes, distinct sessions, empty/single/large injected states, and zero idle or canceled-action writes. Include outcomes and changed fields in `TEST.md`.
+- [x] Leave Docker certification and commits to the parent runner after `TEST.md` is produced.
+
+Authentication, payment processing, production-account activity, external messaging and proprietary assets are outside scope.
