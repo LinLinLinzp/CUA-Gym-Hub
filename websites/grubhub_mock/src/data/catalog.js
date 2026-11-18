@@ -1,0 +1,28 @@
+export const neighborhoods = ['Park Slope', 'Fort Greene', 'Crown Heights', 'Cobble Hill', 'Greenpoint', 'Bedford-Stuyvesant']
+
+export const catalog = [
+  ['Juniper Rice Kitchen', 'Korean', 'rice', 'Charred Chicken Rice Bowl', 'Kimchi Fried Rice', 'Sesame Tofu Bowl', 'Scallion Pancake', 'Pickled Cucumber'],
+  ['Night Orchard Pizzeria', 'Pizza', 'pizza', 'Market Margherita', 'Wild Mushroom Pie', 'Hot Honey Pepperoni', 'Garlic Knots', 'Little Caesar Salad'],
+  ['Saffron & Steam', 'Indian', 'rice', 'Saffron Chicken Biryani', 'Paneer Tikka Bowl', 'Coconut Dal', 'Vegetable Samosas', 'Garlic Naan'],
+  ['Willow Noodle House', 'Chinese', 'noodles', 'Chili Crisp Dan Dan Noodles', 'Ginger Chicken Lo Mein', 'Sesame Cold Noodles', 'Pork Dumplings', 'Bok Choy'],
+  ['Marlow Garden Table', 'Salads', 'greens', 'Harvest Crunch Salad', 'Lemon Kale Bowl', 'Herbed Chickpea Plate', 'Rosemary Potatoes', 'Carrot Ginger Soup'],
+  ['Cedar Street Taqueria', 'Mexican', 'tacos', 'Crispy Fish Tacos', 'Braised Beef Tacos', 'Mushroom Tinga Tacos', 'Street Corn', 'Chips and Salsa'],
+  ['Fieldstone Sandwich Co.', 'Sandwiches', 'sandwich', 'Roasted Turkey Club', 'Grilled Portobello Melt', 'Italian Hero', 'Kettle Chips', 'Dill Pickle'],
+  ['Blue Lantern Ramen', 'Japanese', 'noodles', 'Black Garlic Ramen', 'Spicy Miso Ramen', 'Mushroom Shoyu Ramen', 'Edamame', 'Chicken Karaage'],
+  ['Clover & Chickpea', 'Mediterranean', 'greens', 'Falafel Grain Bowl', 'Lemon Chicken Plate', 'Chopped Village Salad', 'Whipped Hummus', 'Warm Pita'],
+  ['Hawthorn Oven', 'Pizza', 'pizza', 'Tomato Basil Pie', 'Soppressata Pie', 'White Ricotta Pie', 'Focaccia', 'Arugula Salad'],
+  ['Paper Crane Kitchen', 'Japanese', 'rice', 'Teriyaki Salmon Bowl', 'Ginger Beef Donburi', 'Miso Eggplant Rice Bowl', 'Miso Soup', 'Cucumber Sunomono'],
+  ['Luna Roja Tacos', 'Mexican', 'tacos', 'Chicken Mole Tacos', 'Crispy Potato Tacos', 'Carnitas Tacos', 'Black Beans', 'Guacamole'],
+  ['Hadley Lunch Counter', 'Deli', 'sandwich', 'Pastrami on Rye', 'Tuna Salad Melt', 'Roasted Vegetable Wrap', 'Potato Salad', 'Tomato Soup'],
+  ['Peppervine Pho', 'Vietnamese', 'noodles', 'Slow-Cooked Beef Pho', 'Lemongrass Chicken Vermicelli', 'Tofu Mushroom Pho', 'Summer Rolls', 'Papaya Salad'],
+  ['Birch & Barley', 'Grain bowls', 'greens', 'Maple Squash Bowl', 'Green Goddess Salad', 'Wild Rice and Lentils', 'Roasted Broccoli', 'Apple Slaw'],
+  ['Marigold Pizza Room', 'Pizza', 'pizza', 'Calabrian Pepper Pie', 'Broccoli Rabe Pie', 'Four Cheese Pie', 'Marinated Olives', 'Chopped Salad'],
+  ['Lotus Wok', 'Chinese', 'rice', 'Pineapple Fried Rice', 'Black Pepper Chicken Rice', 'Tofu and Eggplant Bowl', 'Crispy Spring Rolls', 'Garlic Green Beans'],
+  ['Sola Sunset Tacos', 'Mexican', 'tacos', 'Chile Lime Shrimp Tacos', 'Adobo Chicken Tacos', 'Poblano and Squash Tacos', 'Cilantro Rice', 'Pico de Gallo'],
+  ['Saltbox Sandwiches', 'Sandwiches', 'sandwich', 'Crispy Chicken Sandwich', 'Burrata and Peppers', 'Roast Beef and Cheddar', 'Sweet Potato Fries', 'Cabbage Slaw'],
+  ['Tamarind Noodles', 'Thai', 'noodles', 'Pad Thai with Shrimp', 'Basil Drunken Noodles', 'Tofu Pad See Ew', 'Crispy Wontons', 'Green Mango Salad'],
+  ['Fennel & Fig', 'Mediterranean', 'greens', 'Fig and Farro Salad', 'Herbed Salmon Greens', 'Roasted Cauliflower Bowl', 'Lentil Soup', 'Lemon Potatoes'],
+  ['Kiln & Crust', 'Pizza', 'pizza', 'Fennel Sausage Pie', 'Summer Squash Pie', 'Classic Pepperoni', 'Parmesan Breadsticks', 'House Greens'],
+  ['Ginger Wharf', 'Caribbean', 'rice', 'Jerk Chicken Rice Plate', 'Coconut Red Beans and Rice', 'Curry Chickpea Bowl', 'Fried Plantains', 'Ginger Slaw'],
+  ['Bodega Bloom', 'Sandwiches', 'sandwich', 'Smashed Avocado Toast', 'Eggplant Parm Hero', 'Grilled Chicken Pesto', 'Crispy Fingerlings', 'White Bean Soup'],
+]
