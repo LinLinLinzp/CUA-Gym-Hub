@@ -1,0 +1,4 @@
+Staging: /var/folders/dg/r45bzmmn49g777grbqfgscdc0000gn/T/airbnb-review-certify-_ogvb_ak
+curl: (7) Failed to connect to 127.0.0.1 port 8090 after 0 ms: Couldn't connect to server
+PASS airbnb                 render=True sync=True(1) idle=True(0) 
+Certification artifacts: /var/folders/dg/r45bzmmn49g777grbqfgscdc0000gn/T/airbnb-review-certify-_ogvb_ak/build

@@ -1,0 +1,12 @@
+
+> airbnb@1.0.0 verify
+> node scripts/verify.mjs
+
+PASS seed, pricing, refund tiers, search, book/cancel, request/withdraw, wishlist, messaging, reviews, /go and session isolation
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+PASS message send/thread switch/navigation with Promise-returning scrolling; carousel overflow, resize, boundaries and content changes
+PASS 96 route renders across default, empty-array, 300-listing and minimal single-record worlds
+Checking 70-second idle persistence…
+PASS idle: zero additional state posts over 71 seconds
+Verification session: verify_uj0o3pldmap

@@ -1,0 +1,13 @@
+{
+ "airbnb": {
+  "posts_load": 1,
+  "posts_idle": 0,
+  "errors": [],
+  "status": 200,
+  "title": "Airbnb | Vacation rentals, cabins, beach houses, & more",
+  "text_chars": 2835,
+  "render": true,
+  "sync": true,
+  "idle": true
+ }
+}
