@@ -1,0 +1,10 @@
+.relationship-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 16px; flex-wrap: wrap; }
+.picker-count { color: var(--muted); font-size: 12px; margin: 12px 0 6px; }
+.picker-list { border: 1px solid var(--border); border-radius: 9px; overflow: clip; }
+.picker-option { display: flex; align-items: center; gap: 9px; min-height: 48px; padding: 8px 10px; cursor: pointer; }
+.picker-option + .picker-option { border-top: 1px solid var(--border); }
+.picker-option:hover, .picker-option:has(:checked) { background: var(--wash); }
+.picker-option input { accent-color: var(--brand); width: 16px; height: 16px; flex: 0 0 auto; }
+.access-sources { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; white-space: normal; max-width: 440px; }
+.source-tag { color: #304990; background: var(--wash); border-radius: 5px; padding: 3px 7px; font-size: 12px; font-weight: 600; }
+.access-unavailable { color: var(--muted); font-size: 12px; font-weight: 600; }
