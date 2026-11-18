@@ -18,8 +18,10 @@ export const fetchCustomState = async (sid) => {
   if (!sid) return null;
   try {
     const res = await fetch(`/state?sid=${encodeURIComponent(sid)}`);
-    if (res.ok) return await res.json();
-    return null;
+    if (!res.ok) return null;
+    // /state returns {stored_state, has_custom_state, sid}; only the stored state is the world.
+    const data = await res.json();
+    return data.has_custom_state && data.stored_state ? data.stored_state : null;
   } catch {
     return null;
   }
