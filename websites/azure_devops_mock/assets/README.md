@@ -1,0 +1,73 @@
+# Azure DevOps research
+
+Azure DevOps Services organizes engineering work around a project. Boards tracks work, Repos hosts Git and pull requests, Pipelines builds artifacts from source, and Classic Releases promotes a selected artifact through stages. The planned workspace uses these product terms and links the four activities. Microsoft Learn documents the browser flows and provides the screenshots below. [Azure DevOps product overview](https://azure.microsoft.com/en-us/products/devops) · [Microsoft walkthrough video](https://learn.microsoft.com/en-us/shows/devops-lab/azure-devops-zero-to-hero-tutorial) · [Web portal navigation](https://learn.microsoft.com/en-us/azure/devops/project/navigation/?view=azure-devops)
+
+## Roles and common work
+
+| Role | Workflow |
+| --- | --- |
+| Product owner or triage lead | Search for a bug, create one if needed, prioritize and assign it, review related discussion, then move it into a sprint. |
+| Developer | Open a work item, branch from main, commit a text change, create a PR with work and reviewer links, then monitor its build. |
+| Code reviewer | Inspect branch and diff context, comment on a line, vote and complete a merge when the required approvals are in place. |
+| Build engineer | Create or edit YAML, run a selected branch, inspect stage/job output, cancel a queued run or retry a failed run. |
+| Release manager or approver | Pick a build version, create a Classic release, deploy QA, review the Production approval and inspect the outcome by attempt. |
+
+## Feature inventory
+
+| Priority | Feature | Product behavior and planned application |
+| --- | --- | --- |
+| P0 | Offline scaffold | A project-centric Azure DevOps browser workspace on port 5479. |
+| P0 | State and session | Await Harbor load, retain the session in URLs and write a whole-state snapshot for a successful user action. |
+| P0 | Service shell and routes | Organization/project context in the header, a service rail and contextual tabs for supported pages. |
+| P0 | Injected world support | Render empty and sparse records, missing references, long lists, and stable deep links. |
+| P0 | Verifier evidence | Document observable fields and exercise all four workflows through browser interactions. |
+| P1 | Projects, Summary and search | Project cards and a summary include members and activity counts. Scoped search links to an item, code file or PR. [Project summary](https://learn.microsoft.com/en-us/azure/devops/organizations/projects/project-vision-status?view=azure-devops) |
+| P1 | Work Items | Title and type lead dense rows with State and Assigned To. The detail uses a strong title and save actions above discussion and planning metadata. [Work Items overview](https://learn.microsoft.com/en-us/azure/devops/boards/work-items/view-add-work-items?view=azure-devops) |
+| P1 | Kanban | Team board and backlog level above columns. Quick add in the first column. Dragging updates State and order. [Kanban quickstart](https://learn.microsoft.com/en-us/azure/devops/boards/boards/kanban-quickstart?view=azure-devops) |
+| P1 | Backlogs and sprints | Backlog includes parent context. Sprint selection and multi-row menus support assignment and moving items to an iteration. [Bulk work item edits](https://learn.microsoft.com/en-us/azure/devops/boards/backlogs/bulk-modify-work-items?view=azure-devops) |
+| P1 | Discussion and history | Discussion is authored content. History shows field changes and revision owners. [Work item types and history](https://learn.microsoft.com/en-us/azure/devops/boards/work-items/about-work-items?view=azure-devops) |
+| P1 | Queries | A clause-based editor runs a flat list of work items against the project. Users can save under My Queries or Shared Queries. [Define a query](https://learn.microsoft.com/en-us/vsts/work/track/using-queries) |
+| P1 | Files and repository creation | Repository and branch selectors precede a file navigator and content/preview view. The create dialog can initialize a README. [Create a Git repo](https://learn.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops) |
+| P1 | Branches and commits | Branch rows show the head commit and open pull request. New branch asks for a name, base and optional work item. The HTML file editor saves changes via a commit confirmation. [Create a Git branch](https://learn.microsoft.com/en-us/azure/devops/repos/git/create-branch?view=azure-devops) |
+| P1 | Create pull request | Select branch direction first, then title, description, reviewers and work items. Draft creation and publishing are separate actions. [Create a pull request](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops) |
+| P1 | Review and complete pull request | Overview puts discussion and completion actions in view. Files supports inline threads and Commits shows the source history. Votes and merge outcome are visible. [Review PRs](https://learn.microsoft.com/en-us/azure/devops/repos/git/review-pull-requests?view=azure-devops) · [Complete PRs](https://learn.microsoft.com/en-us/azure/devops/repos/git/complete-pull-requests?view=azure-devops) |
+| P1 | Pipeline lists and run details | Recent, All and Runs tabs support scanning latest status. Run summary links source, artifact and job output. [Pipeline overview and runs](https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops) |
+| P1 | Create and edit YAML | Choose Azure Repos Git and connect a branch and YAML file. The code editor shows the path and chosen branch before saving or running. [YAML editor](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/yaml-pipeline-editor?view=azure-devops) |
+| P1 | Run, cancel and run again | A run uses a selected branch/commit with variables. Cancel appears while a run is queued or running. Run new is available on a finished run. [Pipeline run management](https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops#cancel-and-re-run-a-pipeline) |
+| P1 | Classic release hub and definition editor | Releases sits inside Pipelines. The hub groups release history by definition, while the editor connects build artifacts to configured stages. [Classic release pipeline](https://learn.microsoft.com/en-us/azure/devops/pipelines/release/releases?view=azure-devops) |
+| P1 | Create release | A release uses an explicit artifact version, description and stage snapshot. The release history links into the stage view. [Create a multistage release](https://learn.microsoft.com/en-us/azure/devops/pipelines/release/define-multistage-release-process?view=azure-devops#create-a-release) |
+| P1 | Deploy, approve, reject and redeploy | Each stage has attempt history. Pending approval opens a comment and decision panel for designated reviewers. Logs are organized by stage and task. [Deployment approvals](https://learn.microsoft.com/en-us/azure/devops/pipelines/release/deploy-using-approvals?view=azure-devops) |
+| P2 | Project settings and theme | Lightweight project context and a user-controlled Light/Dark preference. [Settings overview](https://learn.microsoft.com/en-us/azure/devops/organizations/settings/about-settings?view=azure-devops) · [User preferences](https://learn.microsoft.com/en-us/azure/devops/organizations/settings/set-your-preferences?view=azure-devops) |
+| P2 | Keyboard and narrow layout | Board shortcuts support opening and moving cards. The planned narrow browser layout collapses navigation as specified in the design. [Keyboard shortcuts](https://learn.microsoft.com/en-us/azure/devops/project/navigation/keyboard-shortcuts?view=azure-devops) |
+
+## Visual reference index
+
+The images are Microsoft documentation screenshots for research. Captions describe the source UI. Use [DESIGN.md](../DESIGN.md) for the implemented layout and tokens. Several references are cropped to illustrate one interaction. Two older captures retain the historic wording and navigation, so use the current Learn articles for service names and activity flows.
+
+| Screenshot | Layout observation | Source |
+| --- | --- | --- |
+| [Projects](screenshots/projects.png) | Organization switcher left, Projects/My work items/My pull requests tabs and project filter above English project cards. | [About projects](https://learn.microsoft.com/en-us/azure/devops/organizations/projects/about-projects?view=azure-devops) |
+| [Project summary](screenshots/project-summary.png) | Project title sits above About this project. Stats and member avatars occupy the right column. | [Project summary page](https://learn.microsoft.com/en-us/azure/devops/organizations/projects/project-vision-status?view=azure-devops) |
+| [Project settings](screenshots/project-settings.png) | General and service settings have a secondary navigation list beside top-level settings and project overview. | [Settings overview](https://learn.microsoft.com/en-us/azure/devops/organizations/settings/about-settings?view=azure-devops) |
+| [Kanban](screenshots/boards-kanban.png) | Team picker and backlog control above a horizontal row of state columns. Cards show title, owner, points and labels. | [Kanban quickstart](https://learn.microsoft.com/en-us/azure/devops/boards/boards/kanban-quickstart?view=azure-devops) |
+| [Work Items](screenshots/boards-work-items.png) | Scope and New Work Item sit above a second filter row. The type picker lists icon and checkbox options while rows remain visible. | [Work Items](https://learn.microsoft.com/en-us/azure/devops/boards/work-items/view-add-work-items?view=azure-devops) |
+| [Work item detail](screenshots/boards-work-item-form.png) | ID, title, assignment and Save & Close lead. Description and Discussion sit alongside Planning and Development metadata. | [Plan and track work](https://learn.microsoft.com/en-us/azure/devops/boards/get-started/plan-track-work?view=azure-devops) |
+| [Repos navigation](screenshots/repos-files.png) | The service menu expands to show Files, Commits, Branches and Pull Requests. | [Create a Git repo](https://learn.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops) |
+| [File content](screenshots/repos-file-content.png) | A branch picker and file path precede a left tree and a tabbed file pane. The screenshot uses the older Code navigation. | [Create and edit a repo file](https://learn.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops) |
+| [New branch](screenshots/repos-new-branch.png) | Compact form stacks Name, Based on and linked work-item search, with actions aligned at the bottom right. | [Create a branch](https://learn.microsoft.com/en-us/azure/devops/repos/git/create-branch?view=azure-devops) |
+| [New PR](screenshots/repos-new-pull-request.png) | Branch direction and preview tabs sit above title, description, reviewers, work items and tags. | [Create a PR](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops) |
+| [PR overview](screenshots/repos-pull-request.png) | Approve and Complete sit in the header. Merge health and discussion occupy the main pane, with Reviewers, Tags and Work Items alongside. | [Review and comment on PRs](https://learn.microsoft.com/en-us/azure/devops/repos/git/review-pull-requests?view=azure-devops) |
+| [Pipelines list](screenshots/pipelines-list.png) | Recent, All and Runs tabs sit near the title. Status glyphs accompany names, last run details and times. | [Create your first pipeline](https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops) |
+| [YAML editor](screenshots/pipelines-yaml-editor.png) | Branch and path sit above the line-numbered editor, with task navigation beside the text. | [YAML pipeline editor](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/yaml-pipeline-editor?view=azure-devops) |
+| [Pipeline run](screenshots/pipelines-run.png) | Status and run identifier head the summary, followed by source and artifact references and stage/job cards. | [Pipeline run details](https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops#view-pipeline-run-details) |
+| [Releases list](screenshots/releases-list.png) | Definition list at left, release rows and artifact versions at right, with Edit and Create a release above the rows. | [Classic release deployment approvals](https://learn.microsoft.com/en-us/azure/devops/pipelines/release/deploy-using-approvals?view=azure-devops) |
+| [Release definition](screenshots/releases-definition.png) | An artifact tile feeds stage cards, with stage conditions attached to the cards and Save/Create release in the header. | [Create Classic release pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/release/releases?view=azure-devops) |
+| [Release create entry](screenshots/releases-create.png) | A historic Release action opens the create item above a QA → Production stage sequence. Use the current Create release entry in the definition view. | [Pipeline walkthrough](https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops) |
+| [Release approval](screenshots/releases-approval.png) | Stage drawer identifies pending approval, named approver and Comment, with Approve and Reject in the footer. | [Create a multistage release](https://learn.microsoft.com/en-us/azure/devops/pipelines/release/define-multistage-release-process?view=azure-devops) |
+| [Release logs](screenshots/releases-logs.png) | Stage and status are visible in the header. A stage list sits alongside task-level outcomes. | [Monitor deployments](https://learn.microsoft.com/en-us/azure/devops/pipelines/release/define-multistage-release-process?view=azure-devops#monitor-and-track-deployments) |
+
+## Data model and scope
+
+[Data model](data_model.md) defines 22 top-level keys. Organization, projects, teams and users provide the working context. Work items link to branch and PR records. A pipeline definition points to the Git branch and YAML path, a run pins the commit and references the artifact, and a Classic release pins the selected artifact and stages. Deployments and approvals have separate IDs so missing references, repeated attempts and per-approver outcomes remain inspectable.
+
+Start with Maya Chen signed in to a realistic English workspace. The supported product is the desktop browser workflow, with responsive access on smaller screens. Authentication, service administration and third-party integrations are outside the training scenario. Cloud execution, external messaging and real Git transport are outside the offline Harbor environment. Synthetic logs and artifact data support the same inspection actions.
