@@ -1,0 +1,48 @@
+[
+  {
+    "file": "desktop-overview.jpeg",
+    "sourcePage": "https://unified.www.yahooinc.com/press/yahoo-mail-redesigns-the-inbox-for-a-cleaner-smarter-and-simpler-experience",
+    "imageUrl": "https://cdn.prod.website-files.com/6721939c8726e5c8dc6b9f9f/67599bd5e8781491128d6202_6721939c8726e5c8dc6ba6c2_Newsroom-Post-yahoo-mail-v2.jpeg",
+    "dimensions": [
+      1801,
+      941
+    ],
+    "retrievedAt": "2026-11-18",
+    "publishedAt": "2024-06-11"
+  },
+  {
+    "file": "message-summary.gif",
+    "sourcePage": "https://unified.www.yahooinc.com/press/yahoo-mail-redesigns-the-inbox-for-a-cleaner-smarter-and-simpler-experience",
+    "imageUrl": "https://cdn.prod.website-files.com/6721939c8726e5c8dc6b9f9f/67599bd2a3ead7a03f6dc7c5_6721939c8726e5c8dc6ba6d4_66c3f12766b55fba7fd51ce6_AD_4nXeiGKPnoTD_QYZAx4mXla7EEIM4oBjRhOiyLh7ee9igKJDrlLChRFgHQfzMO93wanfPvutI9Oiuh1SMD3Zy8MujlKGC5OkDYFhKd6kXGFQLQHmB2kAt-njM6kFNLbOhwiTp8HkVtWZ32zTeouhVkW5kkL67.gif",
+    "dimensions": [
+      926,
+      468
+    ],
+    "retrievedAt": "2026-11-18",
+    "publishedAt": "2024-06-11",
+    "representativeFrame": "message-summary-frame.png"
+  },
+  {
+    "file": "quick-actions.gif",
+    "sourcePage": "https://unified.www.yahooinc.com/press/yahoo-mail-redesigns-the-inbox-for-a-cleaner-smarter-and-simpler-experience",
+    "imageUrl": "https://cdn.prod.website-files.com/6721939c8726e5c8dc6b9f9f/67599bd4e8781491128d61fd_6721939c8726e5c8dc6ba6c1_QuickTap-Final-crop-v1.gif",
+    "dimensions": [
+      926,
+      470
+    ],
+    "retrievedAt": "2026-11-18",
+    "publishedAt": "2024-06-11",
+    "representativeFrame": "quick-actions-frame.png"
+  },
+  {
+    "file": "starred-panel.png",
+    "sourcePage": "https://unified.www.yahooinc.com/press/yahoo-mail-redesigns-the-inbox-for-a-cleaner-smarter-and-simpler-experience",
+    "imageUrl": "https://cdn.prod.website-files.com/6721939c8726e5c8dc6b9f9f/67599bd4e8781491128d61fa_6721939c8726e5c8dc6ba6c4_Starred-list-Padded.png",
+    "dimensions": [
+      1374,
+      2150
+    ],
+    "retrievedAt": "2026-11-18",
+    "publishedAt": "2024-06-11"
+  }
+]

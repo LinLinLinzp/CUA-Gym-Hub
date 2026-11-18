@@ -1,0 +1,378 @@
+{
+  "reviewedAt": "2026-11-18",
+  "imageCount": 38,
+  "notes": "All images inspected on labelled contact sheets; official overview and root filter editor inspected at full size. See ../README.md for layout observations and exclusions. Tokens are estimates.",
+  "images": [
+    {
+      "file": "01_inbox_2025_old_vs_new_KEY.png",
+      "width": 1920,
+      "height": 1080,
+      "frames": 1,
+      "sha256": "5a8ba94178ffed180fb48bc9c7730a41259e28d63d3b04e79c01b3aae8eb8374",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "02_inbox_2025_primary_tab_starred_panel.jpg",
+      "width": 1673,
+      "height": 941,
+      "frames": 1,
+      "sha256": "d92e51bcdd721e34ac793e03554f39f9c3d3f3cbc92ca5afcaa42905b4612b60",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "03_left_nav_2025_more_new_folder_dialog.jpg",
+      "width": 2720,
+      "height": 1120,
+      "frames": 1,
+      "sha256": "0e9dfa60cd86000b45814a04d2c11208c638175974f9f0e7d32bf84ce533b6f6",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "04_inbox_list_folders_views_toolbar.jpg",
+      "width": 1500,
+      "height": 844,
+      "frames": 1,
+      "sha256": "259437adf8608acb5614cea5210e0b7b0db3565872fd760f088d5b147dc4fc85",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "05_message_read_attachment_inline_reply.jpg",
+      "width": 1500,
+      "height": 817,
+      "frames": 1,
+      "sha256": "edb5682f8f0138c07607a2e413d0b36791a51e901d8accd54d05a3a2008597df",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "06_compose_full_page_views_sidebar.jpg",
+      "width": 1924,
+      "height": 1282,
+      "frames": 1,
+      "sha256": "b95b5607b9cb3ada8e6673af9a3c385516c1b637416eacc7c49160c7f03a2ce9",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "07_compose_with_contacts_lists_panel.jpg",
+      "width": 800,
+      "height": 462,
+      "frames": 1,
+      "sha256": "d3c85fb468d0cd2334a74f1519ea663c53d2d262fca28b1ce7f7e0b5a76a0217",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "08_settings_filters_new_filter_hires.jpg",
+      "width": 2720,
+      "height": 1520,
+      "frames": 1,
+      "sha256": "4960e044baf7e4e2c0a9e527345e076fb6a104d96e5363562bcde87c23a0caef",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "09_settings_filters_edit_filter.jpg",
+      "width": 2720,
+      "height": 1416,
+      "frames": 1,
+      "sha256": "51448192498e395844505bcc9dcaef6540f2bbb2f5dbf1a0f64634b8f43b7266",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "10_settings_filters_empty.jpg",
+      "width": 800,
+      "height": 407,
+      "frames": 1,
+      "sha256": "640b5460031777d58723eb3494000146d75805c81ad51cb34da442c681e0eaef",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "11_settings_writing_email_signature.jpg",
+      "width": 720,
+      "height": 813,
+      "frames": 1,
+      "sha256": "af867acddc77551944ce87944e45a4e8b9495799224f561014f5068d8d869a48",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "12_settings_contacts.jpg",
+      "width": 1500,
+      "height": 1000,
+      "frames": 1,
+      "sha256": "a89271279ffe16298e6c7a57acc42f29164d9e39c0d1c3a0a440cdbf6b01cf65",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "13_contact_details_panel_edit_delete.jpg",
+      "width": 335,
+      "height": 688,
+      "frames": 1,
+      "sha256": "fec211c2e36bc26699b118472049a3b0f35139710c5fb762d59dcc5442254da5",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "14_sort_menu.jpg",
+      "width": 1366,
+      "height": 645,
+      "frames": 1,
+      "sha256": "8230209191f2a9ec65a4b65f18012600d4b79304e7dd7305f4b302ebc824c63f",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "15_quick_settings_theme_layout_panel.jpg",
+      "width": 750,
+      "height": 407,
+      "frames": 1,
+      "sha256": "d9d9c533a67db2f8e7c8898e99aa36170a87cd898a925df3ce385b5c80a372a6",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "16_message_blocked_images_reply_links.jpg",
+      "width": 1124,
+      "height": 610,
+      "frames": 1,
+      "sha256": "6e3cf6b5450d3a664a88ab8d4c058615baa6921fe3e58ae0aa956c02cef7d6d7",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "17_inbox_folder_context_menu.jpg",
+      "width": 720,
+      "height": 631,
+      "frames": 1,
+      "sha256": "704368d56f5d001ded3daf689560544fda615a1e664106cd255ae12e794b36d3",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "18_contacts_full_page_list_detail.jpg",
+      "width": 974,
+      "height": 536,
+      "frames": 1,
+      "sha256": "f1008fc54eb1f9e1806c192cef4cf169f4e29cd17a06a7a5b445dc0282d01651",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "inbox/000001.jpg",
+      "width": 1366,
+      "height": 645,
+      "frames": 1,
+      "sha256": "d21ddfcdb151e57ab05e4f4f82090480077d401c0e5427b6d99fd1eca0e843d7",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "inbox/000002.jpg",
+      "width": 680,
+      "height": 380,
+      "frames": 1,
+      "sha256": "2e5caf5a51db4f82fc1ca633336522606d701c0859317f152ffd57a20c24138b",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "inbox/000003.jpg",
+      "width": 3200,
+      "height": 2407,
+      "frames": 1,
+      "sha256": "cbffe758d5e2413d0e0a5af57a2ec54283f4057b1b6e902ad8a5054d09dfc639",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "inbox/000004.jpg",
+      "width": 1500,
+      "height": 844,
+      "frames": 1,
+      "sha256": "a003923dc02a89dbf468ba3c55a6105bf86574e739b7bc575ac48cba8a3e3cbd",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "official/desktop-overview.jpeg",
+      "width": 1801,
+      "height": 941,
+      "frames": 1,
+      "sha256": "5ae9a87c9897f98897c67c3effde6d1025c572d7bc6568bd0155422f2fc05436",
+      "sourcePage": "https://unified.www.yahooinc.com/press/yahoo-mail-redesigns-the-inbox-for-a-cleaner-smarter-and-simpler-experience",
+      "imageUrl": "https://cdn.prod.website-files.com/6721939c8726e5c8dc6b9f9f/67599bd5e8781491128d6202_6721939c8726e5c8dc6ba6c2_Newsroom-Post-yahoo-mail-v2.jpeg",
+      "retrievedAt": "2026-11-18",
+      "publishedAt": "2024-06-11",
+      "role": "primary visual evidence"
+    },
+    {
+      "file": "official/message-summary-frame.png",
+      "width": 926,
+      "height": 468,
+      "frames": 1,
+      "sha256": "1cc2213f3ef325cc9598c63063f9f9cc8851dd40666217f710704f49b156c719",
+      "sourcePage": "https://unified.www.yahooinc.com/press/yahoo-mail-redesigns-the-inbox-for-a-cleaner-smarter-and-simpler-experience",
+      "imageUrl": "https://cdn.prod.website-files.com/6721939c8726e5c8dc6b9f9f/67599bd2a3ead7a03f6dc7c5_6721939c8726e5c8dc6ba6d4_66c3f12766b55fba7fd51ce6_AD_4nXeiGKPnoTD_QYZAx4mXla7EEIM4oBjRhOiyLh7ee9igKJDrlLChRFgHQfzMO93wanfPvutI9Oiuh1SMD3Zy8MujlKGC5OkDYFhKd6kXGFQLQHmB2kAt-njM6kFNLbOhwiTp8HkVtWZ32zTeouhVkW5kkL67.gif",
+      "retrievedAt": "2026-11-18",
+      "publishedAt": "2024-06-11",
+      "derivedFrom": "message-summary.gif",
+      "role": "primary visual evidence"
+    },
+    {
+      "file": "official/message-summary.gif",
+      "width": 926,
+      "height": 468,
+      "frames": 75,
+      "sha256": "0d59c27bee8578a06068252bbd0dc350a514a3790f107d7e5944eacb6a3a354e",
+      "sourcePage": "https://unified.www.yahooinc.com/press/yahoo-mail-redesigns-the-inbox-for-a-cleaner-smarter-and-simpler-experience",
+      "imageUrl": "https://cdn.prod.website-files.com/6721939c8726e5c8dc6b9f9f/67599bd2a3ead7a03f6dc7c5_6721939c8726e5c8dc6ba6d4_66c3f12766b55fba7fd51ce6_AD_4nXeiGKPnoTD_QYZAx4mXla7EEIM4oBjRhOiyLh7ee9igKJDrlLChRFgHQfzMO93wanfPvutI9Oiuh1SMD3Zy8MujlKGC5OkDYFhKd6kXGFQLQHmB2kAt-njM6kFNLbOhwiTp8HkVtWZ32zTeouhVkW5kkL67.gif",
+      "retrievedAt": "2026-11-18",
+      "publishedAt": "2024-06-11",
+      "role": "primary visual evidence"
+    },
+    {
+      "file": "official/quick-actions-frame.png",
+      "width": 926,
+      "height": 470,
+      "frames": 1,
+      "sha256": "1cb74948460f1c13fd03a9898629987847416e6a7ca439054934b81a762aebbb",
+      "sourcePage": "https://unified.www.yahooinc.com/press/yahoo-mail-redesigns-the-inbox-for-a-cleaner-smarter-and-simpler-experience",
+      "imageUrl": "https://cdn.prod.website-files.com/6721939c8726e5c8dc6b9f9f/67599bd4e8781491128d61fd_6721939c8726e5c8dc6ba6c1_QuickTap-Final-crop-v1.gif",
+      "retrievedAt": "2026-11-18",
+      "publishedAt": "2024-06-11",
+      "derivedFrom": "quick-actions.gif",
+      "role": "primary visual evidence"
+    },
+    {
+      "file": "official/quick-actions.gif",
+      "width": 926,
+      "height": 470,
+      "frames": 75,
+      "sha256": "d2b5f6b4c21b6f49c85dccb01d3278ea2159de947a70c27ceefdaaffce0a2332",
+      "sourcePage": "https://unified.www.yahooinc.com/press/yahoo-mail-redesigns-the-inbox-for-a-cleaner-smarter-and-simpler-experience",
+      "imageUrl": "https://cdn.prod.website-files.com/6721939c8726e5c8dc6b9f9f/67599bd4e8781491128d61fd_6721939c8726e5c8dc6ba6c1_QuickTap-Final-crop-v1.gif",
+      "retrievedAt": "2026-11-18",
+      "publishedAt": "2024-06-11",
+      "role": "primary visual evidence"
+    },
+    {
+      "file": "official/starred-panel.png",
+      "width": 1374,
+      "height": 2150,
+      "frames": 1,
+      "sha256": "436cd6e7c1d8fdfb9289aadf6c829eae2e7465ece250b41a1baf42de7c2e9b67",
+      "sourcePage": "https://unified.www.yahooinc.com/press/yahoo-mail-redesigns-the-inbox-for-a-cleaner-smarter-and-simpler-experience",
+      "imageUrl": "https://cdn.prod.website-files.com/6721939c8726e5c8dc6b9f9f/67599bd4e8781491128d61fa_6721939c8726e5c8dc6ba6c4_Starred-list-Padded.png",
+      "retrievedAt": "2026-11-18",
+      "publishedAt": "2024-06-11",
+      "role": "primary visual evidence"
+    },
+    {
+      "file": "research-compose/000001.jpg",
+      "width": 1521,
+      "height": 1084,
+      "frames": 1,
+      "sha256": "d851291fe71fdf14452a3ea19163586299718bc1c7d8c3562b89ef5317d2c7b3",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "research-current/000001.jpg",
+      "width": 1924,
+      "height": 1282,
+      "frames": 1,
+      "sha256": "c9ba8d239613d93c840fb55e994bb4453cb767524f034728f3447ebb057b25b8",
+      "imageUrl": "https://www.lifewire.com/thmb/6GrY1UAzVidh0hM4jAal_5drf_g=/1924x1282/filters:no_upscale():max_bytes(150000):strip_icc()/yahoocompose-3178a4d2c9e546a69b784193ec289849.jpg",
+      "retrievedAt": "2026-11-18",
+      "query": "Yahoo Mail new desktop compose attachments contacts interface",
+      "engine": "bing",
+      "role": "classic structural reference only"
+    },
+    {
+      "file": "research-current/000002.jpg",
+      "width": 1628,
+      "height": 915,
+      "frames": 1,
+      "sha256": "19affd4afaba3b9c59669e6c71ae99064a251490c7d6a8c38ea8a472fac53420",
+      "imageUrl": "https://www.lifewire.com/thmb/NbclI404xfd4FwW24Vb676MjIxQ=/1628x915/filters:no_upscale():max_bytes(150000):strip_icc()/002_auto-add-contacts-yahoo-1174459-4e642bf8180f49918c979a264998dc42.jpg",
+      "retrievedAt": "2026-11-18",
+      "query": "Yahoo Mail new desktop compose attachments contacts interface",
+      "engine": "bing",
+      "role": "classic structural reference only"
+    },
+    {
+      "file": "research-current/000003.jpg",
+      "width": 1500,
+      "height": 1069,
+      "frames": 1,
+      "sha256": "3a632ce8c7382d0ec69817e7738dd54150c1404ac91978b985c675da994a6b4b",
+      "imageUrl": "https://www.lifewire.com/thmb/mQ_aHhx8A9w-9J2yIxyo_gf0_-s=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/yahoomailcompose-c897862eaa6743879f513512fdfa0eb4.jpg",
+      "retrievedAt": "2026-11-18",
+      "query": "Yahoo Mail new desktop compose attachments contacts interface",
+      "engine": "bing",
+      "role": "classic structural reference only"
+    },
+    {
+      "file": "research-filters/000001.jpg",
+      "width": 800,
+      "height": 407,
+      "frames": 1,
+      "sha256": "275caa24075c9bf09be0ce0841efc34776ac796a712d242e544e52cbfc876d3f",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "research-inbox/000001.jpg",
+      "width": 631,
+      "height": 700,
+      "frames": 1,
+      "sha256": "0e626c50ef34f2e3b1739524d9227b62357eb6f06b821f68e2838999d0dc6963",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "irrelevant mobile-store result; exclude"
+    },
+    {
+      "file": "settings-compose/000001.jpg",
+      "width": 800,
+      "height": 407,
+      "frames": 1,
+      "sha256": "275caa24075c9bf09be0ce0841efc34776ac796a712d242e544e52cbfc876d3f",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "settings-compose/000002.jpg",
+      "width": 2720,
+      "height": 1416,
+      "frames": 1,
+      "sha256": "51448192498e395844505bcc9dcaef6540f2bbb2f5dbf1a0f64634b8f43b7266",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "settings-compose/000003.jpg",
+      "width": 800,
+      "height": 407,
+      "frames": 1,
+      "sha256": "b0b9b7b272efd3a931f7d1080d60ce45bd21e9c85b9bd9178f46e39a3e7b19bc",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    },
+    {
+      "file": "settings-compose/000004.jpg",
+      "width": 1366,
+      "height": 645,
+      "frames": 1,
+      "sha256": "ddf5114391775d82d686e582b0072aab222641de0f10816c4dcc198189c5ad30",
+      "provenance": "inherited local reference; original URL and date unverified",
+      "role": "structural reference only"
+    }
+  ]
+}
