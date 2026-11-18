@@ -60,3 +60,10 @@ None recorded.
 | SCHEMA.md | Updated | Added endpoint semantics, fixture ID patterns, and a minimal injection example. The observable changes table matches the business handlers. |
 
 Local build and browser results are in [TEST.md](TEST.md). Docker dynamic certification belongs to the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Chromium saved a Droplet from an injected UTF-8 world over 64 KiB. Harbor retained the Droplet, its activity and the injected records.
+- **AUDIT-002 · Fixed and retested.** The pending startup POST withheld action controls. Harbor retained matching initial and current baseline snapshots on acknowledgement.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

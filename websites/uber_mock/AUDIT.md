@@ -64,3 +64,9 @@ None found in the audited scope.
 ## SCHEMA.md Updates
 
 Added the local endpoint contract and reset behavior, explicit key types, seeded ID ranges, a minimal injected world and the verifier diff format. Documented receipt action status pairs, nullable action trip IDs and UI interactions that leave business state untouched.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** A corrupted receipt link could no longer save a charge from another trip. The existing edge runner still reports the separate P1 timestamp-offset ordering failure.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

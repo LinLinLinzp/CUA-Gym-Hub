@@ -51,7 +51,12 @@ export default function Rules() {
   const pager = usePagination(matching, 6)
   const close = () => setDialog(null)
 
+  function canRestore(version) {
+    return typeof version.source === 'string' && version.source.trim() && !inspectRules(version.source).error
+  }
+
   function publish(restoring) {
+    if (restoring && !canRestore(restoring)) return
     const id = newId('rules')
     const versionSource = restoring ? restoring.source : source
     const restoreFields = restoring ? { restoredFromVersionId: restoring.id } : {}
@@ -108,7 +113,11 @@ export default function Rules() {
           {version.restoredFromVersionId && <small className="restored-from">Restored from <code>{version.restoredFromVersionId}</code></small>}
           <div className="actions">
             <button onClick={() => setDialog({ type: 'view', version })}>View source</button>
-            {version.id !== active?.id && <button onClick={() => setDialog({ type: 'restore', version })}>Restore</button>}
+            {version.id !== active?.id && (
+              canRestore(version)
+                ? <button onClick={() => setDialog({ type: 'restore', version })}>Restore</button>
+                : <span className="muted">Source unavailable or invalid</span>
+            )}
           </div>
         </li>)}</ul> : <Empty>{versions.length ? 'No versions match your search.' : 'No versions have been published.'}</Empty>}
         <Pagination pager={pager} label="versions" />

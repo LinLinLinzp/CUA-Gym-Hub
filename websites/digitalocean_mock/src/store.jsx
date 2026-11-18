@@ -1,10 +1,11 @@
 import { createContext, useContext, useRef, useState } from 'react'
-import { loadState, saveState } from './utils/dataManager.js'
+import { saveState } from './utils/dataManager.js'
+import { loadInitialState } from './utils/loadInitialState.js'
 import { createInitialData } from './data/seed.js'
 
 const appName = 'digitalocean_mock'
 const StoreContext = createContext(null)
-const loadedWorld = loadState(appName, createInitialData)
+const loadedWorld = loadInitialState(appName, createInitialData)
 let pendingSave = null
 
 function saveWorld(world) {
@@ -13,8 +14,10 @@ function saveWorld(world) {
     let drained = Promise.resolve()
     // The shared template does not consume its response. Chromium can retain
     // that request's keepalive quota and reject the next full-state upload.
-    window.fetch = (...args) => {
-      const response = request(...args)
+    window.fetch = (input, options) => {
+      // Chromium limits keepalive uploads by UTF-8 byte length.
+      const keepalive = options.keepalive && new TextEncoder().encode(options.body).byteLength < 64 * 1024
+      const response = request.call(window, input, { ...options, keepalive })
       drained = response.then(result => result.arrayBuffer()).catch(() => {})
       return response
     }

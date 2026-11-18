@@ -61,3 +61,9 @@ None found.
 ## SCHEMA.md Updates
 
 Added the localhost endpoints, reset semantics, verified default ids, and a minimal injected world. Clarified nullable manual-item due dates and retained the per-action verifier field mapping.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Chromium held the startup POST and verified that action controls stayed unavailable through acknowledgement. Grade entry, roster and announcements passed against the built preview.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

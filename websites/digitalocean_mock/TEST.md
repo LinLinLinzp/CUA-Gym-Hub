@@ -138,3 +138,10 @@ The repository certifier passed the production bundle in run `131988`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `projects → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Chromium saved a Droplet from an injected UTF-8 world over 64 KiB. Harbor retained the Droplet, its activity and the injected records.
+- **AUDIT-002 · Fixed and retested.** The pending startup POST withheld action controls. Harbor retained matching initial and current baseline snapshots on acknowledgement.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

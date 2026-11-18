@@ -92,3 +92,10 @@ The repository certifier passed the production bundle in run `185640`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `users → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Two independent contexts on the same SID retained the canonical baseline and a saved proposal after the second context loaded.
+- **AUDIT-002 · Fixed and retested.** Finishing kept the saved signature linked to completion with unique field rows. The sequential signing and final-completion workflow also passed.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

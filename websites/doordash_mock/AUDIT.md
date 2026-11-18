@@ -57,3 +57,10 @@ No findings.
 Added endpoint instructions, a fixed-ID reference, a minimal injection example, and explicit top-level types. Clarified the refund line shape and its separate record-level `totalCents`. The observable action table still describes the writes made by the current code.
 
 The two issue reproductions are in ignored `tests/`. Docker certification remains with the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Delaying a cancellation in one tab no longer let that older snapshot overtake a second same-session tab write. The workflow suite passed.
+- **AUDIT-002 · Fixed and retested.** A reloaded host in one context saw a guest added in another context. A subsequent close kept that guest in Harbor. Simultaneous writes from isolated contexts still lack a server-side compare-and-swap guarantee.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

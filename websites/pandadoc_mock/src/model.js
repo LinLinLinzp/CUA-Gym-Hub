@@ -188,7 +188,11 @@ export function finishSigning(state, snapshot, recipientId, entries, choices) {
   const fields = fieldsFor(document)
   if (JSON.stringify(fields) !== JSON.stringify(fieldsFor(snapshot))) throw new Error('Your signature fields changed. Review the current proposal.')
   if (!fields.length) throw new Error('There are no signature fields assigned to you.')
-  if (fields.some(field => field.required && !entries[field.id]?.value?.trim())) throw new Error('Complete every required signature before finishing.')
+  const sameRecipient = signature => signature.documentId === document.id && signature.recipientId === recipientId
+  const saved = new Map(items(state.signatures).filter(sameRecipient).map(signature => [signature.fieldId, signature]))
+  const hasValue = entry => typeof entry?.value === 'string' && Boolean(entry.value.trim())
+  const entryFor = field => hasValue(saved.get(field.id)) ? saved.get(field.id) : entries[field.id]
+  if (fields.some(field => field.required && !hasValue(entryFor(field)))) throw new Error('Complete every required signature before finishing.')
   const locked = priceIsLocked(state, document.id)
   if (locked && !matchesAcceptedPricing(document, snapshot, choices)) {
     throw Object.assign(new Error('The price changed when another signer finished. Review the accepted pricing and try again.'), { code: 'price_changed' })
@@ -217,12 +221,19 @@ export function finishSigning(state, snapshot, recipientId, entries, choices) {
   const value = priceChanged ? documentValue(pricingTables) : Number(document.value ?? documentValue(pricingTables))
   if (!Number.isFinite(value)) throw new Error('The pricing total is too large.')
   const completionId = id('cmp')
-  const signatures = fields.filter(field => entries[field.id]?.value?.trim() && !items(state.signatures).some(
-    signature => signature.documentId === document.id && signature.recipientId === recipientId && signature.fieldId === field.id,
-  )).map(field => ({
-    id: id('sig'), documentId: document.id, recipientId, fieldId: field.id, completionId,
-    method: entries[field.id].method, value: entries[field.id].value.trim(), status: 'signed', actorId: recipientId, createdAt: date,
-  }))
+  const signatures = fields.filter(field => hasValue(entryFor(field))).map(field => {
+    const previous = saved.get(field.id)
+    if (previous?.completionId && items(state.signingCompletions).some(completion => completion.id === previous.completionId)) {
+      throw new Error('A signature is already linked to an existing completion. Review the proposal before finishing.')
+    }
+    if (hasValue(previous)) return { ...previous, id: previous.id || id('sig'), completionId }
+    const entry = entryFor(field)
+    return {
+      id: previous?.id || id('sig'), documentId: document.id, recipientId, fieldId: field.id, completionId,
+      method: entry.method, value: entry.value.trim(), status: 'signed', actorId: recipientId, createdAt: date,
+    }
+  })
+  const completedFields = new Set(signatures.map(signature => signature.fieldId))
   const completion = {
     id: completionId, documentId: document.id, recipientId, signatureIds: signatures.map(signature => signature.id),
     pricingSnapshot: pricingSnapshot(pricingTables), currency: currencyOf(document, state.workspace),
@@ -237,6 +248,8 @@ export function finishSigning(state, snapshot, recipientId, entries, choices) {
     ...(finished ? { status: 'completed', completedAt: date } : {}),
   })
   return withActivity({
-    ...next, signatures: [...items(state.signatures), ...signatures], signingCompletions: [...items(state.signingCompletions), completion],
+    ...next,
+    signatures: [...items(state.signatures).filter(signature => !sameRecipient(signature) || !completedFields.has(signature.fieldId)), ...signatures],
+    signingCompletions: [...items(state.signingCompletions), completion],
   }, activityFor(state, 'signing.completed', document.id, date, [completion.id, ...completion.signatureIds], recipientId))
 }

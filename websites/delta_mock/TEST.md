@@ -92,3 +92,10 @@ The repository certifier passed the production bundle in run `123512`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `trips → 0 → accountId`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Sequential cancellations from two independent Chromium contexts sharing a SID both remained in Harbor after the second write.
+- **AUDIT-002 · Fixed and retested.** An interrupted cancellation left the trip confirmed, produced no actions or refunds, and displayed no confirmation. The workflow suite passed.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

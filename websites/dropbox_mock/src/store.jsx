@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { createInitialData } from './data/seed'
-import { getSessionId, loadState, saveState } from './utils/dataManager'
+import { getSessionId, saveState } from './utils/dataManager'
+import { loadInitialState } from './utils/loadInitialState.js'
 
 const Context = createContext(null)
 const APP = 'dropbox'
@@ -23,7 +24,7 @@ export function Store({ children }) {
       setState(data)
     }
     window.addEventListener('storage', sync)
-    loadState(APP, createInitialData).then(data => {
+    loadInitialState(APP, createInitialData).then(data => {
       current.current = data
       setState(data)
     }).catch(() => setError('The workspace could not load. Reload to try again.'))

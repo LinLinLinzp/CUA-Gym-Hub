@@ -76,3 +76,10 @@ None.
 ## SCHEMA.md Updates
 
 Added fixed fixture IDs, a minimal injection example, API endpoint details, and the scope of browser-profile baseline and commit behavior. Retained the document record shapes and verifier mapping. See [SCHEMA.md](SCHEMA.md) and [TEST.md](TEST.md).
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Two independent contexts on the same SID retained the canonical baseline and a saved proposal after the second context loaded.
+- **AUDIT-002 · Fixed and retested.** Finishing kept the saved signature linked to completion with unique field rows. The sequential signing and final-completion workflow also passed.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

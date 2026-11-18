@@ -57,3 +57,9 @@
 ## SCHEMA.md Updates
 
 Added endpoint usage, a minimal injected world, stable seed IDs and the seed event exceptions. Checked the action-to-field table against the mutation functions.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Chromium held the startup POST and verified action controls stayed unavailable through acknowledgement. File creation and versioning, sharing and requests passed reloaded against Harbor.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

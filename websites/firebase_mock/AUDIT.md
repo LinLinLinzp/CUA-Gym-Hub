@@ -76,3 +76,9 @@ No findings.
 ## SCHEMA.md Updates
 
 Standardized the endpoint and state schema headings, documented fixed seed IDs and local reset semantics, and supplied a minimal injected workspace. The action table describes complete records so verifiers can distinguish the missing fields found during this audit.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** A historical Rules version without source stayed unavailable, and Harbor retained the active policy. Rules, authentication, hosting and Firestore workflows passed.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

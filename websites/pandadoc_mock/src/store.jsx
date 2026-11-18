@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { createInitialData } from './data/seed.js'
-import { getSessionId, loadState, mergeWithDefaults, saveState } from './utils/dataManager.js'
+import { getSessionId, mergeWithDefaults, saveState } from './utils/dataManager.js'
+import { loadInitialState } from './utils/loadInitialState.js'
 import { items } from './pricing.js'
 
 const APP = 'pandadoc_mock'
@@ -19,15 +20,23 @@ async function readState() {
 
 async function loadWorkspace() {
   const sid = getSessionId()
-  const cached = localStorage.getItem(APP + ':loaded:' + (sid || '_default'))
-  const local = await loadState(APP, createInitialData)
-  if (!cached) return local
+  const loadedKey = APP + ':loaded:' + (sid || '_default')
+  const currentKey = APP + ':current:' + (sid || '_default')
   try {
     const current = await readState()
-    return current ? mergeWithDefaults(createInitialData(), current) : local
+    if (current) {
+      const merged = mergeWithDefaults(createInitialData(), current)
+      // An already initialized workspace must never send another baseline snapshot.
+      if (localStorage.getItem(loadedKey) || JSON.stringify(merged) === JSON.stringify(current)) {
+        localStorage.setItem(currentKey, JSON.stringify(merged))
+        localStorage.setItem(loadedKey, '1')
+        return merged
+      }
+    }
   } catch {
-    return local
+    // The template can recover the previous on-device account if Harbor is unavailable.
   }
+  return loadInitialState(APP, createInitialData)
 }
 
 async function confirm(eventId) {

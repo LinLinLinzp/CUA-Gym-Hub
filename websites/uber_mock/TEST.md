@@ -87,3 +87,9 @@ The repository certifier passed the production bundle in run `149696`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `paymentMethods → 0 → brand`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** A corrupted receipt link could no longer save a charge from another trip. The existing edge runner still reports the separate P1 timestamp-offset ordering failure.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

@@ -48,3 +48,9 @@ No findings.
 | `SCHEMA.md` | Pass | The record table and action map matched the store, seed, and observed snapshots. |
 
 Docker dynamic certification is owned by the parent runner. Local results are recorded in [TEST.md](TEST.md).
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The existing Chromium regression delayed the initial POST and verified the baseline committed before the first mutation. Workflow replay verified 16 mutation snapshots.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

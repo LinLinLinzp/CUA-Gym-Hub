@@ -112,3 +112,9 @@ The repository certifier passed the production bundle in run `164024`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `cases → 0 → receiptNumber`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Chromium held the startup POST and verified action controls waited for acknowledgement. Case lookup, signed submission and address updates passed against the production build.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

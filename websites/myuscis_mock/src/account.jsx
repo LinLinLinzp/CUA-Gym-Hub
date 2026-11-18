@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { createInitialData } from './data/seed.js'
-import { loadState, saveState } from './utils/dataManager.js'
+import { saveState } from './utils/dataManager.js'
+import { loadInitialState } from './utils/loadInitialState.js'
 
 const AccountContext = createContext(null)
 const APP = 'myuscis'
@@ -11,7 +12,7 @@ export function AccountProvider({ children }) {
   const boot = useRef(null)
 
   useEffect(() => {
-    boot.current ??= loadState(APP, createInitialData)
+    boot.current ??= loadInitialState(APP, createInitialData)
     boot.current.then(initial => {
       current.current = initial
       setState(initial)

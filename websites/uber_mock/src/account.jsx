@@ -68,7 +68,12 @@ export const matches = (query, ...fields) => {
 export const label = (value) => value ? String(value).replaceAll('_', ' ').replace(/^./, (char) => char.toUpperCase()) : '—'
 export const paymentLabel = (payment) => payment ? [payment.brand, payment.last4 && '•••• ' + payment.last4].filter(Boolean).join(' ') || '—' : '—'
 export const tripLabel = (trip) => trip?.destination || 'Trip destination unavailable'
-export const relatedReceipt = (data, trip) => trip && (byId(data.receipts, trip.receiptId) ?? records(data.receipts).find((receipt) => receipt.tripId === trip.id))
+export function relatedReceipt(data, trip) {
+  if (!trip) return undefined
+  const linked = byId(data.receipts, trip.receiptId)
+  if (linked && (!linked.tripId || linked.tripId === trip.id)) return linked
+  return records(data.receipts).find(receipt => receipt.tripId === trip.id)
+}
 export const refundableLines = (receipt) => records(receipt?.lineItems).filter((line) => line.id && cents(line.amount) > 0)
 export const isChargeEligible = (data, trip) => {
   const receipt = relatedReceipt(data, trip)

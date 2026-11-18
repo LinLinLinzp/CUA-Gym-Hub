@@ -62,3 +62,9 @@ Added API examples, explicit top-level types, default ID ranges, a minimal injec
 - `node .scratch/acceptance.cjs --preview` passed the built-bundle smoke check on port 5511.
 - `node .scratch/audit.cjs` verified the API lifecycle and reproduced both findings against dev and preview. The scratch runner uses the installed Node Playwright and blocks non-local browser traffic.
 - Docker dynamic certification remains with the parent runner. Application source and Harbor templates were left unchanged in this audit.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Chromium held the startup POST and verified action controls waited for acknowledgement. Case lookup, signed submission and address updates passed against the production build.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

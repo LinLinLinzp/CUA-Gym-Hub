@@ -84,3 +84,10 @@ The repository certifier passed the production bundle in run `43924`. The local 
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `merchants → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Delaying a cancellation in one tab no longer let that older snapshot overtake a second same-session tab write. The workflow suite passed.
+- **AUDIT-002 · Fixed and retested.** A reloaded host in one context saw a guest added in another context. A subsequent close kept that guest in Harbor. Simultaneous writes from isolated contexts still lack a server-side compare-and-swap guarantee.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

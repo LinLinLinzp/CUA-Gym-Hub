@@ -84,3 +84,9 @@ The repository certifier passed the production bundle in run `73748`. The local 
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `titles → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The existing Chromium regression delayed the initial POST and verified the baseline committed before the first mutation. Workflow replay verified 16 mutation snapshots.
+
+Docker dynamic certification run `188924` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

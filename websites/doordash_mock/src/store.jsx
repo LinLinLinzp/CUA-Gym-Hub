@@ -1,9 +1,20 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { createInitialData } from './data/seed.js'
-import { getSessionId, loadState, saveState } from './utils/dataManager.js'
+import { getSessionId } from './utils/dataManager.js'
+import { loadInitialState } from './utils/loadInitialState.js'
+import { readCurrentState, saveAcknowledged, withSessionWrite } from './utils/harborPersistence.js'
 
 const APP = 'doordash'
 const AccountContext = createContext(null)
+
+async function loadAccount(storageKey) {
+  const stored = await readCurrentState(null)
+  if (stored && (localStorage.getItem(storageKey) || Object.keys(createInitialData()).every(key => Object.hasOwn(stored, key)))) {
+    localStorage.setItem(storageKey, JSON.stringify(stored))
+    return stored
+  }
+  return loadInitialState(APP, createInitialData)
+}
 
 export function AccountProvider({ children }) {
   const [state, setState] = useState(null)
@@ -24,9 +35,9 @@ export function AccountProvider({ children }) {
       if (event.key === storageKey && event.newValue) publish(JSON.parse(event.newValue))
     }
     window.addEventListener('storage', onStorage)
-    loadState(APP, createInitialData).then(
+    loadAccount(storageKey).then(
       (initial) => {
-        if (mounted) publish(JSON.parse(localStorage.getItem(storageKey)) || initial)
+        if (mounted) publish(initial)
       },
       () => { if (mounted) setError(true) },
     )
@@ -37,17 +48,14 @@ export function AccountProvider({ children }) {
   }, [storageKey])
 
   async function commit(update, message) {
-    function apply() {
-      const latest = JSON.parse(localStorage.getItem(storageKey)) || current.current
+    return withSessionWrite(APP, async () => {
+      const latest = await readCurrentState(current.current)
       const next = update(latest, new Date().toISOString())
-      saveState(APP, next)
+      await saveAcknowledged(APP, next)
       publish(next)
       setNotice({ message })
       return next
-    }
-
-    if (navigator.locks) return navigator.locks.request(storageKey, apply)
-    return apply()
+    })
   }
 
   if (error) return <main className="boot" role="alert">Your account couldn’t load. Reload the page to try again.</main>

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { createInitialData } from './data/seed.js'
-import { loadState, saveState } from './utils/dataManager.js'
+import { saveState } from './utils/dataManager.js'
+import { loadInitialState } from './utils/loadInitialState.js'
 
 const APP = 'blackboard_mock'
 const Store = createContext(null)
@@ -11,7 +12,7 @@ export function StoreProvider({ children }) {
   const current = useRef(null)
 
   useEffect(() => {
-    loadState(APP, createInitialData).then((loaded) => {
+    loadInitialState(APP, createInitialData).then((loaded) => {
       current.current = loaded
       setState(loaded)
     })
