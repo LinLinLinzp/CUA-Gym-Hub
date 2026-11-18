@@ -1,0 +1,42 @@
+# Freshdesk — TODO
+
+> Status: VERIFIED  
+> Last updated by the plan agent on 2026-11-18  
+> References: `DESIGN.md`, `assets/README.md`, `assets/data_model.md`
+
+## Status legend
+
+`[ ]` Not started · `[~]` In progress · `[x]` Done
+
+## P0 — Shell and Harbor runtime
+
+- [x] Set up React, Vite and React Router with `npm run dev`, `npm run build`, and `npm run preview`. Use strict port 5452 for localhost development. Run commands from this site directory, generate `package-lock.json`, and ignore `node_modules`, `dist`, `.mock-states`, `.mock-files`, and local test scratch files. Set the document title and text wordmark to Freshdesk. Use local styling and icons with zero external requests.
+- [x] Build the shell in `DESIGN.md`. `/` and `/tickets` open the queue, `/tickets/new` opens ticket creation, `/tickets/:ticketId` opens a ticket, `/admin` links to both admin workflows, and `/admin/sla-policies` and `/admin/canned-responses` open their respective workspaces. Give missing IDs and unknown routes a clear route back. Keep all routes inside their providers, preserve `?sid=` across SPA navigation, and use `withSid()` for internal links outside the router. Verify direct loads and hard refreshes.
+- [x] Import the shared `stateApi(createInitialData)` in `vite.config.js` and copy `templates/dataManager.js` unchanged to `src/utils/dataManager.js`. Await one `loadState('freshdesk', createInitialData)` before mounting routes and show a neutral loading view meanwhile. Commit each explicit business action atomically through the central store with one whole-state `saveState`. The state API serves `/state`, `/post`, and `/go` in development and preview. `/go` returns `initial_state`, `current_state`, and `state_diff` as JSON.
+- [x] Render injected empty, sparse, and large collections with safe field and relationship fallbacks. Preserve unknown injected keys through edits and allow injected arrays to replace seed arrays. Use the runtime clock for deadline labels. Keep search, selection, sorting, filters, drafts, route changes, and all derived indicators out of persisted state. Provide `SCHEMA.md` covering every top-level key and an Observable State Changes table with exact fields, checked against code.
+
+## P1 — Seed workflows
+
+- [x] **Tickets — find and triage.** Show All tickets, My open tickets, Unassigned, and Overdue views with live derived counts. Display subject and ID, requester, status, priority, assignee, and next due time. Search by ID, subject, requester name or email. Combine status, priority, group, source and assignee filters, with clear/reset, newest/oldest/due sorting and pagination. Open rows by keyboard or click. Search, filters, sorting and pagination write zero records.
+- [x] **Tickets — create.** New ticket requires requester, subject and description. Find existing contacts by name or email or create a contact on submit with name and valid email. Allow status, priority, type, source, group and eligible agent selection. Open the saved ticket. Writes one `tickets` record, a `contacts` record when needed, and a `ticketEvents` record with type `created`. Set `slaPolicyId`, `firstResponseDueAt`, `nextResponseDueAt`, and `resolutionDueAt` as defined in the data model.
+- [x] **Tickets — update and assign.** Show content and chronological conversation alongside ticket properties. Save changes to status, priority, type, source, group, assignee and tags. Support resolve, close and reopen, plus bulk assign and bulk status changes from selected queue rows. Writes `tickets` properties and `updatedAt`, sets or clears `resolvedAt` and `closedAt`, and writes one field-level `ticketEvents` record per changed ticket. While editing priority, group, source or type, recalculate applicable SLA targets as documented. An unchanged save produces zero writes.
+- [x] **Tickets — reply and add notes.** Composer toggles between Reply and Add note. Notes default private and can be public. Reject whitespace-only content, allow a status change with submit, and show author, timestamp and visibility in the conversation. Writes `ticketConversations`, updates `tickets.updatedAt` and qualifying response/status fields, and adds one `ticketEvents` record. Canned responses may be inserted into a reply before sending. Everything stays in the account state.
+- [x] **SLAs — configure policies.** Admin list shows precedence, enabled state, and the default fallback. Add and edit policies with name, description, all/any conditions (group, source, type), business or calendar hours, and positive first response, every response and resolution targets for each priority. Support activation, deactivation, reordering and confirmed soft deletion of custom policies. Keep the default policy last and available to edit. Write `slaPolicies` fields, ranks or `deletedAt`, plus `adminEvents` per successful action. Policy administration leaves existing ticket deadlines intact until an explicit matching ticket edit.
+- [x] **SLAs — apply and inspect.** Choose the first active matching policy for new tickets and when an explicit ticket edit changes a matching field or priority. Use calendar minutes or the policy schedule. Show policy name, first response due, next response due when present, resolution due and derived overdue status. Enable manual first-response and resolution due date changes in the SLA panel. Writes the affected `tickets` SLA fields and due overrides plus `ticketEvents` on a manual save. First public agent reply or public note fulfills first-response SLA and clears any outstanding next-response target. Private notes leave SLA timestamps intact. Policy and deadline labels on their own write zero records.
+- [x] **Canned responses — organize and manage.** Admin library shows folder counts and searchable titles, bodies and short codes. Create or rename folders and create, edit, move and confirm deletion of responses. Configure Everyone, Groups or Myself visibility and validate selected groups or ownership. Support inserting known placeholders from the editor. Writes `cannedResponseFolders` or `cannedResponses` with ownership, timestamps and `deletedAt` where applicable, and `adminEvents` identifying the action and fields changed.
+- [x] **Canned responses — use in a reply.** Find visible responses by folder, text, title or short code in the ticket composer. Preview, insert into the editable draft, and resolve requester name, ticket ID and subject placeholders from the current ticket. Preserve existing draft content. Preview, insert and cancel write zero records. Send writes `ticketConversations.body` and `cannedResponseIds`, linked by `ticketId`, plus the usual ticket and event changes.
+- [x] **Acceptance.** Run `npm run build` and exercise all P1 workflows in installed Node Playwright on localhost:5452 using `PILOT_PLAYWRIGHT`. Use fresh sessions for seed and injected worlds, check route reloads, verify `/go?sid=…` fields after each write, validate isolation and count idle POSTs after baseline load. Include successful and rejected actions and empty, sparse and large collections in `TEST.md`. If a persistent Vite process is needed, use `Start-Process -WindowStyle Hidden`, the absolute Vite entry point and the target directory as working directory. Use ignored scratch space or remove runners after testing. The parent runner handles Docker certification and commits.
+
+## P2 — Secondary depth
+
+The seed defines three core workflows. Finish and verify those paths before adding any secondary surface.
+
+## Data seed
+
+- [x] In `src/data/seed.js`, implement `createInitialData()` with 48 tickets, 40 contacts, 12 agents, 6 groups, at least 72 conversations and relevant ticket history. Cover all priorities and lifecycle states, each queue view, assigned and unassigned cases, recurring operations issues, and both active and breached SLA targets.
+- [x] Seed 24 SLA policies across specific and overlapping matches, including disabled policies and one default, and 36 canned responses across 6 folders. Include shared, personal and group-scoped entries, useful short codes and placeholder examples. Use English synthetic records, fixed IDs, explicit cross-links and stable timestamps. Use fixed seed dates and the runtime clock for display.
+
+## Out of scope
+
+- Authentication, account creation and production account access. Start signed in as synthetic administrator Morgan Ellis.
+- External email, notifications, file transfers, integrations and external assets. SLA escalation delivery and schedule exceptions are outside the planned workflows.
