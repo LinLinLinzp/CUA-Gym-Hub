@@ -1,0 +1,46 @@
+# Smartsheet research
+
+Smartsheet combines a typed grid, data collection forms, row-based workflow automation, and project scheduling. A project manager works in Grid and Gantt, an operations coordinator configures intake forms and review rules, a stakeholder responds to an approval request, and a submitter provides information through a form link. These workflows converge on the sheet: a form submission creates a row, a matching workflow requests a decision, and Gantt charts the same row dates the grid displays. [Smartsheet product overview](https://www.smartsheet.com/platform) · [Project management demo](https://www.smartsheet.com/contact/project-management-demo)
+
+The app URL redirects to sign-in. The references below come from public product and help materials and a published form screenshot. The [design guide](../DESIGN.md) specifies the new layout and styles. [Smartsheet sign-in](https://app.smartsheet.com/login)
+
+## Feature inventory
+
+| Priority | Feature | Surface and behavior |
+| --- | --- | --- |
+| P0 | Scaffold | Locally bundled React app and fixed port `5386` for both Vite development and preview. |
+| P0 | Workspace navigation | Home, Browse, Search, Notifications, Create, and account access. Recent sheet updates, favorites, workspace list, and search give different paths to the same sheet. [Navigation](https://help.smartsheet.com/articles/2478881-access-and-organize-your-work-from-the-left-panel) |
+| P0 | Deep links | Browser-addressable sheets, Gantt views, form builders and published forms, workflow editors, and approval details, retaining the Harbor SID. |
+| P0 | State and session isolation | Injected worlds, unchanged state templates, a single commit per mutation, and a `/go` state inspection endpoint. [Harbor contract](../../../HARBOR_CONTRACT.md) |
+| P1 | Sheet lifecycle | Create in a workspace, open, rename, favorite, and delete with confirmation. [Organize your work](https://help.smartsheet.com/articles/2478881-access-and-organize-your-work-from-the-left-panel) |
+| P1 | Editable grid | Row and column menus, cell selection, typed editors, keyboard navigation, row insertion and deletion, column addition and ordering. [Row operations](https://help.smartsheet.com/articles/504721-inserting-deleting-rows-or-tasks) · [Keyboard shortcuts](https://help.smartsheet.com/articles/522200-keyboard-shortcuts) |
+| P1 | Sort and filter | Typed filters hide rows temporarily. Sorting commits row order. Grid and Gantt display the same visible set. [Sort and filter](https://help.smartsheet.com/learning-track/view-and-organize-sheet-data/sort-and-filter-sheet-data) |
+| P1 | Form management and builder | Sheet-level list, add/edit fields sourced from columns, reorder, required and hidden defaults, preview, activate, and copy link. [Create and edit a form](https://help.smartsheet.com/articles/2482491-customize-form-appearance) |
+| P1 | Public form submission | Ordered controls, validation, confirmation text, and top/bottom placement in the destination sheet. [Share your form](https://help.smartsheet.com/articles/2481821-review-and-share-your-form) · [Form submission settings](https://help.smartsheet.com/articles/2481836-manage-form-display-and-submission-options) |
+| P1 | Approval workflow configuration | Trigger on add or change, optional condition, contact recipient, response column, message, and active/paused status. [Approval workflow](https://help.smartsheet.com/articles/2479276-request-approval-from-stakeholders) |
+| P1 | Approval request and decision | Notifications lists requests for the assigned user. An approve or decline decision sets the linked cell and leaves a request record. [Notifications](https://help.smartsheet.com/articles/2481841-overview-of-automated-notifications-sent-via-smartsheet) · [Approval responses](https://help.smartsheet.com/articles/2479276-request-approval-from-stakeholders) |
+| P1 | Gantt setup and visualization | Grid and timeline split, date and progress column mapping, project settings, zoom, bars, milestones, dependency connectors. [Gantt](https://help.smartsheet.com/learning-track/level-3-solutions/gantt-chart-dependencies) |
+| P1 | Gantt schedule edits | Bar moves, resizing, duration, milestones, and predecessor changes share typed row cells with the grid. Initial dependency editing covers Finish-to-Start and working-day lag. [Dependencies and predecessors](https://help.smartsheet.com/articles/765727-enabling-dependencies-using-predecessors) |
+| P2 | Sheet-scoped saved filters | Name, edit, select, or delete a reusable filter. [Filter management](https://help.smartsheet.com/learning-track/project-fundamentals-part-3-reporting/filter-creation-and-management) |
+| P2 | Conditional form display | Show a field when an earlier response matches the saved condition. [Form field logic](https://help.smartsheet.com/articles/2482491-customize-form-appearance) |
+
+## Visual references
+
+| Local reference | What the image shows | Source |
+| --- | --- | --- |
+| [Home and Recents](screenshots/home-recents.jpg) | A Create action on the upper right, list/card options, Recents and Favorites, item names and workspace names. The implementation uses a workspace directory and sheet list. | [Home experience](https://help.smartsheet.com/articles/2482308-navigate-your-work-from-home) |
+| [Sheet surface](screenshots/sheet-grid.jpg) | Dense table with row numbers, task names, statuses and dates, with the sheet title and actions above. The reference shows Smartsheet Table view, so use it for information density and the sheet menu context. | [Form entry point from a sheet](https://help.smartsheet.com/articles/2482491-customize-form-appearance) |
+| [Form builder](screenshots/forms-builder.jpg) | Form and Settings tabs, a field palette, and a live preview with a dropdown. Preview and field property editing are both visible concepts in the implementation. | [Create and edit a form](https://help.smartsheet.com/articles/2482491-customize-form-appearance) |
+| [Published form](screenshots/forms-submit.jpg) | A single-column intake form with a title, helper text, required indicators, and a submit button. | [Smartsheet Community form example](https://community.smartsheet.com/discussion/100893/automation-having-a-form-pop-up-from-a-different-smartsheet-if-the-criteria-changes-in-the-other) |
+| [Automation workflow](screenshots/approval-builder.png) | Current product illustration for the Trigger → Condition → Action pattern. The image’s example action is an alert. | [Smartsheet platform](https://www.smartsheet.com/platform) |
+| [Approval rule configuration](screenshots/approval-rule.jpg) | An earlier product visual shows separate controls for the trigger, recipient and response column. Use the current help for action labels and stages. | [Smartsheet approval workflow documentation](https://help.smartsheet.com/articles/2479276-request-approval-from-stakeholders) · [Original screenshot](https://www.smartsheet.com/sites/default/files/2018/automated-actions-2%20%281%29.jpg) |
+| [Gantt split pane](screenshots/gantt-split.jpg) | A sheet with task details and duration on the left and a date axis and aligned bars on the right. | [Gantt chart with dependencies](https://help.smartsheet.com/learning-track/level-3-solutions/gantt-chart-dependencies) |
+| [Gantt zoom menu](screenshots/gantt.jpg) | Toolbar zoom and timescale options over task bars with progress shading. | [Gantt settings and zoom](https://help.smartsheet.com/learning-track/level-3-solutions/gantt-chart-dependencies) |
+
+Desktop workflows drive the implementation. The iOS listing and navigation guide show a more compact experience centered on recent work and notifications. Keep the public form and approval response route usable on narrow browsers. Use horizontal scrolling for dense grids. Native offline submissions, barcode scanning and push notifications belong to the mobile app. [Smartsheet iOS listing](https://apps.apple.com/us/app/smartsheet-projects-teams/id568421135) · [Mobile navigation](https://help.smartsheet.com/articles/2482313-view-and-update-your-work-from-the-mobile-app)
+
+## Data model and scope
+
+Every row belongs to one sheet. Cell values refer to stable column IDs, a form field maps to one column, a submission links the form and resulting row, and an approval request links its workflow, row, recipient, and response column. Project settings assign roles to the row’s existing date, duration, predecessor, and progress columns. Defined types, example values, scheduling rules, and seed requirements live in [the data model](data_model.md). [Smartsheet developer guide to sheets, rows, columns, and cells](https://developers.smartsheet.com/api/smartsheet/guides/basics/sheets-rows-columns-and-cells)
+
+The planned session starts as Avery Morgan. In-app requests cover approval delivery inside the offline container. Formula evaluation, native mobile features, sign-in, collaboration permissions, real-time sync, and external services fall outside the four Harbor workflows. The plan commits valid individual grid edits immediately and uses explicit Save for settings and builders. The product also documents a sheet-level Save workflow. [Save and refresh sheets](https://help.smartsheet.com/articles/1872955-saving-refreshing-sheets)
