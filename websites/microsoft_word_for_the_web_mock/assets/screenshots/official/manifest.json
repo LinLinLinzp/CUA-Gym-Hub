@@ -1,0 +1,142 @@
+[
+  {
+    "file": "official/create-01.png",
+    "sourcePage": "https://support.microsoft.com/en-gb/word/training/create-a-document-in-word-for-the-web?nochrome=true",
+    "sourceImage": "https://support.microsoft.com/en-gb/word/media/word-for-web-blank.png",
+    "alt": "Create blank document button in Word for the web.",
+    "width": 481,
+    "height": 105,
+    "retrievedAt": "2026-11-18"
+  },
+  {
+    "file": "official/create-02.jpg",
+    "sourcePage": "https://support.microsoft.com/en-gb/word/training/create-a-document-in-word-for-the-web?nochrome=true",
+    "sourceImage": "https://support.microsoft.com/en-gb/word/media/mts-rename-file.jpg",
+    "alt": "Name/Rename a file",
+    "width": 435,
+    "height": 108,
+    "retrievedAt": "2026-11-18"
+  },
+  {
+    "file": "official/web-tracking-01.png",
+    "sourcePage": "https://support.microsoft.com/en-us/word/training/track-changes-in-word",
+    "sourceImage": "https://support.microsoft.com/en-us/word/media/track-changes-selection.png",
+    "alt": "3e04d7d2-beab-41c7-9a8a-5cb999483b55",
+    "width": 408,
+    "height": 206,
+    "retrievedAt": "2026-11-18"
+  },
+  {
+    "file": "official/web-tracking-02.png",
+    "sourcePage": "https://support.microsoft.com/en-us/word/training/track-changes-in-word",
+    "sourceImage": "https://support.microsoft.com/en-us/word/media/accept-or-reject-tr-chng-main.png",
+    "alt": "7b5ed63e-e5d8-44ea-b190-127089d3c9c8",
+    "width": 272,
+    "height": 157,
+    "retrievedAt": "2026-11-18"
+  },
+  {
+    "file": "official/web-tracking-03.png",
+    "sourcePage": "https://support.microsoft.com/en-us/word/training/track-changes-in-word",
+    "sourceImage": "https://support.microsoft.com/en-us/word/media/word-web-trck-chngs-rt-clck-accpt.png",
+    "alt": "8a281053-77b3-4ce5-8288-55c385ea7b51",
+    "width": 408,
+    "height": 123,
+    "retrievedAt": "2026-11-18"
+  },
+  {
+    "file": "official/web-tracking-04.png",
+    "sourcePage": "https://support.microsoft.com/en-us/word/training/track-changes-in-word",
+    "sourceImage": "https://support.microsoft.com/en-us/word/media/word-web-tr-chng-del-rt-clck.png",
+    "alt": "da56c31b-8d90-438d-acfa-f2d3ba677572",
+    "width": 412,
+    "height": 121,
+    "retrievedAt": "2026-11-18"
+  },
+  {
+    "file": "official/library-search.png",
+    "sourcePage": "https://techcommunity.microsoft.com/blog/Microsoft365InsiderBlog/a-faster-way-to-find-your-word-excel-and-powerpoint-files-online/4496115",
+    "sourceImage": "https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NDk2MTE1LVBrUVZsTg?image-dimensions=999x562&revision=13",
+    "alt": "Word web library with document search, templates and document filters.",
+    "width": 999,
+    "height": 562,
+    "retrievedAt": "2026-11-18",
+    "sourceFrame": 72
+  },
+  {
+    "file": "official/editor-canvas.png",
+    "sourcePage": "https://techcommunity.microsoft.com/blog/Microsoft365InsiderBlog/view-your-document-across-separate-pages-in-word-for-the-web/4221278",
+    "sourceImage": "https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00MjIxMjc4LTYxMDkyN2lCMTZCMzY5NzBDOEQwQzc3?image-dimensions=999x593&revision=5",
+    "alt": "Word web editor with page canvas, ribbon and status bar.",
+    "width": 999,
+    "height": 593,
+    "retrievedAt": "2026-11-18",
+    "sourceFrame": 0
+  },
+  {
+    "file": "official/web-ribbon.png",
+    "sourcePage": "https://techcommunity.microsoft.com/blog/Microsoft365InsiderBlog/a-new-header-and-footer-experience-in-word-for-the-web/4432026",
+    "sourceImage": "https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NDMyMDI2LVZwTTg2VA?image-dimensions=999x82&revision=6",
+    "alt": "Compact ribbon tab and command rows in Word for the web.",
+    "width": 999,
+    "height": 82,
+    "retrievedAt": "2026-11-18"
+  },
+  {
+    "file": "official/all-markup.png",
+    "sourcePage": "https://techcommunity.microsoft.com/blog/Microsoft365InsiderBlog/simple-markup-view-in-word-for-the-web/4214635",
+    "sourceImage": "https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00MjE0NjM1LTYwODI3NWk2MDBCMjJDQTU3NjhEN0M0?image-dimensions=750x661&revision=6",
+    "alt": "Word web canvas with edits annotated inline in All Markup.",
+    "width": 750,
+    "height": 661,
+    "retrievedAt": "2026-11-18"
+  },
+  {
+    "file": "official/simple-markup.png",
+    "sourcePage": "https://techcommunity.microsoft.com/blog/Microsoft365InsiderBlog/simple-markup-view-in-word-for-the-web/4214635",
+    "sourceImage": "https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00MjE0NjM1LTYwODI3Nmk3NUVGRThBNkMzQUM3MDgy?image-dimensions=750x629&revision=6",
+    "alt": "Word web canvas with red margin indicators in Simple Markup.",
+    "width": 750,
+    "height": 629,
+    "retrievedAt": "2026-11-18"
+  },
+  {
+    "file": "official/manage-access.png",
+    "sourcePage": "https://support.microsoft.com/en-us/onedrive/sharepoint/manage-sharing-and-permissions-in-onedrive-and-sharepoint",
+    "sourceImage": "https://support.microsoft.com/en-us/onedrive/media/existing-access-permissions-menu.png",
+    "alt": "Shared Microsoft 365 permissions UI in a PowerPoint context.",
+    "width": 1656,
+    "height": 956,
+    "retrievedAt": "2026-11-18"
+  },
+  {
+    "file": "official/comments-refresh-01.png",
+    "sourcePage": "https://techcommunity.microsoft.com/blog/Microsoft365InsiderBlog/introducing-a-fresh-new-look-for-comments-in-word-for-the-web/4458184",
+    "alt": "Microsoft announcement hero image for the Word web comment refresh.",
+    "width": 1300,
+    "height": 500
+  },
+  {
+    "file": "official/comments-refresh-02.png",
+    "sourcePage": "https://techcommunity.microsoft.com/blog/Microsoft365InsiderBlog/introducing-a-fresh-new-look-for-comments-in-word-for-the-web/4458184",
+    "alt": "Word web contextual comments showing inactive cards and replies.",
+    "width": 897,
+    "height": 525,
+    "sourceImage": "https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NDU4MTg0LTNEbkNyaA?image-dimensions=897x525&revision=4"
+  },
+  {
+    "file": "official/comments-refresh-03.png",
+    "sourcePage": "https://techcommunity.microsoft.com/blog/Microsoft365InsiderBlog/introducing-a-fresh-new-look-for-comments-in-word-for-the-web/4458184",
+    "alt": "Selected Word web comment and inline reply composer.",
+    "width": 900,
+    "height": 640,
+    "sourceImage": "https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NDU4MTg0LWkzcU1SZw?image-dimensions=900x640&revision=4"
+  },
+  {
+    "file": "official/header-footer-01.png",
+    "sourcePage": "https://techcommunity.microsoft.com/blog/Microsoft365InsiderBlog/a-new-header-and-footer-experience-in-word-for-the-web/4432026",
+    "alt": "Microsoft announcement hero image for the Word web header and footer refresh.",
+    "width": 1300,
+    "height": 500
+  }
+]
