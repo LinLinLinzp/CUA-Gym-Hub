@@ -17,7 +17,7 @@
 
 ## P0 — Dead or broken code
 
-### AUDIT-001 · A stale tab erases an accepted write
+### AUDIT-001 · A stale tab erases an accepted write · Resolved on 2026-11-18
 
 - **Files** — `src/store.jsx:22`, `src/store.jsx:39`
 - **Workflow** — Scheduled Hold Mail cancellation. The shared commit path also serves claims, forwarding and PO Boxes.
@@ -25,7 +25,7 @@
 - **Observed** — Both pages report success. `/go` ends with `hold-001.status: scheduled` and `hold-002.status: cancelled`. The second context has no shared storage event and posts its older full snapshot. The existing idle-tab test passes because it performs writes from only one context.
 - **Fix** — Reconcile each user-initiated mutation with the latest authoritative snapshot and apply the existing business checks to that snapshot before saving. Handle overlap between active writers so a stale full snapshot cannot silently undo an accepted operation. Keep both Harbor templates unchanged and preserve the zero-write idle behavior. Verify that both cancellation records survive with their cancellation metadata.
 
-### AUDIT-002 · Claim review can save a draft and file the same input
+### AUDIT-002 · Claim review can save a draft and file the same input · Resolved on 2026-11-18
 
 - **Files** — `src/claims.jsx:192`, `src/ui.jsx:72`
 - **Reproduction** — Complete a new claim up to its review. Activate Save draft and then File claim in the same browser turn, before navigation replaces the form.
@@ -67,6 +67,6 @@ Added the localhost API contract, fixed seed ID ranges and a minimal injection e
 ## P0 audit replay, 2026-11-18
 
 - **AUDIT-001 · Fixed and retested.** The original two-context browser case retained both Hold Mail cancellations and cancellation metadata after the second preloaded context wrote.
-- **AUDIT-002 · Fixed and retested.** Same-turn Save draft and File claim yielded one draft for the tracking number. Both entry points share a synchronous claim lock through successful navigation.
+- **AUDIT-002 · Fixed and retested.** The two same-turn activation orders each produced exactly one write and one claim. The first action determined whether the claim stayed draft or was filed. Both entry points use the same submission guard.
 
-Docker dynamic certification run `135192` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.
+Docker dynamic certification run `168412` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

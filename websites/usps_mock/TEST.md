@@ -122,6 +122,6 @@ Injection reached `changeOfAddressRequests → 0 → createdAt`.
 ## P0 audit replay, 2026-11-18
 
 - **AUDIT-001 · Fixed and retested.** The original two-context browser case retained both Hold Mail cancellations and cancellation metadata after the second preloaded context wrote.
-- **AUDIT-002 · Fixed and retested.** Same-turn Save draft and File claim yielded one draft for the tracking number. Both entry points share a synchronous claim lock through successful navigation.
+- **AUDIT-002 · Fixed and retested.** The two same-turn activation orders each produced exactly one write and one claim. The first action determined whether the claim stayed draft or was filed. Both entry points use the same submission guard.
 
-Docker dynamic certification run `135192` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.
+Docker dynamic certification run `168412` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

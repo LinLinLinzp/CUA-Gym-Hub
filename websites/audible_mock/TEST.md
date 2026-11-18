@@ -90,3 +90,9 @@ The repository certifier passed the production bundle in run `135780`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `titles → 0 → title`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The delayed add did not expose Remove before acknowledgement. After adding and removing, both writes reached Harbor and the latest Wish List status was removed.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

@@ -3,12 +3,12 @@ import { BrowserRouter } from 'react-router-dom'
 import { App } from './App.jsx'
 import { createInitialData } from './data/seed.js'
 import { APP, AccountProvider } from './state/AccountProvider.jsx'
-import { loadState } from './utils/dataManager.js'
+import { loadInitialState } from './utils/loadInitialState.js'
 import './styles.css'
 
 const root = createRoot(document.getElementById('root'))
 root.render(<div className="boot" role="status">Loading your account…</div>)
-loadState(APP, createInitialData).then((state) => {
+loadInitialState(APP, createInitialData).then((state) => {
   root.render(
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <AccountProvider initialState={state}>

@@ -19,14 +19,14 @@ The audit reran the existing Playwright workflow and rapid-update suites against
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · A delayed startup baseline overwrites a user save
+### AUDIT-001 · A delayed startup baseline overwrites a user save · Resolved on 2026-11-18
 
 - **Files** · `src/main.jsx:12`, `src/utils/dataManager.js:57`, `src/utils/persist.js:3`
 - **Issue** · The shared template starts the baseline POST and returns the initial snapshot without waiting for the request to finish. Routes become editable while the baseline POST is still pending. The app's queue orders user saves with each other, but the startup POST bypasses it.
 - **Reproduction** · On a fresh SID, hold the browser's startup `action: "set"` request, create a custom shelf, and let `set_current` reach the server. Verify the shelf is present in `/go`, then release the startup request. In Vite's shared API, the resulting `current_state` loses the shelf while `initial_state` contains it. The UI continues showing the shelf.
 - **Fix** · Coordinate the startup POST and the mutation queue at the app boundary while retaining the shared templates byte-for-byte. Hold writes until an outstanding baseline finishes, or hold route readiness until the baseline is established. Add a delayed-baseline regression that checks the original baseline and the edited current snapshot.
 
-### AUDIT-002 · A rejected state save still announces success
+### AUDIT-002 · A rejected state save still announces success · Resolved on 2026-11-18
 
 - **Files** · `src/store.jsx:14`, `src/utils/persist.js:9`, `src/utils/dataManager.js:64`
 - **Issue** · `commit` treats synchronous dispatch as successful persistence. The wrapper drains response bodies without checking HTTP status, and the template catches fetch rejections. A failed POST leaves the new snapshot in local storage only. The dialog closes and the success announcement makes it look saved.

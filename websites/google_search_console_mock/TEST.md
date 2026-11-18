@@ -104,3 +104,9 @@ The repository certifier passed the production bundle in run `50260`. The local 
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `properties → 0 → type`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** A sitemap submission from an already open tab preserved the other tab’s URL inspection in Harbor. Property, indexing and sitemap acceptance checks also passed.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

@@ -102,8 +102,8 @@ export function Moderation() {
   const status = activeStatus(selected, now)
   const chats = selected ? (state.chatMessages ?? []).filter(message => message.viewerId === selected.id).sort(newest) : []
 
-  function apply(action, viewerId, reason = '', durationSeconds = null, messageId) {
-    commit((current, tx) => {
+  async function apply(action, viewerId, reason = '', durationSeconds = null, messageId) {
+    await commit((current, tx) => {
       const records = current.viewers ?? []
       const viewer = records.find(item => item.id === viewerId)
       if (!viewer) return current

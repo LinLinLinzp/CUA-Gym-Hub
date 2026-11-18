@@ -12,8 +12,8 @@ export function GroupActions({ record, onEdit }) {
   const to = useRouteLink()
   const [deleting, setDeleting] = useState(false)
 
-  function removeGroup() {
-    const saved = commit((state, meta) => {
+  async function removeGroup() {
+    const saved = await commit((state, meta) => {
       if (!state.groups.some(group => group.id === record.id && group.source === 'OKTA')) return null
       const members = state.groupMemberships.filter(row => row.groupId === record.id)
       const grants = state.appAssignments.filter(row => row.principalType === 'GROUP' && row.principalId === record.id)
@@ -65,8 +65,8 @@ export function GroupMembership({ record, forGroup }) {
   const groups = new Map(state.groups.map(group => [group.id, group]))
   const users = new Map(state.users.map(user => [user.id, user]))
 
-  function add(ids) {
-    const didSave = commit((snapshot, meta) => {
+  async function add(ids) {
+    const didSave = await commit((snapshot, meta) => {
       const allowed = new Set(eligible(snapshot, record.id, forGroup).map(row => row.id))
       if (ids.some(id => !allowed.has(id))) return null
       const added = ids.map(id => {
@@ -82,8 +82,8 @@ export function GroupMembership({ record, forGroup }) {
     return didSave ? undefined : 'One or more selections are no longer eligible.'
   }
 
-  function remove() {
-    const didSave = commit((snapshot, meta) => {
+  async function remove() {
+    const didSave = await commit((snapshot, meta) => {
       const membership = snapshot.groupMemberships.find(row => row.id === removing.id)
       if (!membership || !snapshot.groups.some(row => row.id === membership.groupId && row.source === 'OKTA')) return null
       const { id, groupId, userId } = membership

@@ -19,7 +19,7 @@ The build and existing localhost Playwright suite passed. A separate source life
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · Reclassifying and removing a source leaves active offers without a removal path
+### AUDIT-001 · Reclassifying and removing a source leaves active offers without a removal path · Resolved on 2026-11-18
 
 - **Location** `src/data/feeds.js:33`, `src/data/feeds.js:78`, `src/pages/Feeds.jsx:197`, `src/pages/Products.jsx:169`.
 - **Reproduction** Open `feed-001` and run its configured sample. In Edit setup, change Type from Primary to Supplemental and save. Remove the source. The confirmation claims that zero products are affected.
@@ -67,3 +67,9 @@ The build and existing localhost Playwright suite passed. A separate source life
 - Existing Playwright suite passed on `localhost:5470` in sessions `mc-check-1795012759018` and `mc-check-1795012898423`. [TEST.md](TEST.md) records the prior dev and built-bundle runs.
 - Source lifecycle and latest-input findings reproduced in session `mc-audit-1795012813978`.
 - Direct state API checks passed in session `mc-audit-api-1795012837301`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The revised browser fixture switched a source from Primary to Supplemental, verified its previously owned active offer stayed visible, then retired the source and checked removal and unrelated offers.
+
+Docker dynamic certification run `182740` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

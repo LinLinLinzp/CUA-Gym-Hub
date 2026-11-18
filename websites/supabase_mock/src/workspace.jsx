@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useRef, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { saveState, withSid } from './utils/dataManager.js'
+import { withSid } from './utils/dataManager.js'
+import { readCurrentState, saveAcknowledged, withSessionWrite } from './utils/harborPersistence.js'
 
 export const APP = 'supabase_mock'
 export const list = value => Array.isArray(value) ? value : []
@@ -30,20 +31,22 @@ export function Workspace({ initialState, children }) {
   const current = useRef(initialState)
 
   function commit(mutation, message) {
-    const previous = current.current
-    const timestamp = new Date().toISOString()
-    const actorId = previous.currentUser?.id ?? null
-    const meta = { actorId, createdAt: timestamp, updatedAt: timestamp }
-    const { changes, action, entityType, entityId, related = {}, details = {} } = mutation(previous, meta)
-    const activity = { id: crypto.randomUUID(), action, entityType, entityId, actorId, createdAt: timestamp, related, details }
-    const next = { ...previous, ...changes, activity: [...list(previous.activity), activity] }
-    current.current = next
-    saveState(APP, next)
-    setState(next)
-    setNotice({ message, id: activity.id })
+    return withSessionWrite(APP, async () => {
+      const previous = await readCurrentState(current.current)
+      const timestamp = new Date().toISOString()
+      const actorId = previous.currentUser?.id ?? null
+      const meta = { actorId, createdAt: timestamp, updatedAt: timestamp }
+      const { changes, action, entityType, entityId, related = {}, details = {} } = mutation(previous, meta)
+      const activity = { id: crypto.randomUUID(), action, entityType, entityId, actorId, createdAt: timestamp, related, details }
+      const next = { ...previous, ...changes, activity: [...list(previous.activity), activity] }
+      await saveAcknowledged(APP, next)
+      current.current = next
+      setState(next)
+      setNotice({ message, id: activity.id })
+    })
   }
 
-  return <WorkspaceContext.Provider value={{ state, commit, notice, clearNotice: () => setNotice(null) }}>
+  return <WorkspaceContext.Provider value={{ state, commit, notice, reportError: error => setNotice({ message: error.message, id: crypto.randomUUID() }), clearNotice: () => setNotice(null) }}>
     {children}
   </WorkspaceContext.Provider>
 }

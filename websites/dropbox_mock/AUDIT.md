@@ -17,7 +17,7 @@
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · A delayed boot write can erase the first mutation from `/go`
+### AUDIT-001 · A delayed boot write can erase the first mutation from `/go` · Resolved on 2026-11-18
 
 - **Files**: `src/store.jsx:26`, `src/utils/dataManager.js:56`
 - **Reproduction**: In a fresh SID, hold the boot `POST /post` with `action=set` while allowing the workspace to render. Create a folder and let its `set_current` complete. Release the held `set`.

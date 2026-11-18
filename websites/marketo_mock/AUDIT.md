@@ -17,7 +17,7 @@
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · Run now rejected an otherwise valid injected campaign
+### AUDIT-001 · Run now rejected an otherwise valid injected campaign · Resolved on 2026-11-18
 
 - **Files** `src/data/model.js`, `src/pages/Campaigns.jsx`, `src/pages/Inventory.jsx`
 - **Finding** A campaign without `mode` could show Batch and enable Run once, then reject the confirmed run. An injected campaign with triggers and no mode also lacked the correct activation controls.

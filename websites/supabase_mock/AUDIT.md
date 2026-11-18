@@ -17,7 +17,7 @@
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · A second active tab overwrites saved records
+### AUDIT-001 · A second active tab overwrites saved records · Resolved on 2026-11-18
 
 - **Files** `src/workspace.jsx:30–41`, `src/utils/dataManager.js:64–75`
 - **Reproduction** Open Authentication in two tabs with the same fresh SID. Create `first@example.com` in the first tab and verify it in `/go`. Without reloading the second tab, create `second@example.com` there. Both requests return `200` and both tabs report success. The final `/go` state contains only the second user and its activity record.
@@ -56,3 +56,9 @@ Added endpoint usage, reset behavior, seed ID patterns, and a minimal injection 
 ## Verification
 
 Reviewed the application shell, Tables, Authentication, Storage, Policies, shared UI and store, and checked the stylesheet against `DESIGN.md`. The existing Playwright suite passed on port 5486. Additional checks used separate synthetic SIDs on that port. [TEST.md](TEST.md) records workflow evidence and the two edge cases. Docker certification is assigned to the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Two already-open authentication tabs created different users and Harbor retained both users and both linked activity records. The full browser suite also passed.
+
+Docker dynamic certification run `182740` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

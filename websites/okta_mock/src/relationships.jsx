@@ -33,10 +33,10 @@ export function Picker({ title, searchLabel, items, onSave, onClose }) {
   const visible = items.filter(item => matches(query, item.name, item.subtitle))
   const selected = items.filter(item => picked.includes(item.id)).map(item => item.id)
   return <Modal title={title} drawer onClose={onClose}>
-    <form className="dialog-form" onSubmit={event => {
+    <form className="dialog-form" onSubmit={async event => {
       event.preventDefault()
       if (!selected.length) return
-      const issue = onSave(selected)
+      const issue = await onSave(selected)
       if (issue) setError(issue)
       else onClose()
     }}>

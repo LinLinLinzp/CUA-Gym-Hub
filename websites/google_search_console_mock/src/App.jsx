@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useMatch } from 'react-router-dom'
-import { saveState } from './utils/dataManager'
+import { readCurrentState, saveAcknowledged, withSessionWrite } from './utils/harborPersistence.js'
 import { activeProperty, inspectPage, label, list, scopedUrl, selectProperty } from './data/records'
 import { Icon, Missing, Status, typeLabel, usePaths, inspectionQuery, propertyPath } from './ui'
 import { Overview } from './pages/Overview'
@@ -52,9 +52,9 @@ function PropertyPicker({ state, property, onSelect, openSheet }) {
 function GlobalInspect({ property, onInspect }) {
   const [value, setValue] = useState('')
   const [error, setError] = useState('')
-  return <form className="global-form" aria-label="Global URL inspection" noValidate onSubmit={event => {
+  return <form className="global-form" aria-label="Global URL inspection" noValidate onSubmit={async event => {
     event.preventDefault()
-    const result = onInspect(value)
+    const result = await onInspect(value)
     setError(result || '')
     if (!result) setValue('')
   }}>
@@ -89,24 +89,37 @@ export function App({ initialState, appName }) {
   const property = verified.find(p => p.id === contextId) || selected
   const url = search.get('url') || ''
   const tab = path.startsWith('/properties') ? '/properties' : path.startsWith('/sitemaps') ? '/sitemaps' : path
-  const commit = change => {
-    const next = typeof change === 'function' ? change(fresh.current) : change
-    if (!next || next === fresh.current) return
-    fresh.current = next
-    setState(next)
-    saveState(appName, next)
+  const commit = async change => {
+    try {
+      return await withSessionWrite(appName, async () => {
+        const current = await readCurrentState(fresh.current)
+        const next = change(current)
+        if (!next || next === current) return false
+        await saveAcknowledged(appName, next)
+        fresh.current = next
+        setState(next)
+        return true
+      })
+    } catch (error) {
+      setNotice(error.message || 'The change could not be saved. Try again.')
+      return false
+    }
   }
-  const choose = next => {
+  const choose = async next => {
     if (next.id === property?.id) return
-    commit(current => selectProperty(current, next))
+    if (!await commit(current => selectProperty(current, next))) return
     setNotice('')
     go(to(navigation.some(([href]) => href === tab) ? tab : '/', { property: next.id }))
   }
-  const inspect = (value) => {
+  const inspect = async (value) => {
     const result = scopedUrl(value, property)
     if (result.error) return result.error
-    const next = inspectPage(fresh.current, property, result.url)
-    commit(next.state)
+    let next
+    const saved = await commit(current => {
+      next = inspectPage(current, property, result.url)
+      return next.state
+    })
+    if (!saved) return 'The inspection could not be saved. Try again.'
     setNotice('')
     go(to('/url-inspection', inspectionQuery(property, result.url, next.inspection.id)))
     return ''

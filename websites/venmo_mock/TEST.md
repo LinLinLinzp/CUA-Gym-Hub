@@ -118,3 +118,9 @@ The repository certifier passed the production bundle in run `161436`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `contacts → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** A delayed acknowledgement prevented an early download or success notice. Both CSVs downloaded after their respective writes and both export records persisted through hard reload.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

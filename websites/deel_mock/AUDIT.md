@@ -19,7 +19,7 @@ The app uses a horizontal slate header, plain-text Deel branding, synthetic Nort
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · A stale tab can replace completed writes for the same session
+### AUDIT-001 · A stale tab can replace completed writes for the same session · Resolved on 2026-11-18
 
 - **Files** `src/context/Workspace.jsx:24`, `src/data/invoices.js:5`
 - **Issue** The mutation boundary validates against a tab-local snapshot. The Harbor API accepts the resulting whole-state write, so a second tab can confirm an already released invoice or overwrite an unrelated mutation.
@@ -54,3 +54,9 @@ None open.
 ## SCHEMA.md Updates
 
 Added endpoint syntax, seed ID ranges, a minimal injection payload, and the observed baseline and reset behavior. The action table already matches the source.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** Two same-session tabs attempted to confirm one invoice while the first response was held. The duplicate produced no write. A stale third tab’s approval preserved the original payment ID and activity.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

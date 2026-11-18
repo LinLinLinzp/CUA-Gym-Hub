@@ -44,7 +44,7 @@ function StreamEditor({ close }) {
     setTagError('')
     return next
   }
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
     const title = draft.title.trim()
     if (!title) {
@@ -58,8 +58,7 @@ function StreamEditor({ close }) {
       return
     }
     const patch = { ...draft, title, tags, goLiveNotification: draft.goLiveNotification.trim() }
-    commit((current, tx) => editSettings(current, 'streamSettings', patch, tx, 'update_stream_info'), 'Stream info saved.')
-    close()
+    if (await commit((current, tx) => editSettings(current, 'streamSettings', patch, tx, 'update_stream_info'), 'Stream info saved.')) close()
   }
   return <Dialog title="Edit Stream Info" close={close}>
     <form className="form" onSubmit={submit}>

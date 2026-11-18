@@ -19,7 +19,7 @@ The standard single-tab workflows pass for payables, approvals, and vendor payme
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · Saves from stale tabs erase confirmed records
+### AUDIT-001 · Saves from stale tabs erase confirmed records · Resolved on 2026-11-18
 
 - **Files** `src/store.jsx:9`, `src/store.jsx:11`, `src/utils/dataManager.js:65`, shared `templates/state-api.js`.
 - **Reproduction** Open `/bills/new` in two tabs with the same fresh SID before either saves. Save a different valid draft in each tab, waiting for the first POST to complete before the second save. Each returns HTTP 200 and navigates to its bill detail. `/go` contains the first bill and linked `bill_created` activity after the first save. Both disappear after the second save.

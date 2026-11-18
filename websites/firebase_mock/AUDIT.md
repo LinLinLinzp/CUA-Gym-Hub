@@ -20,7 +20,7 @@ The build passed and all eight existing Chromium scenarios passed against both t
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · Restoring a version with no source replaces the active policy
+### AUDIT-001 · Restoring a version with no source replaces the active policy · Resolved on 2026-11-18
 
 - **File** `src/pages/Rules.jsx:54` and `src/pages/Rules.jsx:111`
 - **Reproduce** Inject a historical version with its ID and valid project/database IDs but omit `source`. Open Rules, select **Restore**, and confirm.

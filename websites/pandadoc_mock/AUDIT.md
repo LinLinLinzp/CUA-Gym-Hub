@@ -19,14 +19,14 @@ The built app passed the standard proposal, pricing, and sequential-signing suit
 
 ## P0 — Dead or Broken Code
 
-### AUDIT-001 · A delayed baseline erases a confirmed proposal
+### AUDIT-001 · A delayed baseline erases a confirmed proposal · Resolved on 2026-11-18
 
 - **Files** `src/store.jsx:20`, `src/store.jsx:58`, `src/utils/dataManager.js:40`
 - **Repro** Open one browser context on a new sid. Open that sid in a second context with its startup `set` request held after the UI renders. Create a proposal in the first context and wait for the editor to open. Release the held request.
 - **Observed** `/go` showed 37 documents after creation and 36 after the second baseline reached the server. Both the new document and its activity event disappeared, and `state_diff` returned to empty. The initial snapshot was preserved. The provider's commit lock covers user mutations. The shared helper posts a snapshot asynchronously on the first load in each browser storage profile, and the API accepts it as current state.
 - **Fix** Coordinate the site's baseline initialization with writes for the same sid. Ensure an older boot snapshot cannot replace an acknowledged mutation, including across browser storage profiles. Preserve the shared helper and state API templates as required by the seed. Keep the delayed-baseline case as a regression check.
 
-### AUDIT-002 · Finish drops a previously saved signature from its completion
+### AUDIT-002 · Finish drops a previously saved signature from its completion · Resolved on 2026-11-18
 
 - **Files** `src/sign.jsx:104`, `src/model.js:191`, `src/model.js:220`
 - **Repro** Inject a sent proposal with a pending signer and a saved typed signature for the signer's required field, with the historical completion link absent. Open the signer link and select Finish. Enter a signature and select Finish again.

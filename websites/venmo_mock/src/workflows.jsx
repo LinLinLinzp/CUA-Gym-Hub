@@ -59,12 +59,12 @@ function NoteField({ id, note, setNote, error }) {
 function useConfirmation() {
   const locked = useRef(false)
   const [error, setError] = useState('')
-  function confirm(action) {
+  async function confirm(action) {
     if (locked.current) return
     locked.current = true
     setError('')
     try {
-      action()
+      await action()
     } catch (failure) {
       locked.current = false
       setError(failure.message)
@@ -114,9 +114,9 @@ export function Composer({ options, close, finish }) {
   }
 
   function submit() {
-    confirm(() => {
+    confirm(async () => {
       let result
-      commit((latest) => {
+      await commit((latest) => {
         result = payingRequest
           ? changeRequest(latest, options.requestId, 'paid', effectiveFunding)
           : send(latest, mode, recipients, note.trim(), effectiveFunding)
@@ -184,9 +184,9 @@ export function SplitComposer({ payment, close, finish }) {
   }
 
   function submit() {
-    confirm(() => {
+    confirm(async () => {
       let result
-      commit((latest) => {
+      await commit((latest) => {
         result = addSplit(latest, participants, total, note.trim(), method, payment?.id)
         return result.state
       })

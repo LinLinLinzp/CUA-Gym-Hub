@@ -77,3 +77,5 @@ Injection reached `stores → 0 → name`.
 - **AUDIT-001 · Previously fixed, retested.** The built-preview suite exercised stale return rejection in tabs and isolated contexts. The separate report’s simultaneous isolated-context race remains outside that sequential fix.
 
 Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.
+
+- **BUG-001 · Still reproduced.** Two isolated Chromium contexts sharing a SID each read the available quantity, then submitted the last eligible unit. The browser probe held both writes until their preflight reads had completed. Both writes returned HTTP 200 with distinct return IDs. The final Harbor snapshot retained only one. Atomic validation and write must occur in the shared runtime to cover this case.

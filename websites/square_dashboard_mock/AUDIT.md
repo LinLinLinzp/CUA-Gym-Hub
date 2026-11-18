@@ -17,7 +17,7 @@ The build and the existing Playwright suite passed on the built site at `http://
 
 ## P0 — Dead or Broken Code
 
-### AUDIT-001 · Delayed full-state POSTs overwrite newer actions
+### AUDIT-001 · Delayed full-state POSTs overwrite newer actions · Resolved on 2026-11-18
 
 - **Files** `src/store.jsx:24` and `src/store.jsx:28`. The unchanged state client starts the baseline POST at `src/utils/dataManager.js:57` and each current-state POST at `src/utils/dataManager.js:68`.
 - **Back-to-back save reproduction** Open `/orders/ord_001?sid=<fresh-id>` and let the baseline finish. In Playwright, hold the first `set_current` request after clicking **Start preparing**. Click **Mark ready**, let that second request finish and verify `/go` says `ready`. Release the held request. Both POSTs return HTTP 200, but `/go` now says `in_progress` and lacks the latest activity event. The open UI still offers **Mark picked up**.

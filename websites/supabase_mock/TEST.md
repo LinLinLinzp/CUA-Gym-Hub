@@ -97,3 +97,9 @@ The repository certifier passed the production bundle in run `136548`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `tables → 0 → schema`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Two already-open authentication tabs created different users and Harbor retained both users and both linked activity records. The full browser suite also passed.
+
+Docker dynamic certification run `182740` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

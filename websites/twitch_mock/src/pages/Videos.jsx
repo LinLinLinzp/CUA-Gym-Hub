@@ -21,7 +21,7 @@ function VideoEditor({ video, close }) {
   const [categoryId, setCategory] = useState(video.categoryId ?? '')
   const [language, setLanguage] = useState(video.language ?? '')
   const [error, setError] = useState(false)
-  function save(event) {
+  async function save(event) {
     event.preventDefault()
     if (!title.trim()) {
       setError(true)
@@ -31,7 +31,7 @@ function VideoEditor({ video, close }) {
     if (description.trim() !== '' || video.description != null) patch.description = description.trim()
     if (categoryId !== '' || video.categoryId != null) patch.categoryId = categoryId
     if (language !== '' || video.language != null) patch.language = language
-    commit((current, tx) => editRecord(current, 'videos', video.id, patch, tx, 'update_video', 'video'), 'Video details saved.')
+    await commit((current, tx) => editRecord(current, 'videos', video.id, patch, tx, 'update_video', 'video'), 'Video details saved.')
     close()
   }
   return <Dialog title="Edit Video Details" close={close}>
@@ -120,11 +120,11 @@ export function VideoProducer() {
   function changeFilter(event) { updateFilters({ ...filters, [event.target.name]: event.target.value }) }
   function jump(next) { setPage(next); setSelected([]) }
 
-  function apply(action, ids) {
+  async function apply(action, ids) {
     const targets = new Set(ids)
     const status = { publish: 'published', unpublish: 'unpublished', delete: 'deleted' }[action]
     const message = { publish: 'Videos published.', unpublish: 'Videos unpublished.', delete: 'Videos deleted.' }[action]
-    commit((current, tx) => {
+    await commit((current, tx) => {
       const changes = []
       const records = (current.videos ?? []).map(video => {
         if (!targets.has(video.id) || video.status === status || video.status === 'deleted') return video

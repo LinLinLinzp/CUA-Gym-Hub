@@ -19,7 +19,7 @@
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · A stale tab silently overwrites another tab’s saved action
+### AUDIT-001 · A stale tab silently overwrites another tab’s saved action · Resolved on 2026-11-18
 
 - **File** `src/App.jsx:73`, `src/App.jsx:92`
 - **Feature** State persistence for user actions in two tabs sharing a `sid`.
@@ -67,3 +67,9 @@ Added endpoint, injection and reset instructions, a minimal verified-property ex
 ## Reproduction scripts
 
 The targeted Chromium and API checks are in the ignored `.scratch/audit.cjs` and `.scratch/audit-api.cjs` files. Run them from this app directory against port 5471. The existing workflow suite is `.scratch/verify.cjs`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** A sitemap submission from an already open tab preserved the other tab’s URL inspection in Harbor. Property, indexing and sitemap acceptance checks also passed.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

@@ -17,7 +17,7 @@
 
 ## P0 — Dead or broken code
 
-### AUDIT-001 · Record creation required a secure context
+### AUDIT-001 · Record creation required a secure context · Resolved on 2026-11-18
 
 The five record-creation paths in `src/pages/Fafsa.jsx`, `src/pages/Loans.jsx`, and `src/pages/Repayment.jsx` called `crypto.randomUUID()`, which can be unavailable on an HTTP mock domain outside localhost. They now use the shared `createRecordId()` in `src/domain.js`. Chromium passed the full suite with `randomUUID` unavailable.
 

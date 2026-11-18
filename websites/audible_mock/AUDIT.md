@@ -16,7 +16,7 @@ All four seed workflows passed in Chromium on localhost port 5373 when each writ
 
 ## P0 — Dead or Broken Code
 
-### AUDIT-001 · An older save can overwrite a newer action in Harbor
+### AUDIT-001 · An older save can overwrite a newer action in Harbor · Resolved on 2026-11-18
 
 - **Files** — `src/state/AccountProvider.jsx` calls `saveState` for each successful action. The unchanged `src/utils/dataManager.js` sends independent POSTs, and the supplied state middleware stores them in arrival order.
 - **Reproduction** — In one SID, delay the first `set_current` request from **Add to Wish List**. Click **Remove from Wish List**, let that request complete, and verify that `/go` shows `wishlist[].status = removed`. Release the delayed request. `/go` now shows `saved` while the UI still offers **Add to Wish List**.
@@ -50,3 +50,9 @@ None found in the scoped audit.
 ## SCHEMA.md Updates
 
 Added the audit-format endpoint header, explicit top-level types, seed IDs and an injection example. Documented the supplied reset behavior and the use of a fresh SID for new fixtures. Reviewed the action table against the current reducer and retained its field mappings.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The delayed add did not expose Remove before acknowledgement. After adding and removing, both writes reached Harbor and the latest Wish List status was removed.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

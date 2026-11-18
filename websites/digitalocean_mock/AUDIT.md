@@ -16,13 +16,13 @@
 
 ## P0 — Persistence blockers
 
-### AUDIT-001 · A valid injected world can exceed Chromium's keepalive byte limit
+### AUDIT-001 · A valid injected world can exceed Chromium's keepalive byte limit · Resolved on 2026-11-18
 
 - **Location** `src/store.jsx:10` and `src/utils/dataManager.js:70`.
 - **Reproduction** Inject the seeded DNS records plus 28 TXT records containing 150 three-byte characters each. Create a Droplet. The serialized save has 59,731 JavaScript code units and 68,131 UTF-8 bytes. The unchanged template enables keepalive by code-unit length. Chromium rejects the fetch before it reaches `/post`. The UI and local reload show the new Droplet, but `/go` has neither the Droplet nor its activity.
 - **Fix** Keep the shared file byte-for-byte unchanged. In the existing app-side fetch wrapper, measure the UTF-8 body size and disable keepalive when it exceeds the browser limit. Verify the persisted resource and activity through `/go` and surface failed saves to the user.
 
-### AUDIT-002 · A delayed baseline can overwrite a saved mutation
+### AUDIT-002 · A delayed baseline can overwrite a saved mutation · Resolved on 2026-11-18
 
 - **Location** `src/store.jsx:7`, `src/utils/dataManager.js:57`, and `state-api.js:67`.
 - **Reproduction** Delay the first browser `POST /post` with action `set`, leaving `GET /state` and `set_current` unaffected. Open `/droplets/new` in a fresh session and create a Droplet. `set_current` returns 200 and `/go` shows the new row. Release the baseline request. The local API replaces `current_state` with the seed and leaves the newly created Droplet in `initial_state`, reversing the expected diff. Both dev and built preview reproduce the ordering failure.

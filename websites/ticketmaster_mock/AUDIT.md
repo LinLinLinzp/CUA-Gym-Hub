@@ -17,7 +17,7 @@
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · A stale browser context erases a confirmed action on the same SID
+### AUDIT-001 · A stale browser context erases a confirmed action on the same SID · Resolved on 2026-11-18
 
 - **Files** `src/store.jsx:28–44`, `src/utils/dataManager.js:63–73`.
 - Open `ord-001` and `ord-002` under the same fresh SID in two independent Chromium contexts. Let both baseline writes finish. Save `ord-001` in the first context and verify its `saved` row through `/go`. Remove `ord-002` from saved in the second context. Both writes return HTTP 200. `/go` then shows `ord-002` removed and the new `ord-001` row absent.

@@ -15,7 +15,7 @@
 
 ## P0 — State can disappear from Harbor
 
-### AUDIT-001 · Reload can discard an acknowledged save
+### AUDIT-001 · Reload can discard an acknowledged save · Resolved on 2026-11-18
 
 - **Files** [src/utils/statePosts.js](src/utils/statePosts.js#L17) and [src/workspace.jsx](src/workspace.jsx#L32)
 - **Reproduction** On Stream Settings, save one title. Let the server accept its POST and hold the response in Playwright. Save a second title while the first response is pending, wait for “Stream info saved,” and reload before releasing the first response.
@@ -59,3 +59,9 @@ None.
 ## SCHEMA.md Updates
 
 Added the localhost endpoints, reset behavior, key types, seeded IDs and a singleton injection example. Reviewed the observable state mappings against the store, routes and browser results.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The delayed first server response showed no early confirmation. After both successful stream title changes, a hard reload preserved the second title and both audit events.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

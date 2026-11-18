@@ -19,21 +19,21 @@ The build and the existing localhost Playwright suites passed. Those suites exer
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · Saving one answer can undo a different answer in another tab
+### AUDIT-001 · Saving one answer can undo a different answer in another tab · Resolved on 2026-11-18
 
 - **File** `src/analysis.jsx:176–201`
 - **Reproduction** Open Edit response for `rsp-onboarding-001` in two tabs sharing a browser session. Change the open-text answer in the first tab and save. Verify the new text in `/go`. Change only the rating to 5 in the second tab and save. The rating persists and `/go` shows the original text again.
 - **Cause** The editor starts with a full answer snapshot. Save overlays all draft answers onto the current record and removes unanswered draft keys, including keys the user never touched. Workspace storage synchronization delivers the latest record to the tab, but it does not rebase the draft.
 - **Fix** Apply only edited answer keys to the current record, including explicit clears. Validate the merged answers against the current survey and response status. Add a regression check that both independent edits survive in `/go`.
 
-### AUDIT-002 · Saving a closed message can silently reverse the collector’s identity setting
+### AUDIT-002 · Saving a closed message can silently reverse the collector’s identity setting · Resolved on 2026-11-18
 
 - **File** `src/collectors.jsx:95–116`
 - **Reproduction** Open `col-renewal-web` in two tabs sharing a session. In the first tab switch from Identified to Anonymous and save. Verify `settings.anonymous: true` in `/go`. In the second tab edit only Closed message and save. The message persists and `settings.anonymous` returns to `false`.
 - **Cause** The settings form derives its draft from the initial collector and writes every field from that draft over the current collector. Its dirty check also compares untouched stale fields against the newly delivered collector settings.
 - **Fix** Keep the latest values for untouched fields and merge only the settings changed in this form. Verify in `/go` that the new closed message and the other tab's anonymity change both survive.
 
-### AUDIT-003 · Saving a sparse injected choice throws before validation
+### AUDIT-003 · Saving a sparse injected choice throws before validation · Resolved on 2026-11-18
 
 - **File** `src/surveys.jsx:218–237`
 - **Reproduction** Inject a survey with one multiple-choice question, one option `{ "id": "missing-label" }`, a second labeled option, and no responses. Open Design, click Edit question, then Save question. Chromium reports `Cannot read properties of undefined (reading 'trim')`, the dialog shows no validation feedback, and `/go` has an empty diff.

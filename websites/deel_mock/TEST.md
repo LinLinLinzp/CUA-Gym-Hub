@@ -73,3 +73,9 @@ The repository certifier passed the production bundle in run `144844`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `legalEntities → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** Two same-session tabs attempted to confirm one invoice while the first response was held. The duplicate produced no write. A stale third tab’s approval preserved the original payment ID and activity.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

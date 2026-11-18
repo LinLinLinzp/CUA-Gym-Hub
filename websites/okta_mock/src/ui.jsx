@@ -73,8 +73,8 @@ export function Confirm({ title, description, actionLabel, dangerous, onConfirm,
     <div className="dialog-body"><p>{description}</p>{error && <p className="error" role="alert">{error}</p>}</div>
     <footer className="dialog-footer">
       <Button data-initial-focus onClick={onClose}>Cancel</Button>
-      <Button tone={dangerous ? 'danger' : 'primary'} onClick={() => {
-        const result = onConfirm()
+      <Button tone={dangerous ? 'danger' : 'primary'} onClick={async () => {
+        const result = await onConfirm()
         if (result) setError(result)
         else onClose()
       }}>{actionLabel}</Button>

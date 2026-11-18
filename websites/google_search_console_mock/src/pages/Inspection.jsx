@@ -52,9 +52,9 @@ export function Inspection({ state, property, to, go, commit, inspect, queryUrl,
   const result = test ? test.result || {} : localResult
   const request = url && scoped(state.indexingRequests, property).find(row =>
     row.status === 'queued' && scopedUrl(row.url, property).url === url)
-  const submit = event => {
+  const submit = async event => {
     event.preventDefault()
-    setValidation(inspect(value))
+    setValidation(await inspect(value))
   }
   return <>
     <PageHead eyebrow={property ? label(property) : 'Property reports'} title="URL Inspection"
@@ -76,15 +76,15 @@ export function Inspection({ state, property, to, go, commit, inspect, queryUrl,
           <div><div className="eyebrow">{inspection ? 'Inspection result' : 'Inspection preview'}</div>
             <h2 className="mono wrap">{url}</h2><p>{inspection ? 'Inspected ' + dateLabel(inspection.createdAt) : 'Run an inspection to save this result and use live testing.'}</p></div>
           {inspection && <div className="actions">
-            <button onClick={() => {
-              commit(current => testLive(current, inspection, url, localResult))
+            <button onClick={async () => {
+              if (!await commit(current => testLive(current, inspection, url, localResult))) return
               setTab('live')
               setRequestFeedback('')
             }}>Test live URL</button>
-            <button className="primary" onClick={() => {
+            <button className="primary" onClick={async () => {
               if (request) { setRequestFeedback('An indexing request is already queued for this URL.'); return }
               if (!eligible(result)) { setRequestFeedback(result.reason || 'This URL does not pass the live indexing checks.'); return }
-              commit(current => queueIndexing(current, inspection, url, test))
+              if (!await commit(current => queueIndexing(current, inspection, url, test))) return
               setRequestFeedback('Indexing request queued.')
             }}>Request indexing</button>
           </div>}

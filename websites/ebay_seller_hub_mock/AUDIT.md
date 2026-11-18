@@ -15,7 +15,7 @@
 
 ## P0 — Dead or broken code
 
-### AUDIT-001 · Bulk selection enabled for an unaddressable listing
+### AUDIT-001 · Bulk selection enabled for an unaddressable listing · Resolved on 2026-11-18
 
 In `src/Listings.jsx`, an injected active record without an ID could enable the page checkbox without providing an actionable row. The page selection now uses the same ID and status requirements as the row control. Chromium verified that the checkbox is disabled for this fixture.
 

@@ -44,8 +44,8 @@ export function Library() {
   }).sort((left, right) => sort === 'recent' ? recentFirst(left, right)
     : alphabetic(titles.get(left.titleId)?.[sort], titles.get(right.titleId)?.[sort]))
 
-  function mark(entry, finished, trigger) {
-    act({ type: finished ? 'unfinish' : 'finish', libraryId: entry.id })
+  async function mark(entry, finished, trigger) {
+    await act({ type: finished ? 'unfinish' : 'finish', libraryId: entry.id })
     requestAnimationFrame(() => {
       if (!trigger.isConnected) list.current?.focus()
     })

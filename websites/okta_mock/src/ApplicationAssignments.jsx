@@ -84,9 +84,9 @@ export function ApplicationAssignments({ kind, record, tab }) {
   const targets = { people: users, groups, apps }[targetKind]
   const rows = collectAccess(state, record, kind, tab)
 
-  function add(ids) {
+  async function add(ids) {
     const type = forApp ? assigning : principalType
-    const saved = commit((snapshot, meta) => {
+    const saved = await commit((snapshot, meta) => {
       const selections = ids.map(id => [forApp ? record.id : id, forApp ? id : record.id])
       if (selections.some(([appId, principalId]) => !canGrant(snapshot, appId, type, principalId))) return null
       const added = selections.map(([appId, principalId]) => {
@@ -103,8 +103,8 @@ export function ApplicationAssignments({ kind, record, tab }) {
     return saved ? undefined : 'One or more selections are no longer eligible.'
   }
 
-  function unassign() {
-    const saved = commit((snapshot, meta) => {
+  async function unassign() {
+    const saved = await commit((snapshot, meta) => {
       const grant = snapshot.appAssignments.find(row => row.id === removing.id)
       if (!grant) return null
       meta.event('APP_UNASSIGNED', 'APP_ASSIGNMENT', grant.id, assignmentDetails(grant))

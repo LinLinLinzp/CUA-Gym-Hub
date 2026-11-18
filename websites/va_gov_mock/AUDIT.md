@@ -22,14 +22,14 @@ The standard Playwright suites passed on Vite and against `dist/` with the local
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · A stale tab can erase a confirmed action
+### AUDIT-001 · A stale tab can erase a confirmed action · Resolved on 2026-11-18
 
 - **Files** [`src/state.jsx:10`](src/state.jsx#L10), [`src/utils/dataManager.js:64`](src/utils/dataManager.js#L64)
 - **Reproduction** Open `/prescriptions/rx-101` and `/payments/copays/copay-101` in two tabs under the same SID before making any changes. Confirm a refill in the first tab and verify the pending request in `/go`. Confirm the copay payment in the already-open second tab. Both mutation responses succeed. The copay becomes paid and the pending refill disappears from `current_state.refillRequests`.
 - **Cause** `Store.apply` uses a tab-local snapshot. The second action sends the whole snapshot through the shared client helper, overwriting the earlier refill.
 - **Fix** Reconcile same-SID state in the central store before applying an action. Refresh or reject a stale review when its relevant fields changed. Keep the template helper intact and preserve zero mutation posts from passive tabs. Verify that two confirmed actions from already-open tabs both survive in `/go`.
 
-### AUDIT-002 · Some injected IDs open the wrong record or workflow
+### AUDIT-002 · Some injected IDs open the wrong record or workflow · Resolved on 2026-11-18
 
 - **Files** [`src/records.js:1`](src/records.js#L1), [`src/App.jsx:25`](src/App.jsx#L25), [`src/pages/Claims.jsx:96`](src/pages/Claims.jsx#L96)
 - **Reproduction** Inject claim IDs `new`, `ref%2Falpha`, `ref/alpha`, and `..`. From the list, `new` opens the claim application. The link for `ref%2Falpha` opens the `ref/alpha` detail. The link for `..` opens the overview. The same destinations appeared after hard reload. A claim with a normal ID opened its own detail.

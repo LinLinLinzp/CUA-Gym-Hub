@@ -40,9 +40,8 @@ function ConfirmDialog({ pending, close }) {
       </p>
       <div className="dialog-actions">
         <button className="button secondary" ref={cancel} type="button" onClick={dismiss}>Cancel</button>
-        <button className={`button ${pending.action.type === 'buy' ? '' : 'danger'}`} type="button" onClick={() => {
-          act(pending.action)
-          dismiss()
+        <button className={`button ${pending.action.type === 'buy' ? '' : 'danger'}`} type="button" onClick={async () => {
+          if (await act(pending.action)) dismiss()
         }}>{button}</button>
       </div>
     </dialog>

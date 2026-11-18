@@ -17,7 +17,7 @@
 
 ## P0 — State loss
 
-### AUDIT-001 · Confirming a draft edit can erase a newer edit
+### AUDIT-001 · Confirming a draft edit can erase a newer edit · Resolved on 2026-11-18
 
 - **File** `src/pages/Build.jsx:85`, especially the confirmation callback at line 98.
 - **Issue** The callback captures a replacement questions or endings array when the dialog opens. The store receives other tabs’ writes, but the callback still replaces the latest collection with the captured array and filters branch rules by captured object identity. The success message and activity identify the requested edit while omitting the unrelated lost edit.

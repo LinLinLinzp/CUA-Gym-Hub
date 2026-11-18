@@ -40,8 +40,10 @@ export function RecordForm({ kind, record, onClose }) {
   const [errors, setErrors] = useState({})
   const title = record ? (person ? 'Edit Profile' : 'Edit Group') : (person ? 'Add Person' : 'Add Group')
 
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
+    const form = event.currentTarget
+    const submitter = event.nativeEvent.submitter
     const clean = Object.fromEntries(fields.map(([field]) => [field, values[field].trim()]))
     const problems = {}
     for (const [field, caption, type, required] of fields) {
@@ -50,12 +52,12 @@ export function RecordForm({ kind, record, onClose }) {
     }
     if (Object.keys(problems).length) {
       setErrors(problems)
-      event.currentTarget.elements.namedItem(Object.keys(problems)[0])?.focus()
+      form.elements.namedItem(Object.keys(problems)[0])?.focus()
       return
     }
 
     const identifier = person ? 'username' : 'name'
-    const saved = commit((state, meta) => {
+    const saved = await commit((state, meta) => {
       const records = state[collection]
       if (records.some(row => row.id !== record?.id && row[identifier]?.toLowerCase() === clean[identifier].toLowerCase())) {
         problems[identifier] = person ? 'This username is already in use.' : 'This group name is already in use.'
@@ -80,14 +82,14 @@ export function RecordForm({ kind, record, onClose }) {
 
     if (!saved && Object.keys(problems).length) {
       setErrors(problems)
-      event.currentTarget.elements.namedItem(identifier)?.focus()
+      form.elements.namedItem(identifier)?.focus()
       return
     }
-    if (!record && saved && event.nativeEvent.submitter?.value === 'another') {
+    if (!record && saved && submitter?.value === 'another') {
       setValues(getValues(fields))
       setStatus('ACTIVE')
       setErrors({})
-      event.currentTarget.elements.namedItem(fields[0][0])?.focus()
+      form.elements.namedItem(fields[0][0])?.focus()
       return
     }
     onClose()

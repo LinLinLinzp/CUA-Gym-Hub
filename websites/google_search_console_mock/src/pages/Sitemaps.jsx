@@ -40,11 +40,11 @@ export function Sitemaps({ state, property, to, go, commit, setNotice, filter })
     setSort({ key, direction: sort.key === key && sort.direction === 'asc' ? 'desc' : 'asc' })
     setPage(1)
   }
-  const submit = event => {
+  const submit = async event => {
     event.preventDefault()
     const result = scopedUrl(value, property, true)
     if (result.error) { setFeedback(result.error); return }
-    commit(current => submitSitemap(current, property, result.url))
+    if (!await commit(current => submitSitemap(current, property, result.url))) return
     setValue('')
     setFeedback('')
     setPage(1)
@@ -105,10 +105,10 @@ export function SitemapDetail({ map, property, to, go, commit, setNotice }) {
   if (!map) return <Missing title="Sitemap unavailable" path={back}>Back to sitemaps</Missing>
   const issues = list(map.issues)
   const title = map.url || 'Sitemap details'
-  const retry = () => {
+  const retry = async () => {
     const result = scopedUrl(map.url, property, true)
     if (result.error) { setError(result.error); return }
-    commit(current => submitSitemap(current, property, result.url))
+    if (!await commit(current => submitSitemap(current, property, result.url))) return
     setNotice('Search Console received the sitemap submission.')
   }
   return <>
@@ -137,8 +137,8 @@ export function SitemapDetail({ map, property, to, go, commit, setNotice }) {
         : <p>{map.status === 'pending' && !map.lastReadAt ? 'Issue details are available after the sitemap is read.' : 'No issues reported.'}</p>}
     </section>
     {confirmation && <Confirm title="Remove sitemap" target={title} description="The sitemap will be removed from this property’s list."
-      close={() => setConfirmation(false)} onConfirm={() => {
-        commit(current => removeSitemap(current, map))
+      close={() => setConfirmation(false)} onConfirm={async () => {
+        if (!await commit(current => removeSitemap(current, map))) return
         setConfirmation(false)
         setNotice('Sitemap removed.')
         go(back, { replace: true })

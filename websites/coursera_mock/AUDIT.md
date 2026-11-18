@@ -18,7 +18,7 @@
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · Stale confirmation replaces an issued certificate
+### AUDIT-001 · Stale confirmation replaces an issued certificate · Resolved on 2026-11-18
 
 - **Files**: `src/context/Workspace.jsx:31`, `src/data/learning.js:134`
 - **Feature**: Finish course and verify the credential.

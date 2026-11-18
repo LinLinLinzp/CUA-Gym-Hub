@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useSiteNavigate } from './navigation.jsx'
 import { useStore } from './store.jsx'
 import { AddressFields, Field, SelectField, Summary, Wizard } from './ui.jsx'
@@ -98,24 +98,12 @@ export function ClaimForm({ service, record }) {
     evidence: array(record?.evidence),
   }))
   const [fileError, setFileError] = useState('')
-  const savingDraft = useRef(false)
   const field = (key, value) => setForm(previous => ({ ...previous, [key]: value }))
   const updateItem = (index, key, value) => field('items', form.items.map((item, i) => i === index ? { ...item, [key]: value } : item))
   const amount = claimCents(form.items) / 100
   const steps = [record ? 'Resume package claim' : 'Shipment and claimant', 'Items and evidence', 'Review package claim']
 
   async function save(final) {
-    if (savingDraft.current) return
-    savingDraft.current = true
-    try {
-      await saveClaim(final)
-    } catch (error) {
-      savingDraft.current = false
-      throw error
-    }
-  }
-
-  async function saveClaim(final) {
     const id = record?.id || makeId('claim')
     const time = new Date().toISOString()
     const values = {
@@ -200,22 +188,16 @@ export function ClaimForm({ service, record }) {
     </>
   }
 
-  async function saveDraft(setMessage) {
-    if (savingDraft.current) return
+  function saveDraft(setMessage, finish) {
     if (!validTracking(form.trackingNumber)) {
       setMessage('Enter a tracking number with 13 to 34 letters and digits before saving a draft.')
       return
     }
-    try {
-      await save(false)
-    } catch (error) {
-      savingDraft.current = false
-      setMessage(error.message)
-    }
+    return finish(() => save(false))
   }
 
   return <Wizard title={service.name} backTo={service.path} steps={steps}
     validate={step => shipmentIssue(form) || (step > 0 ? itemsIssue(form) : '')} renderStep={renderStep}
     onConfirm={() => save(true)} confirmLabel="File claim"
-    extra={({ setMessage, busy }) => <button className="button" type="button" disabled={busy} onClick={() => saveDraft(setMessage)}>Save draft</button>} />
+    extra={({ setMessage, busy, finish }) => <button className="button" type="button" disabled={busy} onClick={() => saveDraft(setMessage, finish)}>Save draft</button>} />
 }

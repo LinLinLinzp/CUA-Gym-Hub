@@ -1,5 +1,5 @@
 import { createContext, useContext, useRef, useState } from 'react'
-import { saveState } from '../utils/dataManager.js'
+import { readCurrentState, saveAcknowledged, withSessionWrite } from '../utils/harborPersistence.js'
 import { applyAction } from './actions.js'
 
 const AccountContext = createContext(null)
@@ -10,15 +10,22 @@ export function AccountProvider({ initialState, children }) {
   const [state, setState] = useState(initialState)
   const [notice, setNotice] = useState(null)
 
-  function act(action) {
-    const result = applyAction(latest.current, action, new Date())
-    if (result.state) {
-      latest.current = result.state
-      saveState(APP, result.state)
-      setState(result.state)
+  async function act(action) {
+    try {
+      return await withSessionWrite(APP, async () => {
+        const result = applyAction(await readCurrentState(latest.current), action, new Date())
+        if (result.state) {
+          await saveAcknowledged(APP, result.state)
+          latest.current = result.state
+          setState(result.state)
+        }
+        setNotice(result.notice)
+        return Boolean(result.state)
+      })
+    } catch (error) {
+      setNotice({ error: true, message: error.message || 'The change could not be saved.' })
+      return false
     }
-    setNotice(result.notice)
-    return Boolean(result.state)
   }
 
   return (

@@ -16,7 +16,7 @@
 
 ## P0 — Resolved
 
-### AUDIT-001 · Baseline could overwrite the first mutation
+### AUDIT-001 · Baseline could overwrite the first mutation · Resolved on 2026-11-18
 
 - **Files** `src/main.jsx`, `src/utils/persist.js`
 - **Issue** The shared loader starts its initial `set` request before returning. A user could submit a `set_current` while that POST was still in flight. With the initial request delayed in Chromium, `/go` captured the Watchlist mutation as `initial_state` and the late baseline replaced it in `current_state`.

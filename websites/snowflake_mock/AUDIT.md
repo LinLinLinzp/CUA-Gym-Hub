@@ -21,7 +21,7 @@ The production build and all seven existing Playwright groups passed on localhos
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · Worksheet shortcuts bypass confirmation dialogs
+### AUDIT-001 · Worksheet shortcuts bypass confirmation dialogs · Resolved on 2026-11-18
 
 - **File**: `src/pages/Worksheets.jsx:136`, `src/pages/Worksheets.jsx:155`, `src/pages/Worksheets.jsx:196`
 - **Element**: Ctrl+S and Ctrl+Enter when a worksheet confirmation is open.

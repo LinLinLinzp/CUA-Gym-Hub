@@ -17,7 +17,7 @@
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · A delayed baseline can erase the first user action
+### AUDIT-001 · A delayed baseline can erase the first user action · Resolved on 2026-11-18
 
 - **Files** `src/store.jsx:14`, `src/utils/dataManager.js:56`, and `templates/state-api.js` in the shared repository.
 - **Reproduction** Open Environmental Policy in a fresh localhost session. In Playwright, hold the boot `POST /post` with `action: "set"`, allow the workspace to render, then click the favorite toggle. Wait for `set_current` and confirm `/go` shows one activity. Release the original `set`.

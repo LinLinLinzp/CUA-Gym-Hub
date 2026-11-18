@@ -16,7 +16,7 @@ Round 2 Playwright verification closed AUDIT-001 and AUDIT-002. See [TEST.md](TE
 
 ## P0 — A queued save can disappear from Harbor
 
-### AUDIT-001 · Reload drops a queued write after the UI reports success
+### AUDIT-001 · Reload drops a queued write after the UI reports success · Resolved on 2026-11-18
 
 - **Files** `src/utils/stateSync.js:5`, `src/store.jsx:36`
 - **Affected workflows** All persisted actions share this path.

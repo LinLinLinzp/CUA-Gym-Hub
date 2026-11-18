@@ -94,3 +94,9 @@ The repository certifier passed the production bundle in run `160064`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `moderators → 0 → login`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The delayed first server response showed no early confirmation. After both successful stream title changes, a hard reload preserved the second title and both audit events.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

@@ -20,7 +20,7 @@
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · A delayed boot snapshot can erase a successful first edit
+### AUDIT-001 · A delayed boot snapshot can erase a successful first edit · Resolved on 2026-11-18
 
 - **Files** `src/main.jsx:9`, `src/utils/dataManager.js:55`, `src/store.jsx:13`. The shared Vite template applies writes on receipt in `templates/state-api.js:66`.
 - **Issue** `loadState` dispatches the baseline `set` and returns before it completes. The account then enables edits immediately. The baseline and the first `set_current` can reach the server in reverse order.

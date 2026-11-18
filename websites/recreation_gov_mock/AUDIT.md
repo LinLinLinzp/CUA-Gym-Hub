@@ -16,7 +16,7 @@
 
 ## P0 — Fixed
 
-### AUDIT-001 · Repeat claim from an injected selected application
+### AUDIT-001 · Repeat claim from an injected selected application · Resolved on 2026-11-18
 
 - **Location** `src/data/domain.js`, `claimPlan`
 - **Finding** A reservation could already reference the selected application through `lotteryApplicationId` while the application omitted its optional `reservationId`. A second claim could create another permit.

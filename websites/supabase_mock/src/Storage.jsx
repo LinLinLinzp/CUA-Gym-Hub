@@ -108,8 +108,8 @@ function BucketDetail({ bucket, folder }) {
   const visible = folderItems(objects, folder).filter(item => matches(query, pathName(pathOf(item))))
   const close = () => setEditor(null)
   const segments = folder ? folder.split('/') : []
-  function deleteBucket() {
-    commit(current => {
+  async function deleteBucket() {
+    await commit(current => {
       if (bucketObjects(current, bucket.id).length) throw new Error('Remove all files and folders before deleting this bucket.')
       return record({ buckets: without(current.buckets, bucket.id),
         policies: list(current.policies).filter(policy => policy.targetType !== 'bucket' || policy.targetId !== bucket.id) },
@@ -117,8 +117,8 @@ function BucketDetail({ bucket, folder }) {
     }, 'Bucket deleted.')
     navigate(root, { replace: true })
   }
-  function deleteObject(object) {
-    commit(current => {
+  async function deleteObject(object) {
+    await commit(current => {
       if (isFolder(object) && hasChildren(bucketObjects(current, bucket.id), pathOf(object))) throw new Error('Remove all items inside this folder before deleting it.')
       return record({ objects: without(current.objects, object.id) }, 'object.deleted', object.id,
         { bucketId: bucket.id, objectId: object.id }, { path: pathOf(object), kind: object.kind })
@@ -180,7 +180,7 @@ function BucketDetail({ bucket, folder }) {
 function BucketEditor({ bucket, close, onCreated }) {
   const { commit } = useWorkspace()
   const navigate = useLocalNavigate()
-  function save(form) {
+  async function save(form) {
     const id = bucket?.id || crypto.randomUUID()
     const name = bucket ? bucket.name || bucket.id : form.get('name').trim()
     const publicAccess = form.get('access') === 'public'
@@ -192,7 +192,7 @@ function BucketEditor({ bucket, close, onCreated }) {
     if (allowedMimeTypes.some(type => type !== '*/*' && !/^[a-z0-9!#$&^_.+-]+\/(?:[a-z0-9!#$&^_.+-]+|\*)$/.test(type))) {
       throw new Error('Enter MIME types such as text/csv or image/*, separated by commas.')
     }
-    commit((state, meta) => {
+    await commit((state, meta) => {
       const buckets = list(state.buckets)
       if (!bucket && buckets.some(item => item.name?.toLowerCase() === name)) throw new Error('A bucket with this name already exists.')
       const fields = { public: publicAccess, maxFileSizeBytes, allowedMimeTypes }
@@ -247,7 +247,7 @@ function ObjectEditor({ bucket, folder, kind, object, close }) {
     }
     const id = object?.id || crypto.randomUUID()
     const action = moving ? (parentOf(path) === parentOf(pathOf(object)) ? 'object.renamed' : 'object.moved') : upload ? 'object.uploaded' : 'object.folder_created'
-    commit((current, meta) => {
+    await commit((current, meta) => {
       const objects = list(current.objects)
       const activeBucket = list(current.buckets).find(item => item.id === bucket.id)
       if (!activeBucket) throw new Error('This bucket is unavailable.')

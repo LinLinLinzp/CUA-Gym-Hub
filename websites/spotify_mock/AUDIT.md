@@ -17,7 +17,7 @@
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · Out-of-order saves erase a successful playlist edit
+### AUDIT-001 · Out-of-order saves erase a successful playlist edit · Resolved on 2026-11-18
 
 - **Files** `src/store.jsx:16`, `src/utils/dataManager.js:64`
 - **Issue** The store computes each mutation from the latest client state, then starts a full-state POST without waiting for the preceding POST to finish. Harbor applies snapshots in arrival order.

@@ -17,14 +17,14 @@ The standard Chromium workflow suite passed at `http://localhost:5323/`. Two tar
 
 ## P0 — Dead or broken code
 
-### AUDIT-001 · A stale browser context can erase a confirmed action
+### AUDIT-001 · A stale browser context can erase a confirmed action · Resolved on 2026-11-18
 
 - **File** [src/store.jsx](src/store.jsx#L10)
 - **Impact** The commit path reads the browser context's local cache and writes a complete snapshot. When two browser contexts use the same session ID, each can apply valid changes to an outdated snapshot. The last write can erase a prior action and its related records.
 - **Reproduction** Open Seattle and Denver cancellation reviews in separate Chromium contexts with the same fresh `sid`. Confirm Seattle and wait for the successful response. Confirm Denver. Both contexts report success, but `/go` shows Seattle as `confirmed` again, with its cancellation action and eCredit gone. Only Denver's cancellation and refund remain.
 - **Fix** Revalidate against authoritative session state and preserve earlier committed changes when writing. Test sequential stale reviews in separate contexts and out-of-order responses from overlapping saves. Keep both repository templates unchanged.
 
-### AUDIT-002 · A failed state write still shows confirmation
+### AUDIT-002 · A failed state write still shows confirmation · Resolved on 2026-11-18
 
 - **Files** [src/store.jsx](src/store.jsx#L21), [src/utils/dataManager.js](src/utils/dataManager.js#L64)
 - **Impact** `saveState` updates the local cache and posts asynchronously. The store proceeds immediately to confirmation, and its `try` block can only catch synchronous failures. The template swallows fetch rejection. A failed request can leave the browser showing a completed action after reload, while the verifier sees the original state.

@@ -14,7 +14,7 @@
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · A stale tab can erase a confirmed action
+### AUDIT-001 · A stale tab can erase a confirmed action · Resolved on 2026-11-18
 
 - **File** `src/state.jsx:14`, with the pickup validation in `src/actions.js:45`.
 - **Issue** Each tab validates and builds the full state from its own in-memory snapshot. The shared API replaces current state with that snapshot on `set_current`. A tab open before a saved action can submit a stale action, or silently revert an unrelated saved record while confirming a valid action.

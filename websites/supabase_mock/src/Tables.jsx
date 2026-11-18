@@ -16,7 +16,7 @@ const unique = (records, name, message) => {
 }
 
 export function setRls(commit, id, rlsEnabled) {
-  commit((state, meta) => {
+  return commit((state, meta) => {
     const table = list(state.tables).find(item => item.id === id)
     const updated = { ...table, rlsEnabled, actorId: meta.actorId, updatedAt: meta.updatedAt }
     return record({ tables: replace(state.tables, id, updated) }, 'table.rls_updated', id, { tableId: id }, { rlsEnabled })
@@ -69,7 +69,7 @@ export function Tables() {
 }
 
 function TableDetail({ table, back }) {
-  const { state, commit } = useWorkspace()
+  const { state, commit, reportError } = useWorkspace()
   const navigate = useLocalNavigate()
   const [view, setView] = useState('Data')
   const [query, setQuery] = useState('')
@@ -86,8 +86,8 @@ function TableDetail({ table, back }) {
   const activePage = Math.min(page, Math.max(0, Math.ceil(filtered.length / pageSize) - 1))
   const close = () => setEditor(null)
 
-  function deleteTable() {
-    commit(current => record({
+  async function deleteTable() {
+    await commit(current => record({
       tables: without(current.tables, table.id),
       rows: list(current.rows).filter(row => row.tableId !== table.id),
       policies: list(current.policies).filter(policy => policy.targetType !== 'table' || policy.targetId !== table.id),
@@ -97,8 +97,8 @@ function TableDetail({ table, back }) {
     navigate(back, { replace: true })
   }
 
-  function deleteRow(row) {
-    commit(current => record({ rows: without(current.rows, row.id) }, 'row.deleted', row.id, { tableId: table.id, rowId: row.id }, { values: row.values || {} }), 'Row deleted.')
+  async function deleteRow(row) {
+    await commit(current => record({ rows: without(current.rows, row.id) }, 'row.deleted', row.id, { tableId: table.id, rowId: row.id }, { values: row.values || {} }), 'Row deleted.')
   }
 
   return <section className="panel detail" aria-label={qualify(table)}>
@@ -112,7 +112,7 @@ function TableDetail({ table, back }) {
     </div>
     <div className="detail-bar"><div className="tabs" aria-label="Table views">
       {['Data', 'Columns'].map(tab => <button key={tab} type="button" aria-pressed={tab === view} onClick={() => setView(tab)}>{tab}</button>)}
-    </div><Toggle title="Row-level security (RLS)" checked={table.rlsEnabled} onChange={value => setRls(commit, table.id, value)} /></div>
+    </div><Toggle title="Row-level security (RLS)" checked={table.rlsEnabled} onChange={value => setRls(commit, table.id, value).catch(reportError)} /></div>
     {view === 'Data' ? <>
       <div className="toolbar">
         <Search title="Search rows" value={query} onChange={value => { setQuery(value); setPage(0) }} />
@@ -189,7 +189,7 @@ function TableEditor({ table, schemas = [], initialSchema, close }) {
   const [rlsEnabled, setRlsEnabled] = useState(true)
   const [columns, setColumns] = useState(() => starterColumns().map(column => ({ ...column, id: crypto.randomUUID() })))
   const [schema, setSchema] = useState(initialSchema || 'public')
-  function save(form) {
+  async function save(form) {
     const name = identifier(form.get('name'), 'Table name')
     const description = form.get('description').trim()
     const id = table?.id || crypto.randomUUID()
@@ -197,7 +197,7 @@ function TableEditor({ table, schemas = [], initialSchema, close }) {
     const definitions = table ? null : columns.map(makeColumn)
     if (definitions && new Set(definitions.map(column => column.name.toLowerCase())).size !== definitions.length) throw new Error('Column names must be unique within a table.')
 
-    commit((state, meta) => {
+    await commit((state, meta) => {
       const records = list(state.tables)
       unique(records.filter(item => (item.schema || 'public') === targetSchema && item.id !== id), name, 'A table with this name already exists in this schema.')
       const next = table
@@ -230,10 +230,10 @@ function TableEditor({ table, schemas = [], initialSchema, close }) {
 function ColumnEditor({ table, column, close }) {
   const { commit } = useWorkspace()
   const [draft, setDraft] = useState(() => freshColumn())
-  function save(form) {
+  async function save(form) {
     const next = column ? { ...column, name: identifier(form.get('name'), 'Column name') } : makeColumn(draft)
     const backfillText = form.get('backfill') || ''
-    commit((state, meta) => {
+    await commit((state, meta) => {
       const current = list(state.tables).find(item => item.id === table.id)
       const columns = list(current.columns)
       unique(columns.filter(item => item.id !== next.id), next.name, 'A column with this name already exists.')
@@ -271,9 +271,9 @@ function ColumnEditor({ table, column, close }) {
 function RowEditor({ table, row, close }) {
   const { commit } = useWorkspace()
   const columns = list(table.columns)
-  function save(form) {
+  async function save(form) {
     const id = row?.id || crypto.randomUUID()
-    commit((state, meta) => {
+    await commit((state, meta) => {
       const rows = list(state.rows)
       const existing = rows.filter(item => item.tableId === table.id && item.id !== id)
       const values = { ...row?.values }

@@ -20,7 +20,7 @@ The production build and both existing Chromium suites passed on port 5331. Norm
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · Reload can lose a confirmed state write
+### AUDIT-001 · Reload can lose a confirmed state write · Resolved on 2026-11-18
 
 - **Files** `src/utils/stateTransport.js:19`, `src/store.jsx:11`, `src/pages.jsx:310`
 - **Issue** The store updates local state immediately. When a previous POST acknowledgement is pending, the next POST waits in a page-local promise queue while the next action can already report success. Reloading discards the queued send. The reloaded app reads the newer local snapshot without syncing it back to the server.
@@ -68,3 +68,9 @@ None found.
 ## SCHEMA.md Updates
 
 Added the local endpoint reference, fixed-ID ranges, minimal injection payload and reset behavior. The eight observable action mappings reflect the implementation. Docker dynamic certification is handled by the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** A delayed acknowledgement prevented an early download or success notice. Both CSVs downloaded after their respective writes and both export records persisted through hard reload.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

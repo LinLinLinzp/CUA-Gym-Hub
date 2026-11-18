@@ -19,7 +19,7 @@ The existing suite passed all 39 scenarios on the localhost dev server. A separa
 
 ## P0 — Dead or Broken Code
 
-### AUDIT-001 · Delayed startup baseline can overwrite the first user mutation
+### AUDIT-001 · Delayed startup baseline can overwrite the first user mutation · Resolved on 2026-11-18
 
 - **Files**: `src/store.js:35`, `src/utils/dataManager.js:57`
 - **Feature**: Harbor baseline and first user action.

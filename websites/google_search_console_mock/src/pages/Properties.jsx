@@ -64,11 +64,14 @@ export function PropertySheet({ state, pending, close, commit, onSaved }) {
     setError('')
     setSiteUrl(scope)
   }
-  const save = defer => {
-    const result = saveProperty(state, { type, siteUrl, method: selectedMethod, pending: defer, verify: pending })
-    if (!result) { setError('This property is already in your account.'); return }
-    commit(result.state)
-    onSaved(result.property)
+  const save = async defer => {
+    let result
+    const saved = await commit(current => {
+      result = saveProperty(current, { type, siteUrl, method: selectedMethod, pending: defer, verify: pending })
+      return result?.state
+    })
+    if (saved) onSaved(result.property)
+    else setError(result === null ? 'This property is already in your account.' : 'The property could not be saved. Try again.')
   }
   return <Dialog sheet title={siteUrl ? 'Verify ownership' : 'Add property'} close={close}>
     {siteUrl ? <>
@@ -123,8 +126,8 @@ export function PropertyDetail({ target, property, to, go, commit, openSheet, se
       <button className="danger-outline" onClick={() => setConfirmation(true)}>Remove property</button>
     </section>
     {confirmation && <Confirm title="Remove property" target={name} description="The property will be removed from your account’s property list."
-      close={() => setConfirmation(false)} onConfirm={() => {
-        commit(current => removeProperty(current, target))
+      close={() => setConfirmation(false)} onConfirm={async () => {
+        if (!await commit(current => removeProperty(current, target))) return
         setConfirmation(false)
         setNotice('Property removed.')
         go(to('/properties'), { replace: true })

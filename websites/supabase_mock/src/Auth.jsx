@@ -8,7 +8,7 @@ const statusOf = user => user.status || 'unconfirmed'
 const providerOf = user => user.provider || 'email'
 
 export function Auth() {
-  const { state, commit } = useWorkspace()
+  const { state, commit, reportError } = useWorkspace()
   const users = list(state.authUsers)
   const [query, setQuery] = useState('')
   const [provider, setProvider] = useState('')
@@ -23,9 +23,9 @@ export function Auth() {
   const activePage = Math.min(page, Math.max(0, Math.ceil(filtered.length / pageSize) - 1))
   const close = () => setEditor(null)
 
-  function changeUser(action) {
+  async function changeUser(action) {
     const messages = { confirmed: 'User confirmed.', banned: 'User banned.', unbanned: 'User unbanned.', deleted: 'User deleted.' }
-    commit((current, meta) => {
+    await commit((current, meta) => {
       const previous = list(current.authUsers).find(item => item.id === user.id)
       const details = { email: previous.email ?? null, fromStatus: statusOf(previous) }
       if (action === 'deleted') return record({ authUsers: without(current.authUsers, user.id) }, 'auth_user.deleted', user.id, { userId: user.id }, details)
@@ -58,9 +58,9 @@ export function Auth() {
         {user.bannedAt && <div><dt>Banned</dt><dd>{date(user.bannedAt)}</dd></div>}
       </dl>
       <div className="detail-actions">
-        {['invited', 'unconfirmed'].includes(statusOf(user)) && <Button onClick={() => changeUser('confirmed')}>Confirm user</Button>}
-        {statusOf(user) === 'banned' ? <Button onClick={() => changeUser('unbanned')}>Unban user</Button>
-          : <Button onClick={() => changeUser('banned')}>Ban user</Button>}
+        {['invited', 'unconfirmed'].includes(statusOf(user)) && <Button onClick={() => changeUser('confirmed').catch(reportError)}>Confirm user</Button>}
+        {statusOf(user) === 'banned' ? <Button onClick={() => changeUser('unbanned').catch(reportError)}>Unban user</Button>
+          : <Button onClick={() => changeUser('banned').catch(reportError)}>Ban user</Button>}
         <Button variant="danger-outline" onClick={() => setEditor('delete')}>Delete user</Button>
       </div>
     </section>}
@@ -98,11 +98,11 @@ function UserEditor({ close, onCreated }) {
   const [mode, setMode] = useState('create')
   const { commit } = useWorkspace()
   const invite = mode === 'invite'
-  function save(form) {
+  async function save(form) {
     const email = form.get('email').trim().toLowerCase()
     if (!/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(email)) throw new Error('Enter a valid email address.')
     const id = crypto.randomUUID()
-    commit((state, meta) => {
+    await commit((state, meta) => {
       const users = list(state.authUsers)
       if (users.some(user => user.email?.trim().toLowerCase() === email)) throw new Error('A project user with this email already exists.')
       const confirmed = !invite && form.has('confirmed')

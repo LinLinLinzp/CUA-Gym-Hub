@@ -18,14 +18,14 @@ The standard Chromium suite passed against Vite dev and the production bundle on
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · Out-of-order POSTs erase confirmed actions
+### AUDIT-001 · Out-of-order POSTs erase confirmed actions · Resolved on 2026-11-18
 
 - **Source** `src/store.jsx:39` and `src/utils/dataManager.js:64`.
 - **Reproduction** Run `node tests/test_audit_write_order.mjs` from the site directory with Vite running. Delay the first cancellation’s `set_current` request, allow the second to reach the server, then release the first. After the second write, both orders are canceled in `/go`. After the first write arrives, `/go` says `DD-240117` is placed again. Local storage still reports it canceled.
 - **Cause** `saveState` sends the full snapshot in a fire-and-forget fetch. The Web Lock covers the synchronous call and releases before the POST reaches the server. Navigation and subsequent confirmations proceed while the earlier snapshot is in flight.
 - **Fix** Keep the Harbor templates unchanged. Coordinate persistence at the site boundary so an earlier full-state POST settles before a later one is dispatched, including the initial baseline. Add a regression that delays an earlier request and requires both confirmed actions to remain visible in `/go`.
 
-### AUDIT-002 · A shared invite loses joined guests across browser contexts
+### AUDIT-002 · A shared invite loses joined guests across browser contexts · Resolved on 2026-11-18
 
 - **Source** `src/store.jsx:27`, `src/store.jsx:41`, `src/groups.jsx:112`, and `src/utils/dataManager.js:40`.
 - **Reproduction** Run `node tests/test_audit_guest_context.mjs`. Open seeded group `GO-1030` in a host browser context, then use its invite to join as Riley Audit in an independent context. `/go` returns Riley’s participant record after the successful join. Reload the host page and close the group. The host never sees Riley and its close write erases the participant from `/go`.

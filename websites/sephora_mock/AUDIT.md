@@ -17,7 +17,7 @@
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · A write from a second tab erases a confirmed action
+### AUDIT-001 · A write from a second tab erases a confirmed action · Resolved on 2026-11-18
 
 - **File**: `src/account.jsx:26` and `src/utils/dataManager.js:64`
 - **Feature**: Order cancellation, reward redemption, and mail return submission in a shared `sid`.

@@ -174,12 +174,12 @@ export function RequestDetail() {
   const reminders = newest(records(request.reminders))
   const pending = request.status === 'pending'
 
-  function apply(action) {
+  async function apply(action) {
     if (submitting.current) return
     submitting.current = true
     setError('')
     try {
-      commit((latest) => changeRequest(latest, requestId, action).state)
+      await commit((latest) => changeRequest(latest, requestId, action).state)
       setConfirmation(null)
       announce(({ remind: 'Reminder sent.', cancelled: 'Request cancelled.', declined: 'Request declined.' })[action])
     } catch (failure) {
@@ -307,11 +307,11 @@ export function Statements() {
     ...history.map((payment) => new Date(postedAt(payment)).getUTCFullYear())])].sort((a, b) => b - a)
   const { rows, totalIncoming, totalOutgoing } = statement(state, year, month)
 
-  function download() {
+  async function download() {
     setError('')
     try {
       let result
-      commit((latest) => {
+      await commit((latest) => {
         result = exportStatement(latest, year, month)
         return result.state
       })

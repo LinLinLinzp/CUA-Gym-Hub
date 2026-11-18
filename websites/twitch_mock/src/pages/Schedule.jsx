@@ -20,7 +20,7 @@ function ScheduleEditor({ entry, defaultDate, zone, close, onAdded }) {
   const dialogTitle = entry ? weekly ? 'Edit Weekly Series' : 'Edit Stream' : 'Add Stream'
   const helpFor = field => error?.field === field ? 'schedule-error' : undefined
 
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
     if (!title.trim() || title.trim().length > 140) {
       setError({ field: 'title', text: 'Enter a stream title of up to 140 characters.' })
@@ -46,10 +46,10 @@ function ScheduleEditor({ entry, defaultDate, zone, close, onAdded }) {
       return
     }
     if (entry) {
-      commit((current, tx) => editRecord(current, 'scheduleEntries', entry.id, rows[0], tx, 'update_schedule_entry', 'scheduleEntry'),
+      await commit((current, tx) => editRecord(current, 'scheduleEntries', entry.id, rows[0], tx, 'update_schedule_entry', 'scheduleEntry'),
         weekly ? 'Weekly series updated.' : 'Stream updated.')
     } else {
-      commit((current, tx) => {
+      await commit((current, tx) => {
         const records = rows.map(row => ({ ...row, id: makeId('slot'), status: 'scheduled', createdAt: tx.now, updatedAt: tx.now }))
         return { ...current, scheduleEntries: [...(current.scheduleEntries ?? []), ...records], stateChanges: appendChanges(current,
           records.map(record => audit(tx, 'create_schedule_entry', 'scheduleEntry', record.id, null, record))) }
@@ -96,14 +96,14 @@ function VacationEditor({ settings, zone, today, close }) {
   const [start, setStart] = useState(settings.vacationStartDate ?? today)
   const [end, setEnd] = useState(settings.vacationEndDate ?? today)
   const [error, setError] = useState(false)
-  function save(event) {
+  async function save(event) {
     event.preventDefault()
     if (enabled && end < start) {
       setError(true)
       return
     }
     const patch = { vacationEnabled: enabled, vacationStartDate: enabled ? start : null, vacationEndDate: enabled ? end : null }
-    commit((state, tx) => editSettings(state, 'scheduleSettings', patch, tx, 'update_vacation'), 'Vacation settings saved.')
+    await commit((state, tx) => editSettings(state, 'scheduleSettings', patch, tx, 'update_vacation'), 'Vacation settings saved.')
     close()
   }
   return <Dialog title="Vacation Mode" close={close}>
@@ -190,10 +190,10 @@ export function Schedule() {
   const dates = selected ? [selected] : [...grouped.keys()]
   const defaultDate = selected || (monthStart(today) === month ? today : first)
 
-  function toggle(item) {
+  async function toggle(item) {
     const { entry, occurrenceDate } = item
     const restore = item.status === 'cancelled'
-    commit((current, tx) => {
+    await commit((current, tx) => {
       if (entry.recurrence !== 'weekly') return editRecord(current, 'scheduleEntries', entry.id,
         { status: restore ? 'scheduled' : 'cancelled' }, tx, restore ? 'restore_schedule_entry' : 'cancel_schedule_entry', 'scheduleEntry')
       const exceptions = current.scheduleExceptions ?? []
@@ -228,8 +228,8 @@ export function Schedule() {
     {vacation && <VacationEditor settings={settings} zone={zone} today={today} close={() => setVacation(false)} />}
     {remove && <Confirm title={remove.recurrence === 'weekly' ? 'Delete weekly series?' : 'Delete stream?'}
       verb={remove.recurrence === 'weekly' ? 'Delete series' : 'Delete stream'} close={() => setRemove(null)}
-      confirm={() => {
-        commit((current, tx) => editRecord(current, 'scheduleEntries', remove.id, { status: 'deleted', deletedAt: tx.now },
+      confirm={async () => {
+        await commit((current, tx) => editRecord(current, 'scheduleEntries', remove.id, { status: 'deleted', deletedAt: tx.now },
           tx, 'delete_schedule_entry', 'scheduleEntry'), 'Stream deleted.')
         setRemove(null)
       }}>

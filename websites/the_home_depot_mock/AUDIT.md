@@ -18,12 +18,17 @@ The production build and the existing localhost Chromium acceptance suite passed
 
 ## P0 — Dead or broken code
 
-### AUDIT-001 · A stale browser context silently replaces an already saved return
+### AUDIT-001 · A stale browser context silently replaces an already saved return · Resolved on 2026-11-18
 
 - **Location** [src/main.jsx](src/main.jsx#L36), [src/pages/Returns.jsx](src/pages/Returns.jsx#L102)
 - Open the same return and SID in two Playwright browser contexts with separate localStorage. Review the last eligible unit in both. Submit in the first context and record its ID from `/go`. Submit the stale review in the second context.
 - Both POSTs returned 200. The second confirmation produced a new return ID and replaced the first request in `/go.current_state.returns`. Confirmation validates against the browser-local snapshot, and the whole-state write replaces the saved state.
 - Reconcile the latest persisted SID state at user confirmation before validation and saving. Keep the shared templates intact and keep idle views read-only. Add a regression that confirms the stale request is rejected and the original return ID remains observable.
+
+### AUDIT-004 · Simultaneous isolated-context submissions can overwrite a saved return
+
+- Two independent browser contexts using the same SID each read the last eligible unit and confirmed it. Both writes returned HTTP 200. The second full snapshot replaced the first return.
+- See [BUG-001 in TEST.md](TEST.md#bug-001--p0--simultaneous-confirmations-can-overwrite-a-saved-return) for the replay. Harbor needs a conditional write or an atomic validate-and-write operation to resolve this race.
 
 ## P1 — Incomplete features
 
@@ -66,3 +71,5 @@ Added endpoint and reset behavior, typed top-level keys, default identifiers and
 - **AUDIT-001 · Previously fixed, retested.** The built-preview suite exercised stale return rejection in tabs and isolated contexts. The separate report’s simultaneous isolated-context race remains outside that sequential fix.
 
 Docker dynamic certification run `125084` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.
+
+- **BUG-001 · Still reproduced.** Two isolated Chromium contexts sharing a SID each read the available quantity, then submitted the last eligible unit. The browser probe held both writes until their preflight reads had completed. Both writes returned HTTP 200 with distinct return IDs. The final Harbor snapshot retained only one. Atomic validation and write must occur in the shared runtime to cover this case.

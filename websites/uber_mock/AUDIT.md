@@ -17,7 +17,7 @@
 
 ## P0 — Dead or broken code
 
-### AUDIT-001 · A fare review can persist a charge from a different trip
+### AUDIT-001 · A fare review can persist a charge from a different trip · Resolved on 2026-11-18
 
 - **Files** `src/account.jsx:71`, `src/pages/Trips.jsx`, `src/pages/Refunds.jsx`.
 - **Reproduction** Inject completed `selected-trip` with `receiptId: "other-receipt"`. Set `other-receipt.tripId` to `other-trip` and add `correct-receipt` with `tripId: "selected-trip"`. Open `/trips/selected-trip`. The receipt link opens `other-receipt`. Start a fare review from the selected trip and submit a charge. `/go` records `tripId: "selected-trip"`, `receiptId: "other-receipt"` and a charge from `other-trip`.

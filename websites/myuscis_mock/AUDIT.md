@@ -17,7 +17,7 @@
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · A delayed startup write can erase the first user action
+### AUDIT-001 · A delayed startup write can erase the first user action · Resolved on 2026-11-18
 
 - **Location** `src/account.jsx:14`, `src/utils/dataManager.js:57`, and the shared `../../templates/state-api.js:64`.
 - **Reproduction** In a fresh Chromium session, hold the browser's initial `POST /post` with `action: set`. Check `IOE9700000033`, let `set_current` finish, and inspect `/go`. The case check appears as record 25 and also lands in `initial_state`. Release the held startup write. `/go` reverts to 24 checks in `current_state`, keeps 25 in `initial_state`, and reports a reversed diff. The UI had already shown the successful lookup. Confirmed on dev and built preview.

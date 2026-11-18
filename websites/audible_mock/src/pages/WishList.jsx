@@ -22,8 +22,8 @@ export function WishList() {
   }).sort((left, right) => sort === 'recent' ? recentFirst(left, right)
     : alphabetic(titleLabel(titles.get(left.titleId)), titleLabel(titles.get(right.titleId))))
 
-  function remove(titleId) {
-    act({ type: 'remove_wish', titleId })
+  async function remove(titleId) {
+    await act({ type: 'remove_wish', titleId })
     requestAnimationFrame(() => list.current?.focus())
   }
 

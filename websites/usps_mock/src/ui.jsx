@@ -69,7 +69,20 @@ export function Wizard({ title, backTo, steps, renderStep, validate, onConfirm, 
     setStep(next)
   }
 
-  async function advance(event) {
+  async function finish(action) {
+    if (busy.current) return
+    busy.current = true
+    setMessage('')
+    try {
+      await action()
+      setFinished(true)
+    } catch (error) {
+      setMessage(error.message)
+      busy.current = false
+    }
+  }
+
+  function advance(event) {
     event.preventDefault()
     if (busy.current) return
     const error = validate(step)
@@ -81,14 +94,7 @@ export function Wizard({ title, backTo, steps, renderStep, validate, onConfirm, 
       goTo(step + 1)
       return
     }
-    try {
-      busy.current = true
-      await onConfirm()
-      setFinished(true)
-    } catch (error) {
-      setMessage(error.message)
-      busy.current = false
-    }
+    return finish(onConfirm)
   }
 
   return <section className="form-wrap">
@@ -101,7 +107,7 @@ export function Wizard({ title, backTo, steps, renderStep, validate, onConfirm, 
       <Problem message={message} />
       <div className="form-actions">
         {step > 0 && <button type="button" className="button" onClick={() => goTo(step - 1)}>Back</button>}
-        {extra && extra({ setMessage, busy: finished })}
+        {extra && extra({ setMessage, busy: finished, finish })}
         <button className="button primary" disabled={finished} type="submit">{final ? confirmLabel : 'Continue'}</button>
       </div>
     </form>

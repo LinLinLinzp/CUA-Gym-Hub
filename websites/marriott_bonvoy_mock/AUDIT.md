@@ -16,13 +16,13 @@
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · Actions could fail on an HTTP origin
+### AUDIT-001 · Actions could fail on an HTTP origin · Resolved on 2026-11-18
 
 - **File**: `src/model.js`
 - **Issue**: The shared action ID generator called `crypto.randomUUID()`, which requires a secure browser context. With that method removed in Chromium, confirming a reservation edit threw and produced no `set_current` request.
 - **Resolution**: Generate v4 UUIDs from `crypto.getRandomValues()` and keep the existing ID format. Re-ran the four workflows from `dist/` with `randomUUID()` disabled.
 
-### AUDIT-002 · Whole-state save could silently miss the server
+### AUDIT-002 · Whole-state save could silently miss the server · Resolved on 2026-11-18
 
 - **File**: `src/utils/stateTransport.js`
 - **Issue**: The template's keepalive threshold uses JavaScript string length, while Chromium enforces a byte limit. An injected field with 28,000 CJK characters reproduced a reservation change that reached the UI and local storage but failed to reach `/go`.
@@ -56,3 +56,10 @@ None found. Stays, Points, Folios and Requests all have wired entry points, vali
 ## SCHEMA.md Updates
 
 Documented the endpoint contract, typed collection inventory, default IDs and empty-world injection. Kept the workflow mutation table aligned with observed server state. See [TEST.md](TEST.md) for functional evidence. The parent runner owns Docker certification.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** A browser fixture with crypto.randomUUID disabled still generated and persisted the expected stay action ID.
+- **AUDIT-002 · Previously fixed, retested.** A reservation edit in the 28,000-CJK-character fixture persisted both the edit and all metadata. Baseline reset restored the original snapshot.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

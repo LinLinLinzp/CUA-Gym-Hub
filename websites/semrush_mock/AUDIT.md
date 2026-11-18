@@ -20,7 +20,7 @@ The production build and existing localhost Playwright suite passed. The suite v
 
 ## P0 — Dead/Broken Code (must fix before testing)
 
-### AUDIT-001 · First crawl leaves confirmed defaults out of an injected configuration
+### AUDIT-001 · First crawl leaves confirmed defaults out of an injected configuration · Resolved on 2026-11-18
 
 - **File** `src/Audit.jsx:187`
 - **Feature** Start Audit with an existing sparse `auditConfigs` row and no runs.

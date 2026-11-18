@@ -20,7 +20,7 @@ function targetsOf(state) {
 }
 
 export function Policies() {
-  const { state, commit } = useWorkspace()
+  const { state, commit, reportError } = useWorkspace()
   const [params, setParams] = useSearchParams()
   const [query, setQuery] = useState('')
   const [command, setCommand] = useState('')
@@ -46,8 +46,8 @@ export function Policies() {
   const activePage = Math.min(page, Math.max(0, Math.ceil(groups.length / pageSize) - 1))
   const close = () => setEditor(null)
   const add = group => setEditor({ kind: 'edit', target: group?.key || (targets.some(target => target.key === targetFilter) ? targetFilter : '') })
-  function remove(rule) {
-    commit(current => record({ policies: without(current.policies, rule.id) }, 'policy.deleted', rule.id,
+  async function remove(rule) {
+    await commit(current => record({ policies: without(current.policies, rule.id) }, 'policy.deleted', rule.id,
       { policyId: rule.id, targetType: rule.targetType, targetId: rule.targetId }, { name: rule.name, command: rule.command }), 'Policy deleted.')
   }
   return <>
@@ -80,7 +80,7 @@ export function Policies() {
             <span className="area-icon"><Icon name={type === 'table' ? 'tables' : 'storage'} /></span>
             <div><h2 className="mono">{name}</h2><p>{type === 'table' ? 'Table' : 'Bucket'} · {rules.length} {rules.length === 1 ? 'policy' : 'policies'}</p></div>
           </div><div className="actions">
-            {type === 'table' && <Toggle title="Row-level security (RLS)" checked={item.rlsEnabled} onChange={value => setRls(commit, item.id, value)} />}
+            {type === 'table' && <Toggle title="Row-level security (RLS)" checked={item.rlsEnabled} onChange={value => setRls(commit, item.id, value).catch(reportError)} />}
             <Button icon="plus" onClick={() => add(group)}>Add policy</Button>
           </div></div>
           {rules.length ? <DataGrid title={`Policies for ${name}`}><thead><tr><th>Policy name</th><th>Command</th><th>Applies to</th><th>Actions</th></tr></thead>
@@ -134,7 +134,7 @@ function PolicyEditor({ rule, initialTarget, close }) {
     usesCheck && (checkExpression || command === 'INSERT') && `WITH CHECK (${scoped(checkExpression || 'expression')})`,
   ].filter(Boolean).join('\n') + ';'
 
-  function save() {
+  async function save() {
     const trimmed = name.trim()
     if (!trimmed) throw new Error('Enter a policy name.')
     if (!target) throw new Error('Choose a table or bucket.')
@@ -143,7 +143,7 @@ function PolicyEditor({ rule, initialTarget, close }) {
     if (command === 'INSERT' && !checkExpression) throw new Error('INSERT requires a WITH CHECK expression.')
     const id = rule?.id || crypto.randomUUID()
     const related = { policyId: id, targetType: target.type, targetId: target.item.id }
-    commit((current, meta) => {
+    await commit((current, meta) => {
       const policies = list(current.policies)
       if (policies.some(policy => policy.id !== id && policy.targetType === target.type && policy.targetId === target.item.id && policy.name?.toLowerCase() === trimmed.toLowerCase())) {
         throw new Error('A policy with this name already exists for the selected target.')

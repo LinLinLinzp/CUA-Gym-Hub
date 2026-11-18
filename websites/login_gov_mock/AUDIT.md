@@ -19,14 +19,14 @@ The existing localhost acceptance suite passed both SEED workflows, including ex
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · A late bootstrap POST can erase the first verification action
+### AUDIT-001 · A late bootstrap POST can erase the first verification action · Resolved on 2026-11-18
 
 - **Files** `src/main.jsx:10`, `src/utils/dataManager.js:59`
 - **Reproduction** On a fresh SID, hold the browser's baseline `set` before it reaches the server. Click **Verify identity** and wait for `set_current` to succeed. Release the baseline.
 - **Observed** `/go` initially shows the draft in current state. The late baseline then replaces current state with the seed, while initial state retains the first draft. This loses the action and corrupts the verifier's baseline.
 - **Fix** Coordinate bootstrap at the entry point so state-changing routes become interactive after the baseline POST settles. Keep the shared data helper byte-for-byte unchanged and retain the cached-load path, which sends no baseline. Add a delayed-bootstrap regression that checks both initial and current state.
 
-### AUDIT-002 · Hard reload can discard a queued business mutation
+### AUDIT-002 · Hard reload can discard a queued business mutation · Resolved on 2026-11-18
 
 - **Files** `src/utils/stateWrites.js:10`, `src/context/AccountContext.jsx:12`
 - **Reproduction** Start verification and let the first action reach the server while holding its response. Select **Online** and click **Continue**. When **Review sample identity** appears, hard reload before releasing the first response.

@@ -17,7 +17,7 @@
 
 ## P0 — Dead/Broken Code
 
-### AUDIT-001 · Non-finite amounts reached state
+### AUDIT-001 · Non-finite amounts reached state · Resolved on 2026-11-18
 
 - `src/model.js` accepted a long string of digits that converted to `Infinity`. The cent guard treated non-finite values as zero, so JSON serialized the accepted amount as `null`.
 - Fixed by checking that amounts round-trip through JSON and cent arithmetic before committing. Playwright confirmed that oversized reimbursements leave the dialog open and produce no `/post` write or `/go` change.

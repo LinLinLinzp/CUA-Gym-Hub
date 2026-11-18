@@ -16,7 +16,7 @@ Round 2 resolved AUDIT-001. Chromium verified that the complete 7,000-character 
 
 ## P0 — Dead or broken code
 
-### AUDIT-001 · Multibyte notes can be saved locally and lost on the server
+### AUDIT-001 · Multibyte notes can be saved locally and lost on the server · Resolved on 2026-11-18
 
 - **Files** `src/utils/dataManager.js:64`, `src/utils/stateTransport.js:12`, `src/store.jsx:21`
 - **Reproduction** Open the seeded `booking_001` receipt in a fresh Chromium session on localhost. Edit its notes to 7,000 repetitions of `旅` and save. The app displayed “Booking notes saved.” and cached all 7,000 characters. The receipt in `/go` retained its original 37-character note and `state_diff` stayed empty. The same action with 7,000 ASCII characters persisted and appeared under `state_diff.bookings`.

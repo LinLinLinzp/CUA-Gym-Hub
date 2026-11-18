@@ -19,7 +19,7 @@ The standard Playwright suite passed for Courses, Goals, and Friends Quests. Pro
 
 ## P0 — Dead or broken code
 
-### AUDIT-001 · A delayed boot POST can overwrite a successful first action
+### AUDIT-001 · A delayed boot POST can overwrite a successful first action · Resolved on 2026-11-18
 
 - **Files** `src/account.jsx:17`, `src/utils/dataManager.js:40`, and `../../templates/state-api.js:67`.
 - **Reproduce** With a fresh SID, hold the app's boot POST with action `set`. Add Korean on Courses and wait for `set_current` to succeed. Release the held POST and read `/go`.

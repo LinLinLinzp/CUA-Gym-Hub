@@ -18,7 +18,7 @@ The resumed workspace has an original horizontal navigation layout, the Okta tex
 
 ## P0 — Dead or broken code
 
-### AUDIT-001 · A rapid second save can be absent from Harbor state
+### AUDIT-001 · A rapid second save can be absent from Harbor state · Resolved on 2026-11-18
 
 - **Files** `src/state.jsx` (optimistic commit) and `src/utils/dataManager.js` (shared transport).
 - **Reproduction** Inject an empty workspace with a metadata string of 58,000 ASCII characters. Add two groups in quick succession with **Save and Add Another**. Chromium attempted writes of 58,782 and 59,237 bytes. The browser cache contained both groups, while `/go.current_state.groups` contained only the first. The same result occurred with ordinary localhost timing and with emulated latency.
@@ -49,3 +49,9 @@ No issues found.
 ## SCHEMA.md Updates
 
 Added endpoint and reset semantics, default IDs, a minimal injection example and explicit record types. Clarified the optional direct-grant username and the group creation event payload. The observable changes table covers every business action exposed by the app.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Two near-quota snapshots of 58,782 and 59,237 bytes both reached Harbor, with ordinary timing and at 2,200 ms emulated latency. No request failed.
+
+Docker dynamic certification run `175552` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

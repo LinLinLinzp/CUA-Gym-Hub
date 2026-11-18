@@ -1,5 +1,5 @@
 import { createContext, useContext, useRef, useState } from 'react'
-import { saveState } from './utils/dataManager.js'
+import { readCurrentState, saveAcknowledged, withSessionWrite } from './utils/harborPersistence.js'
 
 const WorkspaceContext = createContext(null)
 const APP = 'twitch'
@@ -24,16 +24,23 @@ export function WorkspaceProvider({ initial, children }) {
   const latest = useRef(initial)
   const [notice, setNotice] = useState(null)
 
-  function commit(mutate, message) {
-    const current = latest.current
-    const tx = { now: new Date().toISOString(), actorId: current.account?.id || 'creator-001' }
-    const next = mutate(current, tx)
-    if (!next || next === current) return false
-    saveState(APP, next)
-    latest.current = next
-    setState(next)
-    setNotice({ text: message, id: crypto.randomUUID() })
-    return true
+  async function commit(mutate, message) {
+    try {
+      return await withSessionWrite(APP, async () => {
+        const current = await readCurrentState(latest.current)
+        const tx = { now: new Date().toISOString(), actorId: current.account?.id || 'creator-001' }
+        const next = mutate(current, tx)
+        if (!next || next === current) return true
+        await saveAcknowledged(APP, next)
+        latest.current = next
+        setState(next)
+        setNotice({ text: message, id: crypto.randomUUID() })
+        return true
+      })
+    } catch (error) {
+      setNotice({ text: error.message || 'The change could not be saved.', id: crypto.randomUUID() })
+      return false
+    }
   }
 
   return <WorkspaceContext.Provider value={{ state, commit }}>

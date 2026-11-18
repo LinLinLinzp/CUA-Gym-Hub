@@ -17,13 +17,13 @@
 
 ## P0 — Dead or broken controls
 
-### AUDIT-001 · An injected field without a label could crash the Zap editor
+### AUDIT-001 · An injected field without a label could crash the Zap editor · Resolved on 2026-11-18
 
 - **Files** · `src/ZapEditor.jsx`, `src/utils/workflow.js`
 - **Resolution** · Render the field key when its display label is absent and use the same fallback in validation messages.
 - **Verification** · Opened an injected Slack action and located its editable field by key.
 
-### AUDIT-002 · Injected steps without IDs could select the wrong action and duplicate with shared IDs
+### AUDIT-002 · Injected steps without IDs could select the wrong action and duplicate with shared IDs · Resolved on 2026-11-18
 
 - **Files** · `src/ZapEditor.jsx`, `src/Zaps.jsx`
 - **Resolution** · Give each ID-less editor step a distinct local ID. Assign a fresh ID to every copied step and remap existing references. Persist editor-generated IDs on a user-driven save.

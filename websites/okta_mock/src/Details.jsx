@@ -35,9 +35,9 @@ function PersonActions({ record, name, onEdit }) {
   const to = useRouteLink()
   const [pending, setPending] = useState(null)
 
-  function confirm() {
+  async function confirm() {
     const [action, status] = pending
-    const saved = commit((state, meta) => {
+    const saved = await commit((state, meta) => {
       const person = state.users.find(item => item.id === record.id)
       if (!person || !(transitions[person.status] || []).some(([allowed]) => allowed === action)) return null
       const previousStatus = person.status
