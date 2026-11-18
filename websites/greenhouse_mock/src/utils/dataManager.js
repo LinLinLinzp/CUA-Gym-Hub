@@ -66,7 +66,8 @@ export const initializeData = (sid = null, customState = null) => {
   const initKey = initialKey(sid);
   const stored = localStorage.getItem(key);
 
-  if (stored) {
+  // Injected server state always wins over the defaults cached during the first render.
+  if (stored && !customState) {
     try {
       return JSON.parse(stored);
     } catch {
