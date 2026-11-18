@@ -210,13 +210,9 @@ function reducer(state, action) {
 export function AppProvider({ children }) {
   const sid = getSessionId();
   const isRefresh = localStorage.getItem(initialKey(sid)) !== null;
-  const [state, dispatch] = useReducer(reducer, null, () => {
-    if (isRefresh) {
-      return initializeData(sid);
-    }
-    // Return defaults synchronously - async custom state applied via effect
-    return initializeData(sid);
-  });
+  // On first load wait for injected server state; rendering defaults first would
+  // persist them over the task's world before /state arrives.
+  const [state, dispatch] = useReducer(reducer, null, () => (isRefresh ? initializeData(sid) : null));
 
   const initialStateRef = useRef(getInitialState(sid));
 
@@ -224,11 +220,9 @@ export function AppProvider({ children }) {
   useEffect(() => {
     if (!isRefresh) {
       fetchCustomState(sid).then(custom => {
-        if (custom) {
-          const data = initializeData(sid, custom);
-          dispatch({ type: 'SET_STATE', payload: data });
-          initialStateRef.current = data;
-        }
+        const data = initializeData(sid, custom);
+        dispatch({ type: 'SET_STATE', payload: data });
+        initialStateRef.current = data;
       });
     }
   }, []);
@@ -244,6 +238,8 @@ export function AppProvider({ children }) {
   }, [state]);
 
   const getInitial = () => initialStateRef.current;
+
+  if (!state) return null;
 
   return (
     <AppContext.Provider value={{ state, dispatch, getInitialState: getInitial, sid }}>
