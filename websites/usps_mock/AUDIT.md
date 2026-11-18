@@ -63,3 +63,10 @@ The existing 15-check Playwright suite passed against the built app served on lo
 ## SCHEMA.md Updates
 
 Added the localhost API contract, fixed seed ID ranges and a minimal injection example. Expanded the action table to distinguish edits from cancellations and to identify the written fields. Documented the shared template's reset behavior, which restores current state from the baseline.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The original two-context browser case retained both Hold Mail cancellations and cancellation metadata after the second preloaded context wrote.
+- **AUDIT-002 · Fixed and retested.** Same-turn Save draft and File claim yielded one draft for the tracking number. Both entry points share a synchronous claim lock through successful navigation.
+
+Docker dynamic certification run `135192` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

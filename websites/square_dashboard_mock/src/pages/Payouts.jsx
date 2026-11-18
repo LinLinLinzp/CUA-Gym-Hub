@@ -117,9 +117,9 @@ export function TransferDialog({ initialLocation, close }) {
   const balance = balanceAt(state, draft.locationId)
   const destinations = destinationList(state, draft.locationId)
   const update = (patch) => { setDraft((current) => ({ ...current, ...patch })); setError('') }
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
-    const result = reviewed ? commit((latest) => makeTransfer(latest, draft, reviewed)) : transferQuote(state, draft)
+    const result = reviewed ? await commit((latest) => makeTransfer(latest, draft, reviewed)) : transferQuote(state, draft)
     if (result.error) return setError(result.error)
     setError('')
     if (result.id) {

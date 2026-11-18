@@ -85,3 +85,9 @@ The repository certifier passed the production bundle in run `185328`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `locations → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The browser verified that a held baseline withheld action controls and that a held order preparation could not be overtaken by Mark ready. Harbor retained both ordered transitions and the original new order.
+
+Docker dynamic certification run `135192` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

@@ -65,3 +65,9 @@ None recorded.
 ## SCHEMA.md Updates
 
 Added local API details, documented reset and merge behavior, listed fixed seed IDs, and added an empty-world injection example. Retained the observable writes for all supported actions.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The held startup probe verified that action controls waited for the baseline. The existing Chromium suite passed 39 scenarios including note creation and reload.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

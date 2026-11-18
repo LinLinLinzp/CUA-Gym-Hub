@@ -95,8 +95,8 @@ function OrderView({ orderId }) {
   const shipments = list(order.shipments)
   const label = orderNumber(order)
 
-  function confirm() {
-    const result = commit((current) => cancelOrder(current, orderId))
+  async function confirm() {
+    const result = await commit((current) => cancelOrder(current, orderId))
     if (result.error) {
       setError(result.error)
       return

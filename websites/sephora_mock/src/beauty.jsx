@@ -28,9 +28,9 @@ export function BeautyInsider() {
   const availableTypes = [...new Set([...Object.keys(types), ...ledger.map((entry) => entry.type).filter(Boolean)])]
   const reward = rewards.find((entry) => entry.id === selected)
 
-  function confirm() {
+  async function confirm() {
     if (!reward || confirmed.current) return
-    const result = commit((current) => redeemReward(current, reward.id))
+    const result = await commit((current) => redeemReward(current, reward.id))
     if (result.error) {
       setError(result.error)
       return

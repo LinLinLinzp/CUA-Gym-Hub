@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { createInitialData } from './data/seed.js'
-import { getSessionId, loadState, saveState } from './utils/dataManager.js'
+import { getSessionId } from './utils/dataManager.js'
+import { loadInitialState } from './utils/loadInitialState.js'
+import { readCurrentState, saveAcknowledged, withSessionWrite } from './utils/harborPersistence.js'
 
 const APP = 'usps'
 const Store = createContext(null)
@@ -25,7 +27,7 @@ export function StoreProvider({ children }) {
       }
     }
     window.addEventListener('storage', syncTab)
-    loadState(APP, createInitialData).then(next => {
+    loadInitialState(APP, createInitialData).then(next => {
       if (mounted) receive(next)
     }).catch(() => {
       if (mounted) setLoadError(true)
@@ -37,11 +39,13 @@ export function StoreProvider({ children }) {
   }, [])
 
   function commit(change, message) {
-    const updated = change(current.current)
-    saveState(APP, updated)
-    current.current = updated
-    setState(updated)
-    setNotice(message)
+    return withSessionWrite(APP, async () => {
+      const updated = change(await readCurrentState(current.current))
+      await saveAcknowledged(APP, updated)
+      current.current = updated
+      setState(updated)
+      setNotice(message)
+    })
   }
 
   if (loadError) return <main className="loading"><h1>Account unavailable</h1><p>Reload this page to try again.</p></main>

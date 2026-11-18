@@ -136,10 +136,10 @@ export function ReserveForm({ service }) {
     return form.termsAccepted ? '' : 'Accept the rental terms to continue.'
   }
 
-  function confirm() {
+  async function confirm() {
     const id = makeId('box')
     const time = new Date().toISOString()
-    commit(latest => {
+    await commit(latest => {
       const selected = officeFor(latest, form)
       const count = availability(selected, form.size)
       if (count < 1 || priceFor(selected, form.size, form.termMonths) !== amount) {
@@ -209,9 +209,9 @@ export function RenewForm({ service, record }) {
   const issue = record.status !== 'active' || !terms.length ? 'A renewal quote is unavailable for this rental.'
     : !terms.includes(form.termMonths) || amount === null ? 'Choose an available renewal term.' : ''
 
-  function confirm() {
+  async function confirm() {
     const time = new Date().toISOString()
-    commit(latest => {
+    await commit(latest => {
       const original = byId(latest, 'poBoxes', record.id)
       const currentOffice = officeFor(latest, original)
       if (original?.status !== 'active' || priceFor(currentOffice, original.size, form.termMonths) !== amount ||

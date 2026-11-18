@@ -92,3 +92,9 @@ The repository certifier passed the production bundle in run `146268`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `users → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Chromium delayed the first track-add POST and clicked two distinct tracks. No second POST overtook the first; Harbor retained both track IDs and the original baseline. Playlist, collaboration and saved-library workflows passed.
+
+Docker dynamic certification run `135192` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

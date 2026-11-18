@@ -58,14 +58,14 @@ export function MoveForm({ service, record }) {
     return (editing ? '' : moveBasics(form)) || moveDestination(form)
   }
 
-  function confirm() {
+  async function confirm() {
     const id = record?.id || makeId('coa')
     const time = new Date().toISOString()
     const destination = {
       newAddress: cleanAddress(form.newAddress), startDate: form.startDate,
       endDate: form.forwardingType === 'temporary' ? form.endDate : null,
     }
-    commit(latest => {
+    await commit(latest => {
       if (editing) {
         const original = requireScheduled(latest, service, id)
         const issue = moveDestination({ ...original, ...destination })
@@ -138,9 +138,9 @@ export function ScheduleDetail({ service, record }) {
   const editLabel = move ? 'Edit forwarding' : 'Edit hold'
   const cancelLabel = move ? 'Cancel change of address' : 'Cancel mail hold'
 
-  function cancel() {
+  async function cancel() {
     const time = new Date().toISOString()
-    commit(latest => {
+    await commit(latest => {
       requireScheduled(latest, service, record.id)
       return replace(latest, service.key, record.id, { status: 'cancelled', cancelledAt: time, cancelledBy: actor(latest), ...updated(latest, time) })
     }, move ? 'Change of address cancelled.' : 'Mail hold cancelled.')
@@ -189,11 +189,11 @@ export function HoldForm({ service, record }) {
   const steps = editing ? ['Edit mail hold', 'Review changes'] : ['Schedule Hold Mail', 'Review mail hold']
   const durationDays = isDate(form.startDate) && isDate(form.endDate) ? dateDistance(form.startDate, form.endDate) + 1 : 0
 
-  function confirm() {
+  async function confirm() {
     const id = record?.id || makeId('hold')
     const time = new Date().toISOString()
     const schedule = { startDate: form.startDate, endDate: form.endDate, durationDays, deliveryMethod: form.deliveryMethod }
-    commit(latest => {
+    await commit(latest => {
       const address = editing ? requireScheduled(latest, service, id).address : cleanAddress(form.address)
       const issue = holdIssue(latest, { ...schedule, address }, record?.id)
       if (issue) throw new Error(issue)

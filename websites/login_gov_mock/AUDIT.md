@@ -70,3 +70,10 @@ Added API usage, reset and cache behavior, fixed ID ranges, and a minimal inject
 - `node test-results/acceptance.mjs` passed on the existing Vite development listener at `http://localhost:5544`.
 - `node test-results/audit-edge.mjs` reproduced all three findings with installed Chromium. The runner lives in the gitignored `test-results/` directory.
 - Docker dynamic certification is handled by the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The initial state POST was held until acknowledgement, with no action controls exposed in the meantime. Verification, consent and connected services passed.
+- **AUDIT-002 · Fixed and retested.** The browser withheld the first saved response, verified there was no optimistic second step, reloaded, resumed from Harbor, and verified that the next confirmed verification step survived a second reload.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

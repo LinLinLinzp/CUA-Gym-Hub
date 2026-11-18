@@ -86,3 +86,9 @@ The repository certifier passed the production bundle in run `110268`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `courses → 0 → title`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** Two stale and simultaneous finish attempts in same-session tabs both preserved the original credential with one business write.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

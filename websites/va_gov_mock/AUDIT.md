@@ -65,3 +65,10 @@ None found.
 ## SCHEMA.md Updates
 
 Added the localhost API reference, reset behavior, fixed seed IDs, and a minimal injected-state example. The existing record shapes and state-write mappings matched the code.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The original two-tab regression retained both a prescription refill and a copay payment in the same SID.
+- **AUDIT-002 · Previously fixed, retested.** The Chromium suite reopened each reserved or encoded injected ID, including slash and dot cases, after direct navigation and reload.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

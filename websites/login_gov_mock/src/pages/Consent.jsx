@@ -25,10 +25,10 @@ function ConsentForm({ service }) {
   const connected = connection?.status === 'connected'
   const backTo = connection ? paths.connection(connection.id) : paths.catalog
 
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
     let connectionId
-    const saved = commit(world => {
+    const saved = await commit(world => {
       const next = connectService(world, service.id, selected)
       connectionId = next && serviceConnection(next, service.id).id
       return next

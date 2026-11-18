@@ -123,9 +123,9 @@ function ReturnForm({ orderId }) {
     setReview(estimate)
   }
 
-  function submit() {
+  async function submit() {
     if (submitted.current) return
-    const result = commit((current) => submitReturn(current, orderId, selected))
+    const result = await commit((current) => submitReturn(current, orderId, selected))
     if (result.error) {
       setSubmitError(result.error)
       return

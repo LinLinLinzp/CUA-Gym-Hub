@@ -55,3 +55,9 @@ None recorded.
 ## SCHEMA.md Updates
 
 Added endpoint and reset semantics, seed IDs and an empty-world injection example. Documented the currency behavior and kept the exact field-level write mappings. Workflow results and audit failures are listed in `TEST.md`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The browser verified that a held baseline withheld action controls and that a held order preparation could not be overtaken by Mark ready. Harbor retained both ordered transitions and the original new order.
+
+Docker dynamic certification run `135192` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

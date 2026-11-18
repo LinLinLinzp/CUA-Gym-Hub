@@ -104,7 +104,18 @@ export function ClaimForm({ service, record }) {
   const amount = claimCents(form.items) / 100
   const steps = [record ? 'Resume package claim' : 'Shipment and claimant', 'Items and evidence', 'Review package claim']
 
-  function save(final) {
+  async function save(final) {
+    if (savingDraft.current) return
+    savingDraft.current = true
+    try {
+      await saveClaim(final)
+    } catch (error) {
+      savingDraft.current = false
+      throw error
+    }
+  }
+
+  async function saveClaim(final) {
     const id = record?.id || makeId('claim')
     const time = new Date().toISOString()
     const values = {
@@ -121,7 +132,7 @@ export function ClaimForm({ service, record }) {
       status: final ? 'submitted' : 'draft',
       ...(final ? { confirmationCode: makeCode('CL'), submittedAt: time } : {}),
     }
-    commit(latest => {
+    await commit(latest => {
       if (record) {
         if (byId(latest, service.key, id)?.status !== 'draft') throw new Error('This claim is no longer an editable draft.')
         return replace(latest, service.key, id, { ...values, ...updated(latest, time) })
@@ -189,15 +200,14 @@ export function ClaimForm({ service, record }) {
     </>
   }
 
-  function saveDraft(setMessage) {
+  async function saveDraft(setMessage) {
     if (savingDraft.current) return
     if (!validTracking(form.trackingNumber)) {
       setMessage('Enter a tracking number with 13 to 34 letters and digits before saving a draft.')
       return
     }
     try {
-      savingDraft.current = true
-      save(false)
+      await save(false)
     } catch (error) {
       savingDraft.current = false
       setMessage(error.message)

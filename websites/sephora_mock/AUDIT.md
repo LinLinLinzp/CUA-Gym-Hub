@@ -64,3 +64,9 @@ None found.
 ## SCHEMA.md Updates
 
 Added the local endpoint contract, baseline and reset semantics, types for all top-level keys, fixed fixture IDs, a minimal injection example, and exact paths and values for verifier assertions.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The original cross-tab workflow preserved the prior cancellation and both operation records after the stale tab wrote. Orders, Beauty Insider and returns passed.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

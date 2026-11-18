@@ -37,7 +37,7 @@ export function Identity() {
           <div className="actions">
             {active
               ? <LocalLink className="button" to={paths.verify}>Resume verification</LocalLink>
-              : <button className="button" onClick={() => { if (commit(startAttempt)) navigate(paths.verify) }}>Verify identity</button>}
+              : <button className="button" onClick={async () => { if (await commit(startAttempt)) navigate(paths.verify) }}>Verify identity</button>}
           </div>
         )}
       </section>

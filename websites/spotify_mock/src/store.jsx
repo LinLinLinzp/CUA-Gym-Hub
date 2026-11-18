@@ -1,6 +1,6 @@
 import { createContext, useContext, useRef, useState } from 'react'
 import { applyAction } from './data/actions.js'
-import { saveState } from './utils/dataManager.js'
+import { readCurrentState, saveAcknowledged, withSessionWrite } from './utils/harborPersistence.js'
 
 const StateContext = createContext(null)
 
@@ -13,14 +13,22 @@ export function StateProvider({ initialState, children }) {
     setNotice((previous) => ({ message, version: (previous?.version || 0) + 1 }))
   }
 
-  function dispatch(action, message) {
-    const next = applyAction(latest.current, action)
-    if (!next) return false
-    latest.current = next
-    saveState('spotify', next)
-    setState(next)
-    if (message) announce(message)
-    return true
+  async function dispatch(action, message) {
+    try {
+      return await withSessionWrite('spotify', async () => {
+        const current = await readCurrentState(latest.current)
+        const next = applyAction(current, action)
+        if (!next) return false
+        await saveAcknowledged('spotify', next)
+        latest.current = next
+        setState(next)
+        if (message) announce(message)
+        return true
+      })
+    } catch (error) {
+      announce(error.message || 'Could not save this change. Try again.')
+      return false
+    }
   }
 
   return (

@@ -70,14 +70,12 @@ function ActiveVerification({ attempt }) {
   const expired = pending && visitExpired(attempt)
   const step = editing ?? resumeStep(attempt)
   const update = (change, notice) => commit(world => updateAttempt(world, attempt, change), notice)
-  const cancel = () => {
-    update((current, now) => ({ ...current, status: 'canceled', canceledAt: now.toISOString() }), 'Verification canceled.')
-    setDialog(null)
+  const cancel = async () => {
+    if (await update((current, now) => ({ ...current, status: 'canceled', canceledAt: now.toISOString() }), 'Verification canceled.')) setDialog(null)
   }
-  function completeVisit() {
-    update((current, now) => current.status === 'pending_in_person' && !visitExpired(current, now)
-      ? finishAttempt(current, now) : null, 'Sample visit completed. Your identity is verified.')
-    setDialog(null)
+  async function completeVisit() {
+    if (await update((current, now) => current.status === 'pending_in_person' && !visitExpired(current, now)
+      ? finishAttempt(current, now) : null, 'Sample visit completed. Your identity is verified.')) setDialog(null)
   }
 
   return (
@@ -97,7 +95,7 @@ function ActiveVerification({ attempt }) {
         </>
       ) : (
         <StepForm key={step} attempt={attempt} step={step} back={() => setEditing(step - 1)}
-          onContinue={change => { if (update(change)) setEditing(null) }}
+          onContinue={async change => { if (await update(change)) setEditing(null) }}
           onSubmit={() => update(submitAttempt, attempt.method === 'online' ? 'Your identity is verified.' : 'Your sample visit is ready.')} />
       )}
       <div className="actions">

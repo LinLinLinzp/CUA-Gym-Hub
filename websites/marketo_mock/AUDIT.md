@@ -55,3 +55,9 @@ The production build passed. Docker dynamic certification is assigned to the par
 ## SCHEMA.md Updates
 
 Added local endpoint and reset behavior, seed ID ranges, a minimal injection fixture, and the effective campaign mode rule. The action table identifies the business records and activity fields used by the verifier.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The sparse campaign replay executed an injected Batch campaign with omitted mode and confirmed the exact business writes.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

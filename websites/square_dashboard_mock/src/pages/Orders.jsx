@@ -60,8 +60,8 @@ function OrderDetail({ order }) {
   const [error, setError] = useState('')
   const payments = rows(state.payments).filter((payment) => payment.orderId === order.id)
   const next = transitions[order.status]
-  function transition(from, to) {
-    const result = commit((latest) => {
+  async function transition(from, to) {
+    const result = await commit((latest) => {
       const current = find(latest.orders, order.id)
       if (!current || current.status !== from || !transitions[from] || (transitions[from] !== to && to !== 'canceled')) {
         return { error: 'This order changed. Check its current status before continuing.' }

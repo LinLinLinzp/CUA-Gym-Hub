@@ -69,7 +69,7 @@ export function Wizard({ title, backTo, steps, renderStep, validate, onConfirm, 
     setStep(next)
   }
 
-  function advance(event) {
+  async function advance(event) {
     event.preventDefault()
     if (busy.current) return
     const error = validate(step)
@@ -83,7 +83,7 @@ export function Wizard({ title, backTo, steps, renderStep, validate, onConfirm, 
     }
     try {
       busy.current = true
-      onConfirm()
+      await onConfirm()
       setFinished(true)
     } catch (error) {
       setMessage(error.message)
@@ -115,11 +115,11 @@ export function CancelDialog({ action, description, onConfirm }) {
   const [message, setMessage] = useState('')
   const titleId = useId()
 
-  function confirm() {
+  async function confirm() {
     if (busy.current) return
     try {
       busy.current = true
-      onConfirm()
+      await onConfirm()
       dialog.current?.close()
     } catch (error) {
       setMessage(error.message)

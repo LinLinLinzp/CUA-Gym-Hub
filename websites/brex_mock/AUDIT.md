@@ -58,3 +58,9 @@ None found.
 Added the endpoint summary, fixed seed IDs and counts, and a minimal injected empty-world example. The record shapes and mutation footprints remain synchronized with the implementation.
 
 Docker dynamic certification is pending in the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The reimbursement workflow rejected a 400-digit amount and an unsafe cent amount before accepting a valid amount.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

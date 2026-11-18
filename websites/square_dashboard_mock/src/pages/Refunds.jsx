@@ -112,9 +112,9 @@ function RefundDialog({ payment, close }) {
   const context = refundContext(state, payment)
   const lines = context.lines.filter((entry) => entry.available > 0)
   const update = (key, value) => { setDraft((current) => ({ ...current, [key]: value })); setError('') }
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
-    const result = reviewed ? commit((latest) => issueRefund(latest, payment.id, draft, reviewed)) : refundQuote(state, payment.id, draft)
+    const result = reviewed ? await commit((latest) => issueRefund(latest, payment.id, draft, reviewed)) : refundQuote(state, payment.id, draft)
     if (result.error) return setError(result.error)
     setError('')
     if (result.id) return route(refundPath(result.id))

@@ -61,3 +61,9 @@ None.
 ## SCHEMA.md Updates
 
 Added the endpoint summary, verified seed IDs and a minimal injected world. Retained the record shapes and mutation table and named the template's reset behavior.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** Chromium delayed the first track-add POST and clicked two distinct tracks. No second POST overtook the first; Harbor retained both track IDs and the original baseline. Playlist, collaboration and saved-library workflows passed.
+
+Docker dynamic certification run `135192` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

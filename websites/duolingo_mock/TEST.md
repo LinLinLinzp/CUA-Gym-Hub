@@ -72,3 +72,9 @@ The repository certifier passed the production bundle in run `178052`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `courses → 0 → name`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** Chromium delayed the baseline before enrolling in a course and verified that the original Harbor snapshot stayed intact.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

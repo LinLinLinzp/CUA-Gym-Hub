@@ -106,3 +106,10 @@ The repository certifier passed the production bundle in run `80608`. The local 
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `emails → 0 → address`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Fixed and retested.** The initial state POST was held until acknowledgement, with no action controls exposed in the meantime. Verification, consent and connected services passed.
+- **AUDIT-002 · Fixed and retested.** The browser withheld the first saved response, verified there was no optimistic second step, reloaded, resumed from Harbor, and verified that the next confirmed verification step survived a second reload.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

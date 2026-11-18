@@ -1,6 +1,7 @@
+import { readCurrentState, saveAcknowledged, withSessionWrite } from './utils/harborPersistence.js'
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { createInitialData } from './data/seed.js'
-import { loadState, saveState } from './utils/dataManager.js'
+import { loadInitialState } from './utils/loadInitialState.js'
 
 const APP = 'sephora'
 const AccountContext = createContext(null)
@@ -12,7 +13,7 @@ export function AccountProvider({ children }) {
 
   useEffect(() => {
     let active = true
-    loadState(APP, createInitialData).then((loaded) => {
+    loadInitialState(APP, createInitialData).then((loaded) => {
       if (active) {
         current.current = loaded
         setState(loaded)
@@ -24,13 +25,20 @@ export function AccountProvider({ children }) {
   }, [])
 
   function commit(mutate) {
-    const result = mutate(current.current)
-    if (result.state) {
-      saveState(APP, result.state)
-      current.current = result.state
-      setState(result.state)
-    }
-    return result
+    return withSessionWrite(APP, async () => {
+      try {
+        const snapshot = await readCurrentState(current.current)
+        const result = mutate(snapshot)
+        if (result.state) {
+          await saveAcknowledged(APP, result.state)
+          current.current = result.state
+          setState(result.state)
+        }
+        return result
+      } catch {
+        return { error: 'Your change could not be saved. Try again.' }
+      }
+    })
   }
 
   if (error) return <main className="container loading"><h1>Account unavailable</h1><p>Reload the page to try again.</p></main>

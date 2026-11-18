@@ -58,3 +58,9 @@ The repository certifier passed the production bundle in run `140796`. The local
 | --- | --- | --- | --- |
 | Pass | Pass (1 baseline POST) | Pass (0 idle POSTs) | Pass |
 Injection reached `trips → 0 → title`.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The targeted UTF-8 replay sent a 73,231-byte snapshot. Harbor and the browser retained the complete 7,000-character note.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

@@ -68,3 +68,9 @@
 ## SCHEMA.md Updates
 
 Added localhost API details, first-baseline, cache and reset semantics, the default workflow IDs and a minimal injection. Preserved the record-shape and observable-change tables.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** Two stale and simultaneous finish attempts in same-session tabs both preserved the original credential with one business write.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

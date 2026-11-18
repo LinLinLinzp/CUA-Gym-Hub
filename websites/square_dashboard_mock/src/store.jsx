@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { createInitialData } from './data/seed.js'
-import { getSessionId, loadState, saveState } from './utils/dataManager.js'
+import { getSessionId } from './utils/dataManager.js'
+import { loadInitialState } from './utils/loadInitialState.js'
+import { readCurrentState, saveAcknowledged, withSessionWrite } from './utils/harborPersistence.js'
 
 const APP = 'square_dashboard_mock'
 const Store = createContext(null)
@@ -21,18 +23,24 @@ export function StoreProvider({ children }) {
       if (event.key === currentKey && event.newValue) receive(JSON.parse(event.newValue))
     }
     window.addEventListener('storage', sync)
-    loadState(APP, createInitialData).then(receive)
+    loadInitialState(APP, createInitialData).then(receive)
     return () => window.removeEventListener('storage', sync)
   }, [])
 
-  function commit(action) {
-    const result = action(latest.current)
-    if (!result.state) return result
-    latest.current = result.state
-    setState(result.state)
-    saveState(APP, result.state)
-    setNotice({ id: result.id, message: result.message })
-    return result
+  async function commit(action) {
+    try {
+      return await withSessionWrite(APP, async () => {
+        const result = action(await readCurrentState(latest.current))
+        if (!result.state) return result
+        await saveAcknowledged(APP, result.state)
+        latest.current = result.state
+        setState(result.state)
+        setNotice({ id: result.id, message: result.message })
+        return result
+      })
+    } catch (error) {
+      return { error: error.message || 'Could not save this change. Try again.' }
+    }
   }
 
   if (!state) return <main className="loading" role="status">Loading dashboard…</main>

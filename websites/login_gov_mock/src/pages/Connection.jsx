@@ -83,14 +83,12 @@ function ConnectionActions({ connection, service }) {
     setDialog('email')
   }
 
-  function submitEmail() {
-    commit(world => changeSharedEmail(world, connection.id, selection), 'Shared email updated.')
-    setDialog(null)
+  async function submitEmail() {
+    if (await commit(world => changeSharedEmail(world, connection.id, selection), 'Shared email updated.')) setDialog(null)
   }
 
-  function disconnect() {
-    commit(world => disconnectService(world, connection.id), 'Service disconnected.')
-    setDialog(null)
+  async function disconnect() {
+    if (await commit(world => disconnectService(world, connection.id), 'Service disconnected.')) setDialog(null)
   }
 
   return (

@@ -65,3 +65,10 @@ None open. Panel and status badge padding were aligned with `DESIGN.md` during t
 Added endpoint examples, default entity IDs, a minimal injected world, and the persisted effect of saving an injected draft whose steps lacked IDs.
 
 See [TEST.md](TEST.md) for the workflow and contract checks. Docker dynamic certification is handled by the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The audit suite opened the injected editor with a missing field label and verified it remained operable.
+- **AUDIT-002 · Previously fixed, retested.** The audit suite verified selection and duplication of injected steps without IDs and checked that duplicate step IDs were distinct.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

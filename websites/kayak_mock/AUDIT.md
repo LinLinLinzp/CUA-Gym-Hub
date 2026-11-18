@@ -52,3 +52,9 @@ Documented the API endpoints and reset behavior, the fixed seed IDs, a sparse in
 ## Verification
 
 Reran the existing localhost Chromium suite for trip planning, price alerts, bookings and Harbor state behavior. The trip deletion test observed one write that deleted the trip, removed its active manual items and unlinked its bookings. Alert tests verified lifecycle changes and derived expiration. The bookings tests verified receipt notes, manual reservation lifecycle and moving and unlinking assignments. The built-preview test observed a booking note change through the standard state API. Docker dynamic certification is owned by the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The targeted UTF-8 replay sent a 73,231-byte snapshot. Harbor and the browser retained the complete 7,000-character note.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

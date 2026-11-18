@@ -19,7 +19,7 @@ export function PlaylistForm({ playlist, onClose }) {
   const [artKey, setArtKey] = useState(playlist?.artKey || '')
   const [error, setError] = useState('')
   const nameInput = useRef(null)
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
     if (!name.trim()) {
       setError('Enter a playlist name.')
@@ -32,10 +32,11 @@ export function PlaylistForm({ playlist, onClose }) {
       return
     }
     const playlistId = playlist?.id || `playlist-${crypto.randomUUID()}`
-    const changed = dispatch({ type: playlist ? 'editPlaylist' : 'createPlaylist', playlistId, name, description, visibility, artKey },
+    const changed = await dispatch({ type: playlist ? 'editPlaylist' : 'createPlaylist', playlistId, name, description, visibility, artKey },
       playlist ? 'Playlist details saved.' : 'Playlist created.')
+    if (!changed) return setError('Could not save this playlist. Try again.')
     onClose()
-    if (!playlist && changed) navigate(route('playlist', playlistId))
+    if (!playlist) navigate(route('playlist', playlistId))
   }
   return <Dialog title={playlist ? 'Edit playlist' : 'Create playlist'} onClose={onClose}>
     <form className="form-stack" onSubmit={submit}>
@@ -128,9 +129,9 @@ function Collaborators({ playlist, onClose }) {
       </section>
       <section className="collaboration-section">
         <h3>Invite collaborators</h3>
-        <form className="invite-form" onSubmit={(event) => {
+        <form className="invite-form" onSubmit={async (event) => {
           event.preventDefault()
-          if (act('createInvite', { recipientId }, 'Invitation link created.')) {
+          if (await act('createInvite', { recipientId }, 'Invitation link created.')) {
             setActiveInvite(null)
             setCopyError('')
           }
@@ -171,8 +172,8 @@ function Collaborators({ playlist, onClose }) {
           <p>Editors will lose access and pending invitations will be revoked.</p>
           <footer className="dialog-actions">
             <button className="button" type="button" onClick={() => setConfirmDisable(false)}>Cancel</button>
-            <button className="button danger" type="button" onClick={() => {
-              if (act('disableCollaboration', {}, 'Collaboration turned off.')) setConfirmDisable(false)
+            <button className="button danger" type="button" onClick={async () => {
+              if (await act('disableCollaboration', {}, 'Collaboration turned off.')) setConfirmDisable(false)
             }}>Confirm turn off</button>
           </footer>
         </> : <button className="button danger-text" type="button" onClick={() => setConfirmDisable(true)}>Turn off collaboration</button>}
@@ -227,8 +228,8 @@ export function Playlist() {
     {dialog === 'delete' && owner && <Dialog title={`Delete ${label(playlist)}?`} onClose={dismiss}>
       <p className="dialog-description">This will remove the playlist from the library and close collaborator access.</p>
       <footer className="dialog-actions"><button className="button" type="button" onClick={dismiss}>Cancel</button>
-        <button className="button danger" type="button" onClick={() => {
-          if (dispatch({ type: 'deletePlaylist', playlistId: id }, 'Playlist deleted.')) navigate('/library')
+        <button className="button danger" type="button" onClick={async () => {
+          if (await dispatch({ type: 'deletePlaylist', playlistId: id }, 'Playlist deleted.')) navigate('/library')
         }}>Delete playlist</button></footer>
     </Dialog>}
   </>
@@ -260,8 +261,8 @@ export function Invite() {
         <h1>{canShow ? label(playlist) : 'Join a playlist'}</h1>
         {status === 'joinable' ? <>
           <p><PersonLink id={invite.invitedBy} /> invited you to contribute to this playlist.</p>
-          <button className="button primary" type="button" onClick={() => {
-            if (dispatch({ type: 'joinPlaylist', playlistId: playlist.id, inviteId: invite.id }, `You joined ${label(playlist)}.`)) {
+          <button className="button primary" type="button" onClick={async () => {
+            if (await dispatch({ type: 'joinPlaylist', playlistId: playlist.id, inviteId: invite.id }, `You joined ${label(playlist)}.`)) {
               navigate(route('playlist', playlist.id))
             }
           }}>Join playlist <Icon name="arrow" size={17} /></button>

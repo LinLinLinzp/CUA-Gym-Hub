@@ -64,3 +64,9 @@ None found.
 ## SCHEMA.md Updates
 
 Added the endpoint reference, reset semantics, fixed fixture IDs and a minimal injection example. Kept all ten root keys and the action-to-state mapping. Clarified where the start action stores effective crawl settings.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The audit edge script verified all confirmed crawl settings were present in both the injected configuration and its first-run snapshot.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

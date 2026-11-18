@@ -63,3 +63,9 @@ None found.
 ## SCHEMA.md Updates
 
 Added API examples, default IDs, a minimal injection, and field paths for each observable business action. Docker certification is handled by the parent runner.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** Chromium delayed the baseline before enrolling in a course and verified that the original Harbor snapshot stayed intact.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

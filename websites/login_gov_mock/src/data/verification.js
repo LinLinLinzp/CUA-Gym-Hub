@@ -26,7 +26,7 @@ export function startAttempt(state, serviceId) {
 
 export function updateAttempt(state, expected, change) {
   const attempt = activeAttempt(state)
-  if (!attempt || attempt !== expected) return null
+  if (!attempt || !expected || JSON.stringify(attempt) !== JSON.stringify(expected)) return null
   const now = new Date()
   const next = change(attempt, now)
   if (!next) return null

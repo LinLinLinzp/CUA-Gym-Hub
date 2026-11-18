@@ -69,3 +69,9 @@ None found.
 ## SCHEMA.md Updates
 
 Added localhost API examples, verified reset behavior, record types, default identifiers and an empty-world injection example. Retained the observable action table and clarified that pending incoming transfers hold seats on the received order.
+
+## P0 audit replay, 2026-11-18
+
+- **AUDIT-001 · Previously fixed, retested.** The browser suite retained both sequential actions across independent contexts and delayed concurrent actions from same-context tabs.
+
+Docker dynamic certification run `154644` recorded render pass, sync pass (1 startup POST), idle pass (0 idle POSTs), and hydrate pass.

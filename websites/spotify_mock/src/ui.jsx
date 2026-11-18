@@ -156,7 +156,7 @@ function DestinationDialog({ track, onClose }) {
         const added = containsTrack.has(playlist.id)
         return <li key={playlist.id}><Art record={playlist} /><strong>{label(playlist)}</strong>
           <button className="button small" type="button" disabled={added} aria-label={added ? `Already in ${label(playlist)}` : `Add to ${label(playlist)}`}
-            onClick={() => { if (dispatch({ type: 'addTrack', playlistId: playlist.id, trackId: track.id }, `Added to ${label(playlist)}.`)) onClose() }}>
+            onClick={async () => { if (await dispatch({ type: 'addTrack', playlistId: playlist.id, trackId: track.id }, `Added to ${label(playlist)}.`)) onClose() }}>
             {added ? 'Added' : 'Add'}
           </button>
         </li>

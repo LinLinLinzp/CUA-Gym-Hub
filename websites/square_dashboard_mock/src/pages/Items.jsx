@@ -114,10 +114,10 @@ function ItemEditor({ item }) {
   const updateVariant = (key, field, value) => set((current) => ({
     ...current, variations: current.variations.map((variant) => variant.key === key ? { ...variant, [field]: value } : variant),
   }))
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
     setUnchanged(false)
-    const result = commit((latest) => {
+    const result = await commit((latest) => {
       const current = find(latest.items, item?.id)
       if (item && (!current || JSON.stringify(formOf(current)) !== original)) return { errors: { form: 'This item changed. Reopen it before saving.' } }
       const { errors: problems, next } = normalize(form, current, latest)
@@ -131,7 +131,7 @@ function ItemEditor({ item }) {
       }
       return { state: { ...latest, items: current ? replace(latest.items, saved) : [...rows(latest.items), saved] }, id: saved.id, item: saved, message: current ? 'Item updated.' : 'Item created.' }
     })
-    setErrors(result.errors || {})
+    setErrors(result.errors || (result.error ? { form: result.error } : {}))
     if (result.unchanged) setUnchanged(true)
     if (result.item) {
       set(formOf(result.item))
@@ -139,8 +139,8 @@ function ItemEditor({ item }) {
       if (!item) route(itemPath(result.item.id))
     }
   }
-  function changeStatus() {
-    const result = commit((latest) => {
+  async function changeStatus() {
+    const result = await commit((latest) => {
       const current = find(latest.items, item.id)
       if (!current || current.status !== confirm.from) return { error: 'This item’s status has already changed.' }
       const saved = { ...current, status: confirm.to, ...metadata(latest) }
