@@ -1,0 +1,50 @@
+[
+  {
+    "file": "verified-official/pin-message-to-channel-3ad9efe87bbf2e79195b9e0256f28f74.png",
+    "sourcePage": "https://docs.mattermost.com/end-user-guide/collaborate/save-pin-messages",
+    "imageUrl": "https://docs.mattermost.com/assets/images/pin-message-to-channel-3ad9efe87bbf2e79195b9e0256f28f74.png",
+    "alt": "You can pin messages to make them easy to return to later.",
+    "dimensions": [
+      283,
+      370
+    ],
+    "sha256": "9511dd97d491486dbd944bf4060443cddad823cc1a310c9b742235293f5c3967",
+    "verifiedOn": "2026-11-18"
+  },
+  {
+    "file": "verified-official/pinned-example-rhs-b9d1d6eab349fd091f77a1110ef3ceff.png",
+    "sourcePage": "https://docs.mattermost.com/end-user-guide/collaborate/save-pin-messages",
+    "imageUrl": "https://docs.mattermost.com/assets/images/pinned-example-rhs-b9d1d6eab349fd091f77a1110ef3ceff.png",
+    "alt": "Review the list of pinned messages.",
+    "dimensions": [
+      462,
+      878
+    ],
+    "sha256": "43b7d75bba506ba6e8f4b11b8adcf9ed88aff547f3e88882a357cf3a309f912b",
+    "verifiedOn": "2026-11-18"
+  },
+  {
+    "file": "verified-official/unpin-message-from-channel-ccd56d0ee72122444b89d072ca53279e.png",
+    "sourcePage": "https://docs.mattermost.com/end-user-guide/collaborate/save-pin-messages",
+    "imageUrl": "https://docs.mattermost.com/assets/images/unpin-message-from-channel-ccd56d0ee72122444b89d072ca53279e.png",
+    "alt": "You can unpin messages from a channel when they&#39;re no longer needed or become outdated.",
+    "dimensions": [
+      289,
+      375
+    ],
+    "sha256": "732aa964f4f5592e987c28de288286683706a76d3d725cbce7500ed3f8b22ad1",
+    "verifiedOn": "2026-11-18"
+  },
+  {
+    "file": "verified-official/add-channels-button.png",
+    "sourcePage": "https://docs.mattermost.com/end-user-guide/collaborate/create-channels",
+    "imageUrl": "https://docs.mattermost.com/images/add-channels-button.png",
+    "alt": "You can create a channel using the Add channels button",
+    "dimensions": [
+      336,
+      366
+    ],
+    "sha256": "b9f8f862f66624047589ffdf30789b1e1d2d24d4d20c71c8bb483cddb111f11d",
+    "verifiedOn": "2026-11-18"
+  }
+]

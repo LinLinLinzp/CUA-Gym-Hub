@@ -1,0 +1,18 @@
+diff --git a/factory/runtime/sitehost/sitehost.py b/factory/runtime/sitehost/sitehost.py
+--- a/factory/runtime/sitehost/sitehost.py
++++ b/factory/runtime/sitehost/sitehost.py
+@@ -305,9 +305,12 @@ class Handler(BaseHTTPRequestHandler):
+         if not match:
+             return self.send_json({"error": "Content-Type must be multipart/form-data"}, 400)
+         boundary = b"--" + match.group(1).strip('"').encode()
++        # The CRLF before a delimiter belongs to the framing. Any earlier
++        # CR or LF belongs to the file, including at the end of the payload.
++        delimiter = re.compile(rb"(?:\A|\r\n)" + re.escape(boundary) + rb"(?:\r\n|--(?:\r\n|\Z))")
+         uploaded = []
+-        for part in self.body().split(boundary)[1:-1]:
+-            head, _, data = part.strip(b"\r\n").partition(b"\r\n\r\n")
++        for part in delimiter.split(self.body())[1:-1]:
++            head, _, data = part.partition(b"\r\n\r\n")
+             name = re.search(rb'filename="([^"]*)"', head)
+             if not name or not name.group(1):
+                 continue

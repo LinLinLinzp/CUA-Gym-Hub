@@ -1,0 +1,8 @@
+NOVEMBER ROLLOUT RUNBOOK
+Owner: Alex Morgan
+
+1. Confirm the build number and check that the previous build can still be deployed.
+2. Drain the workers before moving traffic. Wait until the active job count reaches zero.
+3. Run the sign-in, channel, and attachment smoke tests against the new deployment.
+4. Watch request latency and the worker queue for 15 minutes.
+5. If errors persist above the agreed threshold, pause traffic and notify the rollback owner.

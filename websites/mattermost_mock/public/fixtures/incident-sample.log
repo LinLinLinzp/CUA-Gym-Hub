@@ -1,0 +1,5 @@
+2026-11-16T13:31:02Z INFO  rollout gate=worker-drain status=started
+2026-11-16T13:31:15Z WARN  worker queue=events remaining=2
+2026-11-16T13:31:41Z INFO  worker queue=events remaining=0
+2026-11-16T13:32:03Z INFO  smoke check=attachment status=passed
+2026-11-16T13:47:03Z INFO  observation status=complete latency_p95_ms=182

@@ -1,0 +1,6 @@
+ATTACHMENT REVIEW
+
+Pass: readable names for text files and images.
+Pass: uploaded files can be downloaded after reload.
+Pass: a cancelled attachment is absent from the sent post.
+Recheck: the browser prompts before replacing a file being picked.

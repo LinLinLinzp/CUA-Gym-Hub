@@ -1,0 +1,7 @@
+gate,owner,status,evidence
+Staging smoke tests,Jordan Lee,pass,QA review
+Worker drain,Priya Patel,pass,Rollout runbook
+Restore rehearsal,Alex Morgan,pass,Rollback checklist
+Public release notes,Olivia Bennett,ready,Editorial review
+Customer handoff,Marcus Reed,ready,Support review
+Go/no-go,Sarah Chen,pending,November release sync

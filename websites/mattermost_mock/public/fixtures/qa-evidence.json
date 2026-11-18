@@ -1,0 +1,10 @@
+{
+  "build": "2026.11.16-rc3",
+  "reviewer": "Jordan Lee",
+  "checks": [
+    { "name": "channel permissions", "status": "pass" },
+    { "name": "thread reply after reload", "status": "pass" },
+    { "name": "attachment download", "status": "pass" },
+    { "name": "Safari file picker", "status": "retest" }
+  ]
+}
