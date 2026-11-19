@@ -36,3 +36,4 @@ yarn-debug.log*
 **/.mock-files/
 **/.mock-state*.json
 dist/
+**/.audit_debt.json
