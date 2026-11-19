@@ -40,9 +40,11 @@ export function Restaurants() {
           <div className="catalog-grid">
             {filtered.slice(0, limit).map(restaurant => (
               <article key={restaurant.id} className="card catalog-card">
-                <CuisineTile kind={restaurant.tile} banner />
+                {restaurant.id === 'restaurant-001'
+                  ? <img className="catalog-photo" src="/images/rice-kitchen.png" alt="" width="1280" height="480" />
+                  : <CuisineTile kind={restaurant.tile} banner />}
                 <div className="catalog-content">
-                  <h2>{restaurant.name || 'Restaurant'}</h2>
+                  <h2><AccountLink className="catalog-name" to={timingPath(restaurantHref(restaurant.id), scheduled)}>{restaurant.name || 'Restaurant'}</AccountLink></h2>
                   <p className="meta">{[restaurant.cuisine, restaurant.neighborhood].filter(Boolean).join(' · ')}</p>
                   <div className="catalog-bottom"><AccountLink className="inline-action" to={timingPath(restaurantHref(restaurant.id), scheduled)}>View menu <Glyph name="arrow" /></AccountLink>{restaurant.deliveryFee != null && <span className="meta">{money(restaurant.deliveryFee)} delivery</span>}</div>
                 </div>
@@ -96,37 +98,45 @@ function Menu({ restaurantId }) {
   return (
     <>
       <div className="restaurant-intro">
+        <AccountLink className="back-link restaurant-back" to={back.to}><span aria-hidden="true">←</span>{back.label}</AccountLink>
         {restaurant.id === 'restaurant-001'
           ? <img className="restaurant-photo" src="/images/rice-kitchen.png" alt="" width="1280" height="480" />
           : <CuisineTile kind={restaurant.tile} banner />}
         <div className="restaurant-intro-details">
-          <PageHeading title={restaurant.name || 'Restaurant menu'} back={back}
+          <PageHeading title={restaurant.name || 'Restaurant menu'}
             description={[restaurant.cuisine, restaurant.neighborhood, restaurant.deliveryFee != null && money(restaurant.deliveryFee) + ' delivery'].filter(Boolean).join(' · ')}
             action={bag.items.length > 0 && <AccountLink className="button primary" to={timingPath('/bag', scheduled)}>View bag <Glyph name="arrow" /></AccountLink>} />
           <OrderingTime menu restaurant={restaurant} timing={timing} />
         </div>
       </div>
-      <div className="stack restaurant-menu">
-        <label className="search-field"><span className="sr-only">Search this menu</span><Glyph name="search" /><input type="search" placeholder="Search this menu" value={menuQuery} onChange={event => setMenuQuery(event.target.value)} /></label>
-        {categories.length > 1 && <nav className="menu-categories" aria-label="Menu categories">{categories.map(category => <a key={category} href={'#menu-' + encodeURIComponent(category)}>{category}</a>)}</nav>}
-        <div aria-live="polite" className={feedback ? feedback.error ? 'error' : 'notice' : 'sr-only'}>{feedback?.error || feedback?.message}</div>
-        {!items.length && <Empty title={menuQuery ? 'No matching dishes' : 'No menu items available'} action={<AccountLink className="button" to={back.to}>Browse restaurants</AccountLink>} />}
-        {categories.map(category => (
-          <section className="card" key={category} id={'menu-' + category}>
-            <h2>{category}</h2>
-            <ul className="menu-list">
-              {items.filter(item => (item.category || 'Menu items') === category).map((item, index) => {
-                const count = ownItems.find(line => line.menuItemId === item.id)?.quantity
-                return (
-                  <li key={item.id || index}>
-                    <div><h3>{item.name || 'Menu item'}</h3>{item.description && <p className="meta">{item.description}</p>}<p className="meta">{money(item.unitPrice)}{count > 0 && ` · ${count} in bag`}</p></div>
-                    <button className="button" disabled={!menuAvailable(item, restaurantId)} aria-label={menuAvailable(item, restaurantId) ? `Add ${item.name || 'menu item'}` : undefined} onClick={() => add(item)}>{menuAvailable(item, restaurantId) ? 'Add' : 'Unavailable'}</button>
-                  </li>
-                )
-              })}
-            </ul>
-          </section>
-        ))}
+      <div className="restaurant-menu">
+        <div className="menu-tools">
+          <strong>Menu</strong>
+          <label className="search-field"><span className="sr-only">Search this menu</span><Glyph name="search" /><input type="search" placeholder="Search this menu" value={menuQuery} onChange={event => setMenuQuery(event.target.value)} /></label>
+        </div>
+        <div className="menu-content">
+          {categories.length > 1 && <nav className="menu-categories" aria-label="Menu categories">{categories.map(category => <a key={category} href={'#menu-' + encodeURIComponent(category)}>{category}</a>)}</nav>}
+          <div className="stack menu-dishes">
+            <div aria-live="polite" className={feedback ? feedback.error ? 'error' : 'notice' : 'sr-only'}>{feedback?.error || feedback?.message}</div>
+            {!items.length && <Empty title={menuQuery ? 'No matching dishes' : 'No menu items available'} action={<AccountLink className="button" to={back.to}>Browse restaurants</AccountLink>} />}
+            {categories.map(category => (
+              <section className="card" key={category} id={'menu-' + category}>
+                <h2>{category}</h2>
+                <ul className="menu-list">
+                  {items.filter(item => (item.category || 'Menu items') === category).map((item, index) => {
+                    const count = ownItems.find(line => line.menuItemId === item.id)?.quantity
+                    return (
+                      <li key={item.id || index}>
+                        <div><h3>{item.name || 'Menu item'}</h3>{item.description && <p className="meta">{item.description}</p>}<p className="meta">{money(item.unitPrice)}{count > 0 && ` · ${count} in bag`}</p></div>
+                        <button className="button" disabled={!menuAvailable(item, restaurantId)} aria-label={menuAvailable(item, restaurantId) ? `Add ${item.name || 'menu item'}` : undefined} onClick={() => add(item)}>{menuAvailable(item, restaurantId) ? 'Add' : 'Unavailable'}</button>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </div>
       </div>
       {pending && (
         <Modal title="Replace your bag?" onClose={() => setPending(null)}>

@@ -45,3 +45,11 @@ The original food photograph is packaged at `public/images/rice-kitchen.png`. It
 Prompt
 
 > Create one original photorealistic editorial food hero photograph for a local restaurant demo, horizontal 3:2. Modern Korean neighborhood restaurant on a warm pale-oak tabletop. Overhead at a 35-degree angle, daylight, a generously sized charcoal ceramic bowl of grilled chicken rice with pickled cucumber, scallions and sesame in the lower center with a scallion pancake on a small cream plate and subtle side dish around it. Delicious and candid, cafe food photography, clean edges on each side, background composed so a wide 4:1 center crop still contains the hero ingredients. No writing, lettering, marks, overlays, restaurant branding or people. Create a unique composition and do not reference any existing restaurant or food-delivery site layout.
+
+## Cuisine photography
+
+The built-in ImageGen tool produced the original six-panel image at `public/images/cuisine-gallery.png`. The catalog and menus frame the relevant panel locally using CSS.
+
+Prompt
+
+> A single original food photography contact sheet split cleanly into exactly six equal square photos in a 3-column by 2-row landscape grid with hard straight division, zero spacing or gaps between panels, and NO text or graphics. Professional neighborhood restaurant menu photos, varied backgrounds but consistently warm natural light. Each hero dish is arranged in the exact center of its square and takes 60 percent of the panel, so the image still works when the panel is cropped into a landscape rectangle. Top row left to right: cheese and basil pizza with a wood table, white bowl of noodles and vegetables on a pale slate surface, generous colorful green salad on a speckled plate. Bottom row left to right: three street tacos with lime on a clay plate, toasted deli sandwich cut in half with a side of pickles, a bowl of rice and vegetables with grilled protein. Realistic editorial restaurant photographs, no logos, brand marks, people, lettering, borders, plates crossing between panels, or reference to any existing layout.

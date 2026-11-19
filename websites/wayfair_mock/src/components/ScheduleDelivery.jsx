@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAccount } from '../context/Account.jsx'
 import { bookDelivery } from '../data/actions.js'
-import { availableSlots, findRecord, formatWindow, records, shipmentZone } from '../data/rules.js'
+import { availableSlots, findRecord, formatDate, formatWindow, records, shipmentZone } from '../data/rules.js'
 import { Address, AppointmentWindow, ProductImage } from './Details.jsx'
 import { Dialog, DialogButtons, useConfirmation } from './Dialog.jsx'
 import { useToast } from './Feedback.jsx'
@@ -16,6 +16,13 @@ export function ScheduleDeliveryDialog({ shipment, booking, onClose }) {
   const [reviewSlot, setReviewSlot] = useState(null)
   const slots = availableSlots(state, shipment)
   const zone = shipmentZone(state, shipment)
+  const windowsByDay = new Map()
+  for (const slot of slots) {
+    const day = formatDate(slot.startAt, zone, { weekday: 'short', month: 'short', day: 'numeric' })
+    const windows = windowsByDay.get(day) || []
+    windows.push(slot)
+    windowsByDay.set(day, windows)
+  }
   const order = findRecord(state.orders, shipment.orderId)
   const items = records(order?.items).filter((item) => item?.shipmentId === shipment.id)
   const initialTitle = expectedAppointmentId ? 'Reschedule delivery' : 'Schedule delivery'
@@ -55,10 +62,15 @@ export function ScheduleDeliveryDialog({ shipment, booking, onClose }) {
       <div><h3>Delivery address</h3><Address address={order?.shipTo} /></div>
       {slots.length ? <fieldset className="choices">
         <legend>Available dates and times</legend>
-        {slots.map((slot) => <label className="item-choice check-label window-choice" key={slot.id}>
-          <input type="radio" name="slot" required value={slot.id} checked={slotId === slot.id} onChange={() => setSlotId(slot.id)} />
-          <span>{formatWindow(slot, zone)}</span>
-        </label>)}
+        {[...windowsByDay].map(([day, windows]) => <div key={day} className="window-day">
+          <h3>{day}</h3>
+          <div className="window-options">
+            {windows.map((slot) => <label className="item-choice check-label window-choice" key={slot.id}>
+              <input type="radio" name="slot" required value={slot.id} checked={slotId === slot.id} onChange={() => setSlotId(slot.id)} />
+              <span>{formatWindow(slot, zone).split(' · ').at(-1)}</span>
+            </label>)}
+          </div>
+        </div>)}
       </fieldset> : <p className="muted">No appointment windows are available.</p>}
       <label className="field">
         <span>Delivery instructions (optional)</span>

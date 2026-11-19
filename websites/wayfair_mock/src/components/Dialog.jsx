@@ -1,22 +1,35 @@
 import { useEffect, useId, useRef, useState } from 'react'
-import { X } from 'lucide-react'
+import { LoaderCircle, X } from 'lucide-react'
 
 export function Dialog({ title, onClose, pending, children }) {
   const id = useId()
   const dialog = useRef(null)
   const heading = useRef(null)
+  const wasPending = useRef(false)
 
   useEffect(() => {
     const node = dialog.current
     const trigger = document.activeElement
+    const item = trigger?.closest('.order-item, .line-item')?.querySelector('h3')
     node.showModal()
     return () => {
       node.close()
-      if (trigger instanceof HTMLElement && trigger.isConnected) trigger.focus()
+      if (trigger instanceof HTMLElement && trigger.isConnected) trigger.focus({ preventScroll: true })
+      else if (item?.isConnected) item.focus({ preventScroll: true })
     }
   }, [])
 
-  useEffect(() => { heading.current.focus() }, [title])
+  useEffect(() => { heading.current.focus({ preventScroll: true }) }, [title])
+  useEffect(() => {
+    if (wasPending.current && !pending) {
+      const alert = dialog.current.querySelector('[role="alert"]')
+      if (alert) {
+        alert.tabIndex = -1
+        alert.focus()
+      }
+    }
+    wasPending.current = pending
+  }, [pending])
 
   function containFocus(event) {
     if (event.key !== 'Tab') return
@@ -33,7 +46,7 @@ export function Dialog({ title, onClose, pending, children }) {
     }
   }
 
-  return <dialog ref={dialog} aria-labelledby={id} onKeyDown={containFocus} onCancel={(event) => {
+  return <dialog className="service-dialog" ref={dialog} aria-labelledby={id} data-saving={Boolean(pending)} onKeyDown={containFocus} onCancel={(event) => {
     event.preventDefault()
     if (!pending) onClose()
   }}>
@@ -71,7 +84,7 @@ export function DialogButtons({ onBack, backLabel = 'Back', submitLabel, pending
   return <div className="dialog-buttons">
     <button className="button" type="button" disabled={pending} onClick={onBack}>{backLabel}</button>
     {submitLabel && <button className={'button ' + (danger ? 'danger' : 'primary')} type="submit" disabled={pending || disabled}>
-      {pending ? 'Saving…' : submitLabel}
+      {pending && <LoaderCircle className="save-spinner" size={17} aria-hidden="true" />}{pending ? 'Saving…' : submitLabel}
     </button>}
   </div>
 }

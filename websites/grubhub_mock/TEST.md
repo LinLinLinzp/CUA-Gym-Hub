@@ -56,3 +56,10 @@ Chromium checked the production preview at 1440 px and 390 px. The menu exposed 
 The workflow replay exercised ASAP orders, reorder, receipts, scheduled placement, reschedule, cancel, refund scope and history, empty, sparse and large injected state, plus SID isolation. Browser tests captured the menu and checkout at mobile width and found zero page-level horizontal overflow.
 
 Docker run `177508` passed render, sync, idle and hydrate. The certifier recorded one startup POST, zero idle POSTs and no page errors.
+
+## Interface review · 2026-11-19
+
+- Chromium walked restaurant browsing, the menu, the preorder dialog, the bag, checkout, receipt and refund request. The desktop menu displayed the original photography, restaurant details, search and category navigation. The 390 px layout rendered without horizontal overflow.
+- The centered preorder dialog offered ASAP, Today and Later. Today exposed the time directly, while Later required a date and a time. The save button stayed disabled until a valid window was selected. Keyboard focus wrapped, and window selection and cancellation made no business writes.
+- The chosen time survived the bag round trip and hard reload. An expired time prompted reselection and left order submission disabled until a new time was chosen. The final order and related scheduled delivery contained the same saved window. The refund modal focused the reason and returned focus to the order action on dismissal.
+- Browser workflows for ASAP ordering, reorder, receipt, scheduled changes, refunds and injected state passed. Docker run `152084` passed render, sync, idle and hydrate, with one startup POST, no idle POSTs and no browser errors.

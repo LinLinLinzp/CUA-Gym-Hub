@@ -2,19 +2,19 @@
   .frame { width: min(100%, 1360px); padding-inline: 32px; margin-inline: auto; }
   .topbar { border-bottom: 1px solid var(--border); background: var(--surface); }
   .header-inner { height: 71px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .wordmark { color: var(--brand); font-size: 24px; line-height: 28px; font-weight: 800; letter-spacing: -.06em; text-decoration: none; }
+  .wordmark { color: var(--brand); font-size: 29px; line-height: 1; font-weight: 850; letter-spacing: -.055em; text-decoration: none; }
   .header-nav, .heading-row, .actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .header-nav { gap: 24px; flex-wrap: nowrap; }
   .header-browse { font-weight: 650; text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; }
   .header-browse:hover, .header-browse:focus-visible { text-decoration: underline; }
-  .button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 16px; border: 1px solid var(--field); border-radius: 10px; background: var(--surface); color: var(--ink); font-weight: 650; text-decoration: none; line-height: 1.25; text-align: center; transition: background-color .15s; }
+  .button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 16px; border: 1px solid var(--field); border-radius: 999px; background: var(--surface); color: var(--action); font-weight: 650; text-decoration: none; line-height: 1.25; text-align: center; transition: background-color .15s; }
   .button:hover { background: var(--selected); }
   .button:active { box-shadow: inset 0 0 0 1px currentColor; }
   .button.primary { color: #fff; background: var(--action); border-color: var(--action); }
   .button.primary:hover { background: var(--action-hover); }
   .button.danger { color: var(--alert); border-color: var(--alert); }
   .button.danger:hover { background: var(--alert-bg); }
-  .button:disabled { cursor: default; opacity: .55; }
+  .button:disabled, .button:disabled:hover { cursor: default; background: #f0edef; border-color: #e6e1e8; color: #665f6a; }
   .button.bag-link { background: var(--selected); border-color: transparent; }
   .bag-count { background: var(--action); color: white; min-width: 22px; padding: 2px 5px; font-size: 12px; border-radius: 20px; }
 
@@ -24,7 +24,7 @@
   .avatar { display: grid; place-items: center; flex: 0 0 38px; height: 38px; border-radius: 50%; background: #f1dfd3; color: var(--brand); font-size: 13px; font-weight: 750; }
   .account-nav { display: grid; gap: 4px; }
   .rail-link { display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 8px 10px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 600; }
-  .rail-link:hover { background: rgb(33 83 76 / 5%); }
+  .rail-link:hover { background: var(--selected); }
   .rail-link[aria-current] { background: var(--selected); color: var(--action); box-shadow: inset 3px 0 var(--action); }
   .short-label { display: none; }
   .main { min-width: 0; overflow-wrap: anywhere; }

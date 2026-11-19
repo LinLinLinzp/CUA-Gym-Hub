@@ -67,3 +67,9 @@ Added the required API header, types for all seven root keys, fixed seed ID rang
 The catalog, menu, bag and checkout use a shopping layout. The menu and bag expose delivery time controls. The selected draft is scoped to the restaurant and SID in browser session storage. Checkout validates it against current delivery windows and clears it on successful placement. Receipt help groups refund actions under the order they apply to.
 
 The comparison used the public consumer menu and Grubhub preorder guide. Visual verification of the signed-in customer support and account pages remains pending matching samples.
+
+## Public interface walkthrough · 2026-11-19
+
+The public homepage, restaurant menu and preorder panel rendered in Chromium. Selecting delivery on the public preorder panel showed its timing options at both desktop and mobile widths. The mock adopts a photo-led menu, independent menu search, categorical navigation, compact rounded buttons and a centered preorder dialog. The meal photos and lighter violet palette are local assets and styling.
+
+The locally exercised checkout and refund screens use the same controls and feedback hierarchy. Visual review of authenticated consumer order history, checkout and support still requires matching samples. [Public menu](https://www.grubhub.com/restaurant/chicory-cafe-mishawaka-114-w-1st-st-mishawaka/1784291) · [Preorder guide](https://www.grubhub.com/eat/preorder_demo) · [Order help](https://www.grubhub.com/answers/what-if-my-grubhub-order-is-wrong)

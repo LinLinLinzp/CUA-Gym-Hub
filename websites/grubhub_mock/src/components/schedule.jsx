@@ -7,18 +7,18 @@ import { changeSchedule } from '../data/transactions'
 import { useAccount } from '../store'
 import { Glyph, Modal } from './ui'
 
-export function SlotPicker({ days, date, start, onDateChange, onStartChange }) {
+export function SlotPicker({ days, date, start, onDateChange, onStartChange, hideDay = false }) {
   const windows = days.find(day => day.date === date)?.windows || []
   const available = days.some(day => day.windows.length)
   if (!available) return <p className="error">No delivery windows are available in the next five days.</p>
   return (
     <div className="stack">
-      <label className="field">Delivery day
+      {!hideDay && <label className="field">Delivery day
         <select required value={date} onChange={event => onDateChange(event.target.value)} data-initial-focus>
           <option value="">Choose a day</option>
           {days.map(day => <option key={day.date} value={day.date} disabled={!day.windows.length}>{dayLabel(day.date)}{!day.windows.length && ' · Unavailable'}</option>)}
         </select>
-      </label>
+      </label>}
       <label className="field">Delivery window
         <select required disabled={!windows.length} value={windows.some(window => window.windowStartAt === start) ? start : ''} onChange={event => onStartChange(event.target.value)}>
           <option value="">{date ? 'Choose a 30-minute window' : 'Choose a day first'}</option>
@@ -89,33 +89,66 @@ export function DeliveryTimeFields({ days, scheduled, date, start, onMode, onDat
 
 export function OrderingTime({ restaurant, timing, menu = false }) {
   const [edit, setEdit] = useState(null)
+  const today = timing.days[0]
+  const later = timing.days.slice(1)
   const summary = timing.slot
     ? windowLabel({ ...timing.slot, timeZone: restaurant.timeZone })
-    : timing.stale ? 'Choose a new delivery time' : timing.scheduled ? 'Choose a delivery time' : 'As soon as possible'
+    : timing.stale ? 'Choose a new delivery time' : 'Choose a delivery time'
+
+  function open() {
+    let period = 'asap'
+    if (menu || timing.scheduled) {
+      period = timing.date === today?.date || (!timing.date && today?.windows.length) ? 'today' : 'later'
+    }
+    setEdit({
+      period, date: period === 'today' ? today?.date : timing.date, start: timing.start,
+    })
+  }
+
+  function choosePeriod(period) {
+    if (period === edit.period) return
+    setEdit({ period, start: '', date: period === 'today' ? today.date : '' })
+  }
 
   function save(event) {
     event.preventDefault()
-    timing.update(edit.scheduled ? { date: edit.date, start: edit.start } : {})
-    timing.setMode(edit.scheduled)
+    const scheduled = edit.period !== 'asap'
+    const slot = timing.days.find(day => day.date === edit.date)?.windows.find(window => window.windowStartAt === edit.start)
+    if (scheduled && !slot) return
+    timing.update(scheduled ? { date: edit.date, start: edit.start } : {})
+    timing.setMode(scheduled)
     setEdit(null)
   }
 
   return <>
     <section className="ordering-time" aria-label="Delivery time">
-      <div><p className="meta">Delivery time</p><strong>{timing.scheduled ? summary : 'As soon as possible'}</strong></div>
-      <button className="button time-button" type="button" onClick={() => setEdit({
-        scheduled: timing.scheduled || menu, date: timing.date, start: timing.start,
-      })}><Glyph name="calendar" />{menu && !timing.scheduled ? 'Preorder' : 'Change time'}</button>
+      <div><p className="meta">Delivery time</p><strong aria-live="polite">{timing.scheduled ? summary : 'As soon as possible'}</strong></div>
+      <button className="button time-button" type="button" onClick={open}>
+        <Glyph name="calendar" />{menu && !timing.scheduled ? 'Preorder' : 'Change time'}
+      </button>
     </section>
-    {edit && <Modal title="Choose delivery time" onClose={() => setEdit(null)}>
+    {edit && <Modal title="Schedule delivery" className="time-modal" onClose={() => setEdit(null)}>
       <form className="stack" onSubmit={save}>
-        <DeliveryTimeFields {...edit} days={timing.days} stale={timing.stale && !edit.start}
-          onMode={scheduled => setEdit({ ...edit, scheduled })}
-          onDate={date => setEdit({ ...edit, date, start: '' })}
-          onStart={start => setEdit({ ...edit, start })} />
-        <div className="actions">
+        <fieldset className="field-group">
+          <legend className="sr-only">Delivery timing</legend>
+          <div className="time-periods">
+            {[['asap','ASAP'], ['today','Today'], ['later','Later']].map(([value, label]) => <label className="time-period" key={value}>
+              <input className="sr-only" type="radio" name="preorder-period" checked={edit.period === value}
+                disabled={value === 'today' && !today?.windows.length}
+                data-initial-focus={edit.period === value || undefined}
+                onChange={() => choosePeriod(value)} />
+              <span>{label}</span>
+            </label>)}
+          </div>
+        </fieldset>
+        {timing.stale && !edit.start && <p className="error" role="status">Your previous delivery window is no longer available. Choose another time.</p>}
+        {edit.period === 'asap' ? <p className="meta">Deliver as soon as the restaurant can prepare your order.</p>
+          : <SlotPicker days={edit.period === 'today' ? [today] : later} date={edit.date} start={edit.start} hideDay={edit.period === 'today'}
+              onDateChange={date => setEdit({ ...edit, date, start: '' })}
+              onStartChange={start => setEdit({ ...edit, start })} />}
+        <div className="actions modal-actions">
           <button className="button" type="button" onClick={() => setEdit(null)}>Cancel</button>
-          <button className="button primary" type="submit" disabled={edit.scheduled && !edit.start}>Save time</button>
+          <button className="button primary" type="submit" disabled={edit.period !== 'asap' && !edit.start}>Save time</button>
         </div>
       </form>
     </Modal>}

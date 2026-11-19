@@ -97,3 +97,10 @@ Chromium tested the updated production preview at 1440 px and 390 px. In the sam
 The workflow suites also passed order cancellation, rescheduling, appointment cancellation, photo validation, return cancellation, injected state, stale appointment review, and same-session write ordering. The screenshot check verified no page-level horizontal overflow and expandable mobile filters.
 
 Docker run `177508` passed render, sync, idle and hydrate. The certifier recorded one startup POST, zero idle POSTs and no page errors.
+
+## Interface review · 2026-11-19
+
+- Chromium walked the overview, order list and detail, schedule and reschedule, item issue, return review and return detail in the production bundle. The new order shortcuts retained the SID. The split order still showed distinct fulfillment states, and closing an order dialog restored focus to its trigger.
+- The 390 px reschedule sheet stayed anchored to the bottom of the viewport. Its title and actions remained visible when the content scrolled. Scheduling remained disabled until a time was selected.
+- An injected HTTP 503 left the appointment review open, focused the error, and preserved the Harbor snapshot. Retrying saved one appointment. Reported damage and returned items displayed a confirmation reference and a case link in the order. The full browser workflow and state regressions passed.
+- Docker run `185580` passed render, sync, idle and hydrate, with one startup POST, no idle POSTs and no browser errors.

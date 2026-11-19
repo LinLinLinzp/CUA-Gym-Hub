@@ -1,5 +1,5 @@
 import { Box, ClipboardList, House, RotateCcw, Truck, UserRound } from 'lucide-react'
-import { BrowserRouter, NavLink, Outlet, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, NavLink, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { AccountLink, Missing, useSidPath } from './components/Navigation.jsx'
 import { ToastProvider } from './components/Feedback.jsx'
 import { useAccount } from './context/Account.jsx'
@@ -18,13 +18,19 @@ const sections = [
 function Layout() {
   const path = useSidPath()
   const { state } = useAccount()
+  const { pathname } = useLocation()
+  const activeSection = sections.find(([to]) => to !== '/' && (pathname === to || pathname.startsWith(to + '/')))
   const name = state.account?.name || 'My account'
   const initials = name.split(/\s+/).slice(0, 2).map((part) => part[0]).join('').toUpperCase()
   return <>
+    <a className="skip" href="#main">Skip to content</a>
     <header className="site-header">
       <div className="header-inner">
-        <AccountLink className="wordmark" to="/" aria-label="Wayfair account overview">Wayfair<span>.</span></AccountLink>
-        <AccountLink className="header-account" to="/"><UserRound size={18} /> My account</AccountLink>
+        <AccountLink className="wordmark" to="/" aria-label="Wayfair account overview">Wayfair</AccountLink>
+        <nav className="header-actions" aria-label="Quick links">
+          <AccountLink className="header-account" to="/orders"><Box size={18} aria-hidden="true" /> My orders</AccountLink>
+          <AccountLink className="header-account" to="/"><UserRound size={18} aria-hidden="true" /> My account</AccountLink>
+        </nav>
       </div>
     </header>
     <div className="account-frame">
@@ -39,7 +45,16 @@ function Layout() {
           </NavLink>)}
         </nav>
       </aside>
-      <main className="main-content" id="main"><Outlet /></main>
+      <main className="main-content" id="main" tabIndex={-1}>
+        {activeSection && <nav className="account-crumbs" aria-label="Breadcrumb">
+          <AccountLink to="/">Account</AccountLink>
+          <span aria-hidden="true">/</span>
+          {pathname === activeSection[0]
+            ? <span aria-current="page">{activeSection[1]}</span>
+            : <AccountLink to={activeSection[0]}>{activeSection[1]}</AccountLink>}
+        </nav>}
+        <Outlet />
+      </main>
     </div>
   </>
 }

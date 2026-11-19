@@ -13,6 +13,7 @@ export function RefundRequest({ orderId, onClose }) {
   const { state, commit } = useAccount()
   const navigate = useAccountNavigate()
   const orderFieldId = useId()
+  const reasonFieldId = useId()
   const [selectedId, setSelectedId] = useState(orderId || '')
   const [scope, setScope] = useState('items')
   const [reason, setReason] = useState('')
@@ -61,10 +62,11 @@ export function RefundRequest({ orderId, onClose }) {
             {orderId && <p className="meta">{orderName(order, restaurantFor(state, order.restaurantId))} · #{order.id}</p>}
             {balance.amount > 0 ? (
               <>
+                <div className="field"><label htmlFor={reasonFieldId}>Reason</label><select id={reasonFieldId} data-initial-focus={Boolean(orderId)} value={reason} required onChange={event => { setReason(event.target.value); setError('') }}><option value="">Choose a reason</option>{Object.entries(reasons).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
                 <fieldset className="field-group">
                   <legend>Refund scope</legend>
                   <div className="mode-options">
-                    <label className="choice"><input type="radio" name="scope" checked={scope === 'items'} data-initial-focus={orderId || undefined} onChange={() => { setScope('items'); setError('') }} /> Specific items</label>
+                    <label className="choice"><input type="radio" name="scope" checked={scope === 'items'} onChange={() => { setScope('items'); setError('') }} /> Specific items</label>
                     <label className="choice"><input type="radio" name="scope" checked={scope === 'full_order'} onChange={() => { setScope('full_order'); setError('') }} /> Full order</label>
                   </div>
                 </fieldset>
@@ -84,7 +86,6 @@ export function RefundRequest({ orderId, onClose }) {
                     </div>
                   </fieldset>
                 )}
-                <label className="field">Reason<select value={reason} required onChange={event => { setReason(event.target.value); setError('') }}><option value="">Choose a reason</option>{Object.entries(reasons).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
                 <label className="field">Details (optional)<textarea rows="2" maxLength={500} value={notes} onChange={event => { setNotes(event.target.value); setError('') }} /></label>
                 <div className="notice refund-preview"><div><strong>Requested amount</strong><p className="meta">{paymentLabel(order.payment)}</p></div><strong aria-live="polite">{money(selection?.amount)}</strong></div>
               </>
@@ -92,7 +93,7 @@ export function RefundRequest({ orderId, onClose }) {
           </>
         )}
         {error && <p className="error" role="alert">{error}</p>}
-        <div className="actions">
+        <div className="actions modal-actions">
           <button type="button" className="button" onClick={onClose}>Close</button>
           <button type="submit" className="button primary" disabled={submitting || !selection || !reason}>Submit request</button>
         </div>

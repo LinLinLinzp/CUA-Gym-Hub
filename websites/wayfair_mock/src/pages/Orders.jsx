@@ -1,5 +1,5 @@
 import { useId, useState } from 'react'
-import { ArrowRight, CalendarDays, ChevronLeft, ChevronRight, ClipboardList, Search, SlidersHorizontal, Truck } from 'lucide-react'
+import { ArrowRight, Box, CalendarDays, ChevronLeft, ChevronRight, CheckCircle2, ClipboardList, Search, SlidersHorizontal, Truck } from 'lucide-react'
 import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { useAccount } from '../context/Account.jsx'
 import { AccountLink, BackLink, Missing } from '../components/Navigation.jsx'
@@ -39,11 +39,22 @@ function DeliverySummary({ state, shipment, item }) {
 function OrderService({ order, action, close }) {
   const { state } = useAccount()
   const toast = useToast()
-  if (!action) return null
+  const [confirmation, setConfirmation] = useState(null)
+  if (!action) {
+    if (confirmation?.orderId !== order.id) return null
+    return <div className="service-confirmation">
+      <CheckCircle2 size={19} aria-hidden="true" />
+      <p><strong>{confirmation.label} submitted</strong><span className="meta">Reference {confirmation.id}</span></p>
+      <AccountLink className="text-link" to={confirmation.to}>View request <ArrowRight size={15} aria-hidden="true" /></AccountLink>
+    </div>
+  }
   const { type, id } = action
   const onSuccess = (record) => {
+    const claim = type === 'claim'
+    const label = claim ? 'Damage claim' : 'Return'
+    setConfirmation({ orderId: order.id, id: record.id, label, to: servicePath(claim ? 'claims' : 'returns', record.id) })
     close()
-    toast((type === 'claim' ? 'Damage claim' : 'Return') + ' submitted. Reference ' + record.id)
+    toast(label + ' submitted. Reference ' + record.id)
   }
   if (type === 'schedule') {
     const shipment = findRecord(state.shipments, id)
@@ -95,7 +106,7 @@ function OrderCard({ order, from, compact }) {
       return <div className="order-item" key={item.id || index}>
         <ProductImage item={item} size={82} />
         <div className="order-item-info">
-          <h3>{item.name || 'Order item'}</h3>
+          <h3 tabIndex={-1}>{item.name || 'Order item'}</h3>
           <p className="muted meta">Quantity {item.quantity ?? 'unavailable'}{item.canceledQuantity > 0 && ' · ' + item.canceledQuantity + ' canceled'}</p>
           <DeliverySummary state={state} shipment={shipment} item={item} />
         </div>
@@ -122,11 +133,19 @@ export function Overview() {
   return <div className="page-stack">
     <section className="welcome">
       <div className="welcome-content">
-        <div className="welcome-context">Account overview</div>
         <h1>{firstName ? 'Welcome, ' + firstName : 'Welcome'}</h1>
-        <p>Keep track of orders, deliveries and service requests.</p>
+        <AccountLink className="button primary" to="/orders">Go to my orders <ArrowRight size={16} aria-hidden="true" /></AccountLink>
       </div>
       <img src="/images/reading-corner.webp" alt="" width="600" height="400" />
+    </section>
+    <section aria-labelledby="manage-orders" className="section-stack">
+      <h2 id="manage-orders">Manage your orders</h2>
+      <div className="manage-orders">
+        <AccountLink to="/orders"><Search size={22} aria-hidden="true" /><strong>Track an order</strong><ArrowRight size={16} aria-hidden="true" /></AccountLink>
+        <AccountLink to="/deliveries"><Truck size={22} aria-hidden="true" /><strong>Manage a delivery</strong><ArrowRight size={16} aria-hidden="true" /></AccountLink>
+        <AccountLink to="/claims"><ClipboardList size={22} aria-hidden="true" /><strong>Report an item issue</strong><ArrowRight size={16} aria-hidden="true" /></AccountLink>
+        <AccountLink to="/returns"><Box size={22} aria-hidden="true" /><strong>Start or track a return</strong><ArrowRight size={16} aria-hidden="true" /></AccountLink>
+      </div>
     </section>
     <section className="overview-grid" aria-label="Account activity">
       <article className="card summary-card">
@@ -236,7 +255,7 @@ function ItemDetail({ state, order, item, shipment, open }) {
   return <div className="line-item">
     <ProductImage item={item} size={82} />
     <div className="line-info">
-      <h3>{item.name || 'Order item'}</h3>
+      <h3 tabIndex={-1}>{item.name || 'Order item'}</h3>
       {item.variant && <p className="muted meta">{item.variant}</p>}
       {item.sku && <p className="muted meta">SKU {item.sku}</p>}
       <p className="meta">Quantity {item.quantity ?? 'unavailable'}{Number(item.canceledQuantity) > 0 && ' · ' + item.canceledQuantity + ' canceled'}</p>

@@ -74,3 +74,9 @@ Added endpoint details, reset semantics, default IDs, a runnable injection and s
 Order cards expose the individual shipment state and the next action for each product. Eligible items launch delivery scheduling, damage reporting or returns on the current order screen. The dialogs retain the selected product and order, and service references remain discoverable from the order after saving. The global delivery, claims and returns views continue to support their direct entry points.
 
 The comparison used public Wayfair order help and shipping guidance. Visual verification of the signed-in product screens remains pending a matching account sample.
+
+## Public interface walkthrough · 2026-11-19
+
+The overview organizes the documented order-management tasks into shortcuts. The order pages use a lighter surface, visible account navigation and a consistent action hierarchy. Appointment windows are grouped by date, and a mobile bottom sheet keeps the header and actions available. A rejected save focuses the error, and a confirmed item request displays its reference in context.
+
+Wayfair consumer pages returned a browser access denial in this environment. The public Help and Contact article provided order-entry guidance. The public Homebase case study rendered in Chromium and showed examples of the white surface, purple actions and mobile bottom sheet. Visual review of authenticated order and service screens still requires a matching sample. [Help and Contact](https://www.wayfair.com/help-and-contact) · [Homebase case study](https://www.aboutwayfair.com/careers/tech-blog/how-wayfairs-design-system-empowers-feature-teams-to-dream-bigger)

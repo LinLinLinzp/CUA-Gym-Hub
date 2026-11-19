@@ -255,3 +255,59 @@ h1 { font: 700 40px/1.13 system-ui, "Segoe UI", sans-serif; letter-spacing: -.04
   .order-filter-fields[data-open="false"] { display: none; }
   .order-filter-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+/* Account services use light surfaces and one primary action per panel. */
+:root {
+  --background: #fff;
+  --ink: #211e26;
+  --brand: #742478;
+  --brand-hover: #58155d;
+  --brand-wash: #f5edf6;
+  --line: #e6dfe7;
+  --focus: #804493;
+  font: 15px/1.45 system-ui, "Segoe UI", sans-serif;
+}
+.wordmark { font: 800 31px/1.1 system-ui, "Segoe UI", sans-serif; letter-spacing: -.067em; }
+.header-actions { display: flex; align-items: center; gap: 20px; }
+.account-frame { padding-top: 24px; }
+.rail nav a { border-radius: 0 8px 8px 0; }
+.account-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+.skip { position: fixed; top: 8px; left: 8px; z-index: 4; padding: 10px; background: #fff; transform: translateY(-150%); }
+.skip:focus { transform: none; }
+.button { border-radius: 999px; border-color: var(--brand); }
+.button:active:not(:disabled) { box-shadow: inset 0 0 0 1px currentColor; }
+.button:disabled, .button:disabled:hover { opacity: 1; background: #f2eff2; border-color: #e6e0e6; color: #645d66; }
+.manage-orders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.manage-orders a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; min-height: 64px; padding: 13px 16px; border-radius: 10px; border: 1px solid var(--line); color: var(--brand); text-decoration: none; }
+.manage-orders a:hover { background: var(--brand-wash); text-decoration: underline; }
+.welcome .button { margin-top: 16px; }
+.order-summary { background: #faf7fa; }
+.service-confirmation { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 16px; color: var(--success); background: var(--success-wash); }
+.service-confirmation p { display: grid; }
+.service-confirmation .text-link { margin-inline-start: auto; }
+.detail-grid .service-confirmation { border-radius: 10px; }
+.service-dialog { --dialog-inset: 24px; padding: 0; overscroll-behavior: contain; }
+.service-dialog .dialog-title { z-index: 1; position: sticky; top: 0; margin: 0; padding: 12px var(--dialog-inset); border-bottom: 1px solid var(--line); background: var(--surface); }
+.service-dialog .dialog-body { padding: 16px var(--dialog-inset) 0; }
+.service-dialog .dialog-buttons { position: sticky; z-index: 1; bottom: 0; margin: 4px calc(0px - var(--dialog-inset)) 0; padding: 12px var(--dialog-inset); background: var(--surface); border-top: 1px solid var(--line); }
+.service-dialog .dialog-title .icon-button { border-radius: 50%; }
+.service-dialog [role="alert"] { scroll-margin-block: 75px; }
+.window-day + .window-day { margin-top: 4px; }
+.window-day h3 { font-size: 14px; margin: 0 0 6px; }
+.window-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; }
+.window-options .window-choice { height: 100%; }
+.window-choice:has(:checked) { border-color: var(--brand); background: var(--brand-wash); }
+.save-spinner { animation: save-spin .9s linear infinite; }
+@keyframes save-spin { to { transform: rotate(1turn); } }
+@media (prefers-reduced-motion: reduce) { .save-spinner { animation: none; } }
+@media (max-width: 680px) {
+  .header-actions { gap: 10px; }
+  .header-account { font-size: 13px; gap: 4px; }
+  .account-frame { padding-top: 0; }
+  .manage-orders { grid-template-columns: 1fr; }
+  .service-dialog { --dialog-inset: 16px; inset: auto 0 0; margin: 0; width: 100%; max-width: 100%; max-height: 89dvh; border-radius: 18px 18px 0 0; }
+  .service-dialog .dialog-buttons { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .service-dialog .dialog-buttons > .primary { flex: 1 1 auto; }
+}
+@media (max-width: 380px) {
+  .window-options { grid-template-columns: 1fr; }
+}

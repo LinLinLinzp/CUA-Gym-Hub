@@ -19,6 +19,9 @@ function Shell() {
   const params = new URLSearchParams(location.search)
   const scheduling = params.get('timing') === 'scheduled'
   const selectedDelivery = params.get('delivery')
+  const addresses = list(state.account?.addresses)
+  const address = addresses.find(entry => entry.id === state.account?.defaultAddressId) || addresses[0]
+  const deliveryArea = [address?.city, address?.postalCode].filter(Boolean).join(' ')
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -34,7 +37,10 @@ function Shell() {
       <a className="skip" href="#main">Skip to content</a>
       <header className="topbar">
         <div className="frame header-inner">
-          <AccountLink className="wordmark" to="/">Grubhub</AccountLink>
+          <div className="header-context">
+            <AccountLink className="wordmark" to="/">Grubhub</AccountLink>
+            {ordering && current.startsWith('/restaurants') && deliveryArea && <span className="delivery-area"><span className="meta">Delivery area</span><strong>{deliveryArea}</strong></span>}
+          </div>
           <nav className="header-nav" aria-label="Ordering">
             {ordering && <AccountLink className="header-browse" to="/orders">Orders</AccountLink>}
             <AccountLink className="header-browse" to={timingPath('/restaurants', scheduling)}>Browse restaurants</AccountLink>
