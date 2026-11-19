@@ -61,3 +61,9 @@ None found.
 ## SCHEMA.md Updates
 
 Added the required API header, types for all seven root keys, fixed seed ID ranges and an empty-history injection. Expanded the checkout, scheduling and refund write paths to match the current store. The audit used Vite on port 5317.
+
+## Menu and preorder follow-up
+
+The catalog, menu, bag and checkout use a shopping layout. The menu and bag expose delivery time controls. The selected draft is scoped to the restaurant and SID in browser session storage. Checkout validates it against current delivery windows and clears it on successful placement. Receipt help groups refund actions under the order they apply to.
+
+The comparison used the public consumer menu and Grubhub preorder guide. Visual verification of the signed-in customer support and account pages remains pending matching samples.

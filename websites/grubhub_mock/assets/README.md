@@ -37,3 +37,11 @@ The visual reference for implementation is the original layout and local artwork
 One account provides saved addresses and masked payment methods. The catalog supplies menu lines to the bag, and checkout snapshots them into orders. Each schedule links to an order and keeps a history of window changes. Refunds reference order line IDs and record units and amounts, allowing partial refunds and subsequent requests for the remaining charge. [State model](data_model.md)
 
 Use synthetic diners, restaurant names and prices throughout. Authentication, payment settlement, merchant tools, driver tools, live support, remote assets and outbound communications sit outside the account workflow. [Implementation priorities](../TODO.md)
+
+## Juniper Rice Kitchen
+
+The original food photograph is packaged at `public/images/rice-kitchen.png`. It was created with the built-in ImageGen tool.
+
+Prompt
+
+> Create one original photorealistic editorial food hero photograph for a local restaurant demo, horizontal 3:2. Modern Korean neighborhood restaurant on a warm pale-oak tabletop. Overhead at a 35-degree angle, daylight, a generously sized charcoal ceramic bowl of grilled chicken rice with pickled cucumber, scallions and sesame in the lower center with a scallion pancake on a small cream plate and subtle side dish around it. Delicious and candid, cafe food photography, clean edges on each side, background composed so a wide 4:1 center crop still contains the hero ingredients. No writing, lettering, marks, overlays, restaurant branding or people. Create a unique composition and do not reference any existing restaurant or food-delivery site layout.

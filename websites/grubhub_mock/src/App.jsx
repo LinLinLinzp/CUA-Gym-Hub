@@ -15,6 +15,7 @@ function Shell() {
   const name = state.account?.name || 'Your account'
   const initials = name.split(/\s+/).slice(0, 2).map(word => word[0]).join('')
   const current = location.pathname
+  const ordering = /^\/(restaurants(?:\/|$)|bag$|checkout$)/.test(current)
   const params = new URLSearchParams(location.search)
   const scheduling = params.get('timing') === 'scheduled'
   const selectedDelivery = params.get('delivery')
@@ -35,20 +36,21 @@ function Shell() {
         <div className="frame header-inner">
           <AccountLink className="wordmark" to="/">Grubhub</AccountLink>
           <nav className="header-nav" aria-label="Ordering">
+            {ordering && <AccountLink className="header-browse" to="/orders">Orders</AccountLink>}
             <AccountLink className="header-browse" to={timingPath('/restaurants', scheduling)}>Browse restaurants</AccountLink>
             <AccountLink className="button bag-link" to={timingPath('/bag', scheduling)}><Glyph name="bag" /> Bag <span className="bag-count">{bagCount}</span></AccountLink>
           </nav>
         </div>
       </header>
-      <div className="frame shell">
-        <aside className="account-rail">
+      <div className={ordering ? "frame shell shopping-shell" : "frame shell"}>
+        {!ordering && <aside className="account-rail">
           <div className="diner"><span className="avatar" aria-hidden="true">{initials}</span><div><strong>{name}</strong><p className="meta">Diner account</p></div></div>
           <nav aria-label="Account" className="account-nav">
             <AccountLink to="/orders" className="rail-link" aria-current={current === '/' || current.startsWith('/orders') ? 'page' : undefined}><Glyph name="receipt" /> Orders</AccountLink>
             <AccountLink to="/scheduled" className="rail-link" aria-current={current === '/scheduled' ? 'page' : undefined}><Glyph name="calendar" /> <span className="wide-label">Scheduled deliveries</span><span className="short-label">Scheduled</span></AccountLink>
             <AccountLink to="/refunds" className="rail-link" aria-current={current.startsWith('/refunds') ? 'page' : undefined}><Glyph name="refund" /> Refunds</AccountLink>
           </nav>
-        </aside>
+        </aside>}
         <main className="main" id="main"><Outlet /></main>
       </div>
     </>

@@ -89,3 +89,11 @@ The desktop welcome panel uses a 49% image element and scales it by 1.12. The lo
 ### Round 2 → Round 3
 
 - The final production build passed. Chromium reran orders, delivery scheduling, damage claims, returns, stale return review, route and state contract checks, service history, clipboard and seed integrity against Vite preview. The three targeted regressions above passed on the same build.
+
+## Order interaction and visual follow-up
+
+Chromium tested the updated production preview at 1440 px and 390 px. In the same order, the side table showed Preparing and the basket showed In transit with its estimated date. An eligible sectional exposed Schedule delivery next to the item. Closing the dialog returned focus to the action on the filtered orders page. Scheduling, reporting a damaged lamp and returning a rug each made one verified business write. The resulting appointment, claim and return had the original order, shipment or item references and survived reload. The rug estimate was $109.85 and the final-sale pillow remained unavailable.
+
+The workflow suites also passed order cancellation, rescheduling, appointment cancellation, photo validation, return cancellation, injected state, stale appointment review, and same-session write ordering. The screenshot check verified no page-level horizontal overflow and expandable mobile filters.
+
+Docker run `177508` passed render, sync, idle and hydrate. The certifier recorded one startup POST, zero idle POSTs and no page errors.

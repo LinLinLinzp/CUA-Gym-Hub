@@ -68,3 +68,9 @@ None identified.
 ## SCHEMA.md Updates
 
 Added endpoint details, reset semantics, default IDs, a runnable injection and same-browser write-order semantics. Kept the existing field-level verifier mappings.
+
+## Order context follow-up
+
+Order cards expose the individual shipment state and the next action for each product. Eligible items launch delivery scheduling, damage reporting or returns on the current order screen. The dialogs retain the selected product and order, and service references remain discoverable from the order after saving. The global delivery, claims and returns views continue to support their direct entry points.
+
+The comparison used public Wayfair order help and shipping guidance. Visual verification of the signed-in product screens remains pending a matching account sample.

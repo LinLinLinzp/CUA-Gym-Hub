@@ -3,7 +3,7 @@ import { useAccount } from '../context/Account.jsx'
 import { requestReturn } from '../data/actions.js'
 import { findRecord, itemEligibility, label, money, orderNumber, records, refundMethods, returnEstimate, returnReasons, unitCents } from '../data/rules.js'
 import { Dialog, DialogButtons, useConfirmation } from './Dialog.jsx'
-import { Quote } from './Details.jsx'
+import { ProductImage, Quote } from './Details.jsx'
 import { QuantityField, SelectField } from './Fields.jsx'
 import { OrderChooser } from './RequestFields.jsx'
 
@@ -13,10 +13,10 @@ export function ReturnQuote({ details, currency }) {
   ]} />
 }
 
-export function ReturnDialog({ initialOrderId, onClose, onSuccess }) {
+export function ReturnDialog({ initialOrderId, initialItemId, contextual = false, onClose, onSuccess }) {
   const { state, transact } = useAccount()
   const [orderId, setOrderId] = useState(initialOrderId)
-  const [selected, setSelected] = useState({})
+  const [selected, setSelected] = useState(() => initialItemId ? { [initialItemId]: { quantity: '1', reason: '' } } : {})
   const [handoffMethod, setHandoffMethod] = useState('')
   const [refundMethod, setRefundMethod] = useState('')
   const [review, setReview] = useState(false)
@@ -78,9 +78,10 @@ export function ReturnDialog({ initialOrderId, onClose, onSuccess }) {
       {error && <p className="form-error" role="alert">{error}</p>}
       <DialogButtons onBack={() => { clearError(); setReview(false) }} submitLabel="Confirm return" pending={pending} />
     </form> : <form className="dialog-body" onSubmit={showReview}>
-      <OrderChooser orders={state.orders} value={orderId} onChange={(value) => {
+      {contextual && <p className="meta muted">Order {orderNumber(order)}</p>}
+      {!contextual && <OrderChooser orders={state.orders} value={orderId} onChange={(value) => {
         setOrderId(value); setSelected({}); setHandoffMethod(''); setSelectionError('')
-      }} />
+      }} />}
       {order && <fieldset className="choices">
         <legend>Items to return</legend>
         {!candidates.length && <p className="muted">Item details are unavailable for this order.</p>}
@@ -89,6 +90,7 @@ export function ReturnDialog({ initialOrderId, onClose, onSuccess }) {
           const choice = Object.hasOwn(selected, item.id) ? selected[item.id] : null
           return <div className="item-choice" key={item.id}>
             <label className="check-label">
+              {contextual && <ProductImage item={item} size={44} />}
               <input type="checkbox" checked={Boolean(choice)} disabled={Boolean(restriction) && !choice}
                 onChange={(event) => toggle(item.id, event.currentTarget.checked)} />
               <span>{item.name || 'Order item'}</span>

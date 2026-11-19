@@ -5,6 +5,7 @@ import { submitClaim } from '../data/actions.js'
 import { attachmentTypes, findRecord, issueTypes, itemEligibility, label, maxAttachmentBytes, orderNumber, records, resolutions } from '../data/rules.js'
 import { Dialog, DialogButtons, useConfirmation } from './Dialog.jsx'
 import { QuantityField, SelectField } from './Fields.jsx'
+import { ProductImage } from './Details.jsx'
 import { OrderChooser } from './RequestFields.jsx'
 
 function PhotoPreview({ file, onRemove }) {
@@ -52,7 +53,7 @@ function Photos({ files, setFiles }) {
   </div>
 }
 
-export function DamageClaimDialog({ initialOrderId, initialItemId, onClose, onSuccess }) {
+export function DamageClaimDialog({ initialOrderId, initialItemId, contextual = false, onClose, onSuccess }) {
   const { state, transact } = useAccount()
   const [orderId, setOrderId] = useState(initialOrderId)
   const [itemId, setItemId] = useState(initialItemId)
@@ -94,8 +95,12 @@ export function DamageClaimDialog({ initialOrderId, initialItemId, onClose, onSu
       {error && <p className="form-error" role="alert">{error}</p>}
       <DialogButtons onBack={() => { clearError(); setReview(false) }} submitLabel="Submit damage claim" pending={pending} />
     </form> : <form className="dialog-body" onSubmit={showReview}>
-      <OrderChooser orders={state.orders} value={orderId} onChange={(value) => { setOrderId(value); setItemId(''); setQuantity('1') }} />
-      {order && <>
+      {contextual && <div className="request-product">
+        <ProductImage item={selected} size={76} />
+        <div><h3>{selected?.name || 'Order item'}</h3><p className="meta muted">Order {orderNumber(order)}</p>{!eligible && <p className="meta muted">{candidates.find(({ item }) => item.id === itemId)?.reason || 'This item is no longer eligible.'}</p>}</div>
+      </div>}
+      {!contextual && <OrderChooser orders={state.orders} value={orderId} onChange={(value) => { setOrderId(value); setItemId(''); setQuantity('1') }} />}
+      {!contextual && order && <>
         <SelectField title="Item" value={eligible ? itemId : ''} required placeholder="Choose an item"
           onChange={(value) => { setItemId(value); setQuantity('1') }}
           options={candidates.map(({ item, reason }) => ({ value: item.id, label: item.name || 'Order item', disabled: Boolean(reason) }))} />

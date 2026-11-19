@@ -2,9 +2,8 @@ import { useMemo, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { AccountLink, CuisineTile, Empty, Glyph, Modal, PageHeading, useAccountNavigate } from '../components/ui'
 import { Totals } from '../components/detail'
-import { labelSlots, SlotPicker } from '../components/schedule'
-import { availableDays } from '../data/scheduling'
-import { addressLine, list, money, orderHref, paymentLabel, restaurantFor, restaurantHref, searchable, timingPath } from '../data/format'
+import { DeliveryTimeFields, OrderingTime, useOrderingTime } from '../components/schedule'
+import { addressLine, list, money, orderHref, paymentLabel, restaurantFor, restaurantHref, searchable, timingPath, windowLabel } from '../data/format'
 import { addItem, changeQuantity, checkoutDetails, menuAvailable, placeOrder } from '../data/transactions'
 import { useAccount } from '../store'
 
@@ -66,12 +65,15 @@ export function RestaurantMenu() {
 
 function Menu({ restaurantId }) {
   const { state, commit } = useAccount()
-  const scheduled = useSchedulingMode()
+  const [menuQuery, setMenuQuery] = useState('')
   const [pending, setPending] = useState(null)
   const [feedback, setFeedback] = useState(null)
   const restaurant = restaurantFor(state, restaurantId)
+  const timing = useOrderingTime(restaurant)
+  const { scheduled } = timing
   const back = { to: timingPath('/restaurants', scheduled), label: 'Back to restaurants' }
-  const items = list(state.menuItems).filter(item => item.restaurantId === restaurantId)
+  const items = list(state.menuItems).filter(item => item.restaurantId === restaurantId
+    && searchable(item.name, item.description).includes(menuQuery.trim().toLowerCase()))
   const categories = [...new Set(items.map(item => item.category || 'Menu items'))]
   const bag = checkoutDetails(state)
   const currentBagName = bag.restaurant?.name || 'another restaurant'
@@ -93,15 +95,24 @@ function Menu({ restaurantId }) {
 
   return (
     <>
-      <PageHeading title={restaurant.name || 'Restaurant menu'} back={back}
-        description={[restaurant.cuisine, restaurant.neighborhood].filter(Boolean).join(' · ')}
-        action={bag.items.length > 0 && <AccountLink className="button primary" to={timingPath('/bag', scheduled)}>View bag <Glyph name="arrow" /></AccountLink>} />
-      <div className="stack">
-        <CuisineTile kind={restaurant.tile} banner />
+      <div className="restaurant-intro">
+        {restaurant.id === 'restaurant-001'
+          ? <img className="restaurant-photo" src="/images/rice-kitchen.png" alt="" width="1280" height="480" />
+          : <CuisineTile kind={restaurant.tile} banner />}
+        <div className="restaurant-intro-details">
+          <PageHeading title={restaurant.name || 'Restaurant menu'} back={back}
+            description={[restaurant.cuisine, restaurant.neighborhood, restaurant.deliveryFee != null && money(restaurant.deliveryFee) + ' delivery'].filter(Boolean).join(' · ')}
+            action={bag.items.length > 0 && <AccountLink className="button primary" to={timingPath('/bag', scheduled)}>View bag <Glyph name="arrow" /></AccountLink>} />
+          <OrderingTime menu restaurant={restaurant} timing={timing} />
+        </div>
+      </div>
+      <div className="stack restaurant-menu">
+        <label className="search-field"><span className="sr-only">Search this menu</span><Glyph name="search" /><input type="search" placeholder="Search this menu" value={menuQuery} onChange={event => setMenuQuery(event.target.value)} /></label>
+        {categories.length > 1 && <nav className="menu-categories" aria-label="Menu categories">{categories.map(category => <a key={category} href={'#menu-' + encodeURIComponent(category)}>{category}</a>)}</nav>}
         <div aria-live="polite" className={feedback ? feedback.error ? 'error' : 'notice' : 'sr-only'}>{feedback?.error || feedback?.message}</div>
-        {!items.length && <Empty title="No menu items available" action={<AccountLink className="button" to={back.to}>Browse restaurants</AccountLink>} />}
+        {!items.length && <Empty title={menuQuery ? 'No matching dishes' : 'No menu items available'} action={<AccountLink className="button" to={back.to}>Browse restaurants</AccountLink>} />}
         {categories.map(category => (
-          <section className="card" key={category}>
+          <section className="card" key={category} id={'menu-' + category}>
             <h2>{category}</h2>
             <ul className="menu-list">
               {items.filter(item => (item.category || 'Menu items') === category).map((item, index) => {
@@ -132,9 +143,10 @@ function Menu({ restaurantId }) {
 
 export function Bag() {
   const { state, commit } = useAccount()
-  const scheduled = useSchedulingMode()
   const [error, setError] = useState('')
   const { restaurant, items, totals, valid } = checkoutDetails(state)
+  const timing = useOrderingTime(restaurant)
+  const { scheduled } = timing
   const browse = timingPath('/restaurants', scheduled)
   const menuLink = restaurant ? timingPath(restaurantHref(restaurant.id), scheduled) : browse
 
@@ -149,6 +161,7 @@ export function Bag() {
       {!items.length ? <Empty title="Your bag is empty" action={<AccountLink className="button primary" to={browse}>Browse restaurants</AccountLink>}>Add a dish to start an order.</Empty> : (
         <div className="split">
           <section className="card">
+            <OrderingTime restaurant={restaurant} timing={timing} />
             <h2>{restaurant?.name || 'Restaurant unavailable'}</h2>
             {state.cart.sourceOrderId && <p className="meta">Reorder from <AccountLink to={orderHref(state.cart.sourceOrderId)}>#{state.cart.sourceOrderId}</AccountLink></p>}
             <ul className="menu-list">
@@ -179,34 +192,26 @@ export function Bag() {
 
 export function Checkout() {
   const { state, commit } = useAccount()
-  const [params, setParams] = useSearchParams()
-  const later = params.get('timing') === 'scheduled'
-  const timing = later ? 'scheduled' : 'asap'
   const navigate = useAccountNavigate()
   const { restaurant, totals, items, valid } = checkoutDetails(state)
+  const delivery = useOrderingTime(restaurant)
+  const later = delivery.scheduled
+  const timing = later ? 'scheduled' : 'asap'
   const addresses = list(state.account?.addresses).filter(address => address.id && address.street)
   const payments = list(state.account?.paymentMethods).filter(payment => payment.id && payment.last4)
   const [addressId, setAddressId] = useState(() => addresses.find(address => address.id === state.account?.defaultAddressId)?.id || addresses[0]?.id || '')
   const [paymentId, setPaymentId] = useState(() => payments.find(payment => payment.id === state.account?.defaultPaymentId)?.id || payments[0]?.id || '')
-  const [date, setDate] = useState('')
-  const [windowStartAt, setWindowStartAt] = useState('')
   const [error, setError] = useState('')
-  const days = later ? labelSlots(availableDays(restaurant), restaurant?.timeZone) : []
   const back = { to: timingPath('/bag', later), label: 'Back to bag' }
-
-  function changeTiming(scheduled) {
-    const next = new URLSearchParams(params)
-    if (scheduled) next.set('timing', 'scheduled')
-    else next.delete('timing')
-    setParams(next, { replace: true })
-    setError('')
-  }
 
   function submit(event) {
     event.preventDefault()
-    const result = commit(current => placeOrder(current, { addressId, paymentId, timing, windowStartAt }))
+    const result = commit(current => placeOrder(current, { addressId, paymentId, timing, windowStartAt: delivery.start }))
     if (result.error) setError(result.error)
-    else navigate(orderHref(result.id), { replace: true, state: { notice: later ? 'Scheduled order placed' : 'Order placed' } })
+    else {
+      delivery.update({})
+      navigate(orderHref(result.id), { replace: true, state: { notice: later ? 'Scheduled order placed' : 'Order placed' } })
+    }
   }
 
   if (!valid) return <><PageHeading title="Checkout" back={back} /><Empty title={items.length ? 'Review your bag' : 'Your bag is empty'} action={<AccountLink className="button primary" to={items.length ? back.to : timingPath('/restaurants', later)}>{items.length ? 'Back to bag' : 'Browse restaurants'}</AccountLink>} /></>
@@ -224,19 +229,16 @@ export function Checkout() {
           </section>
           <section className="card stack">
             <h2>Delivery time</h2>
-            <fieldset className="field-group">
-              <legend className="sr-only">Delivery time</legend>
-              <div className="mode-options">
-                <label className="choice"><input type="radio" name="timing" checked={!later} onChange={() => changeTiming(false)} /> ASAP</label>
-                <label className="choice"><input type="radio" name="timing" checked={later} onChange={() => changeTiming(true)} /> Schedule for later</label>
-              </div>
-            </fieldset>
-            {later && <SlotPicker days={days} date={date} start={windowStartAt} onDateChange={value => { setDate(value); setWindowStartAt(''); setError('') }} onStartChange={value => { setWindowStartAt(value); setError('') }} />}
+            <DeliveryTimeFields {...delivery}
+              onMode={value => { delivery.setMode(value); setError('') }}
+              onDate={date => { delivery.update({ date, start: '' }); setError('') }}
+              onStart={start => { delivery.update({ date: delivery.date, start }); setError('') }} />
           </section>
         </div>
         <Totals totals={totals}>
+          {later && delivery.slot && <p className="checkout-window">{windowLabel({ ...delivery.slot, timeZone: restaurant.timeZone })}</p>}
           {error && <p className="error" role="alert">{error}</p>}
-          <button className="button primary" type="submit" disabled={!addresses.length || !payments.length || later && !days.some(day => day.windows.length)}>{later ? 'Place scheduled order' : 'Place order'}</button>
+          <button className="button primary" type="submit" disabled={!addresses.length || !payments.length || later && !delivery.start}>{later ? 'Place scheduled order' : 'Place order'}</button>
         </Totals>
       </form>
     </>

@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { getSessionId } from '../utils/dataManager'
 import { dayLabel, windowLabel } from '../data/format'
 import { availableDays, schedulePermissions } from '../data/scheduling'
 import { changeSchedule } from '../data/transactions'
 import { useAccount } from '../store'
-import { Modal } from './ui'
+import { Glyph, Modal } from './ui'
 
 export function SlotPicker({ days, date, start, onDateChange, onStartChange }) {
   const windows = days.find(day => day.date === date)?.windows || []
@@ -29,6 +31,95 @@ export function SlotPicker({ days, date, start, onDateChange, onStartChange }) {
 
 export function labelSlots(days, timeZone) {
   return days.map(day => ({ ...day, windows: day.windows.map(window => ({ ...window, label: windowLabel({ ...window, timeZone }, { timeOnly: true }) })) }))
+}
+
+function storedTime(key) {
+  try {
+    return JSON.parse(sessionStorage.getItem(key)) || {}
+  } catch {
+    return {}
+  }
+}
+
+export function useOrderingTime(restaurant) {
+  const [params, setParams] = useSearchParams()
+  const key = JSON.stringify(['grubhub-ordering-time', getSessionId(), restaurant?.id])
+  const [memory, setMemory] = useState(() => ({ key, draft: storedTime(key) }))
+  const draft = memory.key === key ? memory.draft : storedTime(key)
+  const scheduled = params.get('timing') === 'scheduled'
+  const days = labelSlots(availableDays(restaurant), restaurant?.timeZone)
+  const day = days.find(entry => entry.date === draft.date && entry.windows.length)
+  const slot = day?.windows.find(window => window.windowStartAt === draft.start)
+  const stale = scheduled && Boolean((draft.date && !day) || (draft.start && !slot))
+
+  function update(next) {
+    setMemory({ key, draft: next })
+    try {
+      sessionStorage.setItem(key, JSON.stringify(next))
+    } catch {
+      // Keep the current view interactive when browser storage is disabled.
+    }
+  }
+
+  function setMode(schedule) {
+    const next = new URLSearchParams(params)
+    if (schedule) next.set('timing', 'scheduled')
+    else next.delete('timing')
+    setParams(next, { replace: true })
+  }
+
+  return {
+    scheduled, days, date: day?.date || '', start: slot?.windowStartAt || '', slot, stale, setMode, update,
+  }
+}
+
+export function DeliveryTimeFields({ days, scheduled, date, start, onMode, onDate, onStart, stale }) {
+  return <>
+    <fieldset className="field-group">
+      <legend className="sr-only">Delivery time</legend>
+      <div className="mode-options">
+        <label className="choice"><input type="radio" name="timing" checked={!scheduled} onChange={() => onMode(false)} /> ASAP</label>
+        <label className="choice"><input type="radio" name="timing" checked={scheduled} onChange={() => onMode(true)} /> Schedule for later</label>
+      </div>
+    </fieldset>
+    {stale && <p className="error" role="status">Your previous delivery window is no longer available. Choose another time.</p>}
+    {scheduled && <SlotPicker days={days} date={date} start={start} onDateChange={onDate} onStartChange={onStart} />}
+  </>
+}
+
+export function OrderingTime({ restaurant, timing, menu = false }) {
+  const [edit, setEdit] = useState(null)
+  const summary = timing.slot
+    ? windowLabel({ ...timing.slot, timeZone: restaurant.timeZone })
+    : timing.stale ? 'Choose a new delivery time' : timing.scheduled ? 'Choose a delivery time' : 'As soon as possible'
+
+  function save(event) {
+    event.preventDefault()
+    timing.update(edit.scheduled ? { date: edit.date, start: edit.start } : {})
+    timing.setMode(edit.scheduled)
+    setEdit(null)
+  }
+
+  return <>
+    <section className="ordering-time" aria-label="Delivery time">
+      <div><p className="meta">Delivery time</p><strong>{timing.scheduled ? summary : 'As soon as possible'}</strong></div>
+      <button className="button time-button" type="button" onClick={() => setEdit({
+        scheduled: timing.scheduled || menu, date: timing.date, start: timing.start,
+      })}><Glyph name="calendar" />{menu && !timing.scheduled ? 'Preorder' : 'Change time'}</button>
+    </section>
+    {edit && <Modal title="Choose delivery time" onClose={() => setEdit(null)}>
+      <form className="stack" onSubmit={save}>
+        <DeliveryTimeFields {...edit} days={timing.days} stale={timing.stale && !edit.start}
+          onMode={scheduled => setEdit({ ...edit, scheduled })}
+          onDate={date => setEdit({ ...edit, date, start: '' })}
+          onStart={start => setEdit({ ...edit, start })} />
+        <div className="actions">
+          <button className="button" type="button" onClick={() => setEdit(null)}>Cancel</button>
+          <button className="button primary" type="submit" disabled={edit.scheduled && !edit.start}>Save time</button>
+        </div>
+      </form>
+    </Modal>}
+  </>
 }
 
 export function ScheduleActions({ delivery, order, restaurant, onChange }) {

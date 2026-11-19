@@ -48,3 +48,11 @@ The final production bundle passed the repository certifier. The local result is
 
 - **AUDIT-001 · Fixed.** Both checkout timing choices survived round trips through the header Bag and Browse restaurants links. Chromium verified radio focus, the session ID and unchanged `/go` state.
 - **AUDIT-002 · Fixed.** Chromium verified the documented filter height and badge typography, with no overflow at 390px.
+
+## Menu and preorder follow-up
+
+Chromium checked the production preview at 1440 px and 390 px. The menu exposed search, category links, a local food photograph for Juniper Rice Kitchen, and a Preorder entry in the first view. The chosen date and window survived menu → bag → checkout, the header Bag round trip and a hard reload. Editing or dismissing a time choice sent no business POST. A window inside the two-hour lead time prompted reselection and disabled order submission. A replacement window reached Harbor in the linked order and scheduled-delivery records.
+
+The workflow replay exercised ASAP orders, reorder, receipts, scheduled placement, reschedule, cancel, refund scope and history, empty, sparse and large injected state, plus SID isolation. Browser tests captured the menu and checkout at mobile width and found zero page-level horizontal overflow.
+
+Docker run `177508` passed render, sync, idle and hydrate. The certifier recorded one startup POST, zero idle POSTs and no page errors.

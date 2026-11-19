@@ -1,14 +1,18 @@
-import { useState } from 'react'
-import { ArrowRight, CalendarDays, ChevronLeft, ChevronRight, ClipboardList, Search, Truck } from 'lucide-react'
+import { useId, useState } from 'react'
+import { ArrowRight, CalendarDays, ChevronLeft, ChevronRight, ClipboardList, Search, SlidersHorizontal, Truck } from 'lucide-react'
 import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { useAccount } from '../context/Account.jsx'
 import { AccountLink, BackLink, Missing } from '../components/Navigation.jsx'
 import { Address, AppointmentWindow, Badge, CopyIdentifier, Empty, PageTitle, ProductImage, Quote, Timeline } from '../components/Details.jsx'
 import { SelectField } from '../components/Fields.jsx'
 import { CancelItemsDialog } from '../components/CancelItems.jsx'
+import { DamageClaimDialog } from '../components/DamageClaim.jsx'
+import { ReturnDialog } from '../components/Returns.jsx'
+import { ScheduleDeliveryDialog } from '../components/ScheduleDelivery.jsx'
+import { useToast } from '../components/Feedback.jsx'
 import {
-  availableSlots, byRecent, canSchedule, cents, deliveryStatus, findRecord, formatDate, formatWindow, futureAppointment,
-  itemEligibility, money, orderNumber, orderStatus, records, remaining, shipmentZone,
+  availableSlots, byRecent, canSchedule, cents, dateValue, deliveryStatus, findRecord, formatDate, formatWindow, futureAppointment,
+  itemEligibility, itemShipment, money, orderNumber, orderStatus, records, remaining, shipmentZone,
 } from '../data/rules.js'
 
 export const orderPath = (id) => '/orders/' + encodeURIComponent(id)
@@ -18,34 +22,89 @@ export const servicePath = (kind, id) => '/' + kind + '/' + encodeURIComponent(i
 const placedSort = (a, b) => byRecent(a.placedAt, b.placedAt)
 const orderStatuses = ['preparing', 'in_transit', 'partially_delivered', 'delivered', 'partially_canceled', 'canceled']
 
+function DeliverySummary({ state, shipment, item }) {
+  if (!remaining(item) && Number(item.canceledQuantity) > 0) return <Badge status="canceled" />
+  if (!shipment) return <p className="meta muted">Tracking unavailable</p>
+  const status = deliveryStatus(state, shipment)
+  const booking = futureAppointment(state, shipment)
+  const zone = shipmentZone(state, shipment)
+  const estimate = status === 'delivered' ? shipment.deliveredAt : shipment.estimatedAt
+  return <div className="item-delivery">
+    <Badge status={status} />
+    {booking ? <span className="meta">{formatWindow(booking, booking.timeZone || zone)}</span>
+      : Number.isFinite(dateValue(estimate)) && status !== 'canceled' && <span className="meta">{status === 'delivered' ? 'Delivered ' : 'Expected '}{formatDate(estimate, zone)}</span>}
+  </div>
+}
+
+function OrderService({ order, action, close }) {
+  const { state } = useAccount()
+  const toast = useToast()
+  if (!action) return null
+  const { type, id } = action
+  const onSuccess = (record) => {
+    close()
+    toast((type === 'claim' ? 'Damage claim' : 'Return') + ' submitted. Reference ' + record.id)
+  }
+  if (type === 'schedule') {
+    const shipment = findRecord(state.shipments, id)
+    return shipment?.orderId === order.id
+      ? <ScheduleDeliveryDialog shipment={shipment} booking={futureAppointment(state, shipment)} onClose={close} />
+      : null
+  }
+  const Form = type === 'claim' ? DamageClaimDialog : ReturnDialog
+  return <Form initialOrderId={order.id} initialItemId={id} contextual onClose={close} onSuccess={onSuccess} />
+}
+
+function ItemActions({ state, order, item, shipment, open }) {
+  const canBook = shipment?.id && canSchedule(state, shipment) && availableSlots(state, shipment).length > 0
+  const booking = canBook && futureAppointment(state, shipment)
+  const canClaim = item.id && !itemEligibility(state, order, item, 'claim').reason
+  const returnEligibility = itemEligibility(state, order, item, 'return')
+  const canReturn = item.id && !returnEligibility.reason
+  return <div className="line-actions order-item-actions">
+    {canBook && <button className="button primary" type="button" onClick={() => open('schedule', shipment.id)}>{booking ? 'Reschedule delivery' : 'Schedule delivery'}</button>}
+    {canClaim && <button className="button" type="button" onClick={() => open('claim', item.id)}>Report damage</button>}
+    {canReturn && <button className="button" type="button" onClick={() => open('return', item.id)}>Return item</button>}
+    {shipment?.status === 'delivered' && returnEligibility.reason && <span className="meta muted">{returnEligibility.reason}</span>}
+  </div>
+}
+
 function OrderCard({ order, from, compact }) {
   const { state } = useAccount()
+  const [action, setAction] = useState(null)
   const { status, partiallyCanceled } = orderStatus(state, order)
   const items = records(order.items)
   const to = orderPath(order.id)
   const displayNumber = orderNumber(order)
+  const visible = compact ? items.slice(0, 1) : items
+  const open = (type, id) => setAction({ type, id })
   return <article className={'card order-card' + (compact ? ' compact-order' : '')}>
     <div className="order-summary">
       <div>
         <h3><AccountLink className="order-number" to={to} state={from && { ordersPath: from }}>{displayNumber}</AccountLink></h3>
-        <p className="muted meta">Placed {formatDate(order.placedAt, shipmentZone(state))}</p>
+        <p className="muted meta">Placed {formatDate(order.placedAt, shipmentZone(state))} · {money(order.totalAmount, order.currency)}</p>
       </div>
       <div className="order-badges">
         <Badge status={status} />
         {partiallyCanceled && <Badge status="partially_canceled" />}
       </div>
-      <div className="order-total"><span className="muted meta">Order total</span><strong>{money(order.totalAmount, order.currency)}</strong></div>
+      <AccountLink className="text-link" to={to} state={from && { ordersPath: from }} aria-label={'View order ' + displayNumber}>View order <ArrowRight size={16} aria-hidden="true" /></AccountLink>
     </div>
-    <div className="order-preview">
-      <div className="order-preview-items">
-        {items.length > 0 && <div className="thumbnail-group">{items.slice(0, 3).map((item, index) => <ProductImage key={item.id || index} item={item} />)}</div>}
-        <div className="preview-description">
-          <strong>{items[0]?.name || 'Item details unavailable'}</strong>
-          {items.length > 1 && <span className="muted meta">+ {items.length - 1} more {items.length === 2 ? 'item' : 'items'}</span>}
+    {visible.map((item, index) => {
+      const shipment = itemShipment(state, order, item)
+      return <div className="order-item" key={item.id || index}>
+        <ProductImage item={item} size={82} />
+        <div className="order-item-info">
+          <h3>{item.name || 'Order item'}</h3>
+          <p className="muted meta">Quantity {item.quantity ?? 'unavailable'}{item.canceledQuantity > 0 && ' · ' + item.canceledQuantity + ' canceled'}</p>
+          <DeliverySummary state={state} shipment={shipment} item={item} />
         </div>
+        {!compact && <ItemActions state={state} order={order} item={item} shipment={shipment} open={open} />}
       </div>
-      <AccountLink className="button" to={to} state={from && { ordersPath: from }} aria-label={'View order ' + displayNumber}>View order <ArrowRight size={16} aria-hidden="true" /></AccountLink>
-    </div>
+    })}
+    {!items.length && <p className="order-item muted">Item details unavailable</p>}
+    {compact && items.length > 1 && <p className="order-item muted meta">+ {items.length - 1} more</p>}
+    <OrderService order={order} action={action} close={() => setAction(null)} />
   </article>
 }
 
@@ -108,6 +167,8 @@ export function OrderList() {
   const { state } = useAccount()
   const [params, setParams] = useSearchParams()
   const { search } = useLocation()
+  const filterId = useId()
+  const [showFilters, setShowFilters] = useState(false)
   const query = params.get('q') || ''
   const status = params.get('status') || 'all'
   const year = params.get('year') || 'all'
@@ -141,16 +202,21 @@ export function OrderList() {
   }
 
   return <div className="page-stack">
-    <PageTitle title="Orders" description="Find an order, track its shipments or manage individual items." />
+    <PageTitle title="Orders" />
     <div className="section-stack">
       <div className="card filters order-filters">
         <label className="field search-field">
           <span>Search orders</span>
           <span className="search-input"><Search size={18} aria-hidden="true" /><input type="search" placeholder="Order number, item or SKU" value={query} onChange={(event) => update('q', event.currentTarget.value)} /></span>
         </label>
-        <SelectField title="Status" options={[{ value: 'all', label: 'All statuses' }, ...orderStatuses]} value={status} onChange={(value) => update('status', value === 'all' ? '' : value)} />
-        <SelectField title="Year" options={[{ value: 'all', label: 'All years' }, ...years]} value={year} onChange={(value) => update('year', value === 'all' ? '' : value)} />
-        <SelectField title="Sort by" options={[{ value: 'newest', label: 'Newest first' }, { value: 'oldest', label: 'Oldest first' }]} value={sort} onChange={(value) => update('sort', value === 'newest' ? '' : value)} />
+        <button className="button order-filter-toggle" type="button" aria-expanded={showFilters} aria-controls={filterId} onClick={() => setShowFilters(!showFilters)}>
+          <SlidersHorizontal size={17} aria-hidden="true" /> Filters{[status !== 'all', year !== 'all', sort !== 'newest'].some(Boolean) && ' · Active'}
+        </button>
+        <div className="order-filter-fields" id={filterId} data-open={showFilters}>
+          <SelectField title="Status" options={[{ value: 'all', label: 'All statuses' }, ...orderStatuses]} value={status} onChange={(value) => update('status', value === 'all' ? '' : value)} />
+          <SelectField title="Year" options={[{ value: 'all', label: 'All years' }, ...years]} value={year} onChange={(value) => update('year', value === 'all' ? '' : value)} />
+          <SelectField title="Sort by" options={[{ value: 'newest', label: 'Newest first' }, { value: 'oldest', label: 'Oldest first' }]} value={sort} onChange={(value) => update('sort', value === 'newest' ? '' : value)} />
+        </div>
       </div>
       <p className="meta muted" role="status">{filtered.length ? 'Showing ' + (start + 1) + '–' + Math.min(start + 12, filtered.length) + ' of ' + filtered.length + ' orders' : '0 orders'}</p>
       {filtered.length ? filtered.slice(start, start + 12).map((order, index) => <OrderCard key={order.id || index} order={order} from={'/orders' + search} />) : <Empty title="No orders found">
@@ -166,26 +232,21 @@ export function OrderList() {
   </div>
 }
 
-function ItemDetail({ state, order, item, shipment }) {
-  const available = itemEligibility(state, order, item, 'claim')
-  const query = new URLSearchParams({ new: '1', order: order.id, item: item.id })
+function ItemDetail({ state, order, item, shipment, open }) {
   return <div className="line-item">
-    <ProductImage item={item} size={72} />
+    <ProductImage item={item} size={82} />
     <div className="line-info">
       <h3>{item.name || 'Order item'}</h3>
       {item.variant && <p className="muted meta">{item.variant}</p>}
       {item.sku && <p className="muted meta">SKU {item.sku}</p>}
       <p className="meta">Quantity {item.quantity ?? 'unavailable'}{Number(item.canceledQuantity) > 0 && ' · ' + item.canceledQuantity + ' canceled'}</p>
-      {shipment?.status === 'delivered' && available.reason && <p className="muted meta">{available.reason}</p>}
-    </div>
-    <div className="line-actions">
       <strong>{money(item.unitPrice, order.currency)}</strong>
-      {!available.reason && <AccountLink to={'/claims?' + query} className="text-link">Report damage</AccountLink>}
     </div>
+    <ItemActions state={state} order={order} item={item} shipment={shipment} open={open} />
   </div>
 }
 
-function ShipmentGroup({ state, order, shipment, items }) {
+function ShipmentGroup({ state, order, shipment, items, open }) {
   const zone = shipmentZone(state, shipment)
   const booking = shipment && futureAppointment(state, shipment)
   const offer = shipment && canSchedule(state, shipment)
@@ -201,14 +262,11 @@ function ShipmentGroup({ state, order, shipment, items }) {
       </div>
       {shipment && <Badge status={deliveryStatus(state, shipment)} />}
     </div>
-    {items.map((item, index) => <ItemDetail key={item.id || index} state={state} order={order} item={item} shipment={shipment} />)}
+    {items.map((item, index) => <ItemDetail key={item.id || index} state={state} order={order} item={item} shipment={shipment} open={open} />)}
     {shipment && <>
       <div className="shipment-links">
         {booking && <AppointmentWindow>{formatWindow(booking, booking.timeZone || zone)}</AppointmentWindow>}
         <AccountLink className="text-link" to={shipmentPath(shipment.id)}>View delivery <ArrowRight size={16} aria-hidden="true" /></AccountLink>
-        {offer && availableSlots(state, shipment).length > 0 && <AccountLink className="button" to={shipmentPath(shipment.id) + '?schedule=1'}>
-          {booking ? 'Reschedule delivery' : 'Schedule delivery'}
-        </AccountLink>}
         {offer && !availableSlots(state, shipment).length && <p className="muted meta">No appointment windows are available.</p>}
       </div>
       <Timeline shipment={shipment} zone={zone} />
@@ -221,6 +279,8 @@ export function OrderDetail() {
   const { orderId } = useParams()
   const location = useLocation()
   const [canceling, setCanceling] = useState(false)
+  const [action, setAction] = useState(null)
+  const open = (type, id) => setAction({ type, id })
   const order = findRecord(state.orders, orderId)
   if (!order) return <Missing title="Order unavailable" to="/orders" label="Back to orders" />
   const items = records(order.items)
@@ -249,14 +309,14 @@ export function OrderDetail() {
     <div className="detail-grid">
       <div className="section-stack">
         {shipments.map((shipment, index) => <ShipmentGroup key={shipment.id || index} state={state} order={order} shipment={shipment}
-          items={items.filter((item) => item.shipmentId === shipment.id)} />)}
-        {unlinked.length > 0 && <ShipmentGroup state={state} order={order} items={unlinked} />}
+          items={items.filter((item) => item.shipmentId === shipment.id)} open={open} />)}
+        {unlinked.length > 0 && <ShipmentGroup state={state} order={order} items={unlinked} open={open} />}
         {!shipments.length && !unlinked.length && <Empty title="Shipment information unavailable" />}
         <section className="card section-stack">
           <h2>Order actions</h2>
           <div className="actions">
             {eligible && <button className="button" type="button" onClick={() => setCanceling(true)}>Cancel items</button>}
-            <AccountLink className="button" to={'/returns?' + new URLSearchParams({ new: '1', order: order.id })}>Start a return</AccountLink>
+            <button className="button" type="button" onClick={() => open('return')}>Start a return</button>
           </div>
           {!eligible && <p className="muted meta">Only items being prepared can be canceled.</p>}
         </section>
@@ -289,6 +349,7 @@ export function OrderDetail() {
         <section className="card section-stack"><h2>Ship to</h2><Address address={order.shipTo} /></section>
       </aside>
     </div>
+    <OrderService order={order} action={action} close={() => setAction(null)} />
     {canceling && <CancelItemsDialog order={order} onClose={() => setCanceling(false)} />}
   </div>
 }

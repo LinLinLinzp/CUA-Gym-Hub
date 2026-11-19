@@ -24,7 +24,10 @@ function OrderCard({ order, restaurant }) {
           <div className="order-price"><Status value={order.status} /><strong>{money(order.totals?.total)}</strong></div>
         </div>
         <p className="order-summary">{summary || 'Item details unavailable'}{items.length > 3 && ` · +${items.length - 3} more`}</p>
-        <AccountLink className="inline-action" to={orderHref(order.id)}>View receipt <Glyph name="arrow" /></AccountLink>
+        <div className="actions order-quick-actions">
+          <AccountLink className="inline-action" to={orderHref(order.id)}>View receipt <Glyph name="arrow" /></AccountLink>
+          {order.status === 'delivered' && restaurant?.id && <ReorderAction orderId={order.id} />}
+        </div>
       </div>
     </article>
   )
@@ -135,7 +138,7 @@ export function Receipt() {
           </section>
           {(order.status === 'delivered' || refunds.length > 0) && (
             <section className="card receipt-support">
-              <h2>Refunds</h2>
+              <h2>Help with this order</h2>
               {balance.amount ? <p className="meta">{money(balance.amount / 100)} remaining to request.</p> : <p className="meta">This order has no refundable amount available.</p>}
               {refunds.filter(refund => refund.id).map(refund => <div className="support-row" key={refund.id}><AccountLink to={refundHref(refund.id)}>#{refund.id}</AccountLink><Status value={refund.status} /><strong>{money(refund.amount)}</strong></div>)}
               {balance.amount > 0 && state.account?.id && <RefundAction key={order.id} orderId={order.id} />}

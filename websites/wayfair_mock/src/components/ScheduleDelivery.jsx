@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useAccount } from '../context/Account.jsx'
 import { bookDelivery } from '../data/actions.js'
-import { availableSlots, findRecord, formatWindow, shipmentZone } from '../data/rules.js'
-import { Address, AppointmentWindow } from './Details.jsx'
+import { availableSlots, findRecord, formatWindow, records, shipmentZone } from '../data/rules.js'
+import { Address, AppointmentWindow, ProductImage } from './Details.jsx'
 import { Dialog, DialogButtons, useConfirmation } from './Dialog.jsx'
 import { useToast } from './Feedback.jsx'
 
@@ -17,6 +17,7 @@ export function ScheduleDeliveryDialog({ shipment, booking, onClose }) {
   const slots = availableSlots(state, shipment)
   const zone = shipmentZone(state, shipment)
   const order = findRecord(state.orders, shipment.orderId)
+  const items = records(order?.items).filter((item) => item?.shipmentId === shipment.id)
   const initialTitle = expectedAppointmentId ? 'Reschedule delivery' : 'Schedule delivery'
   const { confirm, pending, error, clearError } = useConfirmation(
     () => transact((current, now) => bookDelivery(current, now, { shipmentId: shipment.id, slotId, instructions, expectedAppointmentId })),
@@ -35,6 +36,10 @@ export function ScheduleDeliveryDialog({ shipment, booking, onClose }) {
   return <Dialog title={review ? 'Review delivery appointment' : initialTitle} onClose={onClose} pending={pending}>
     {review ? <form className="dialog-body" onSubmit={confirm}>
       <div className="review-panel"><h3>New appointment</h3><AppointmentWindow>{formatWindow(reviewSlot, zone)}</AppointmentWindow></div>
+      <div className="request-product">
+        <ProductImage item={items[0]} size={72} />
+        <div>{items.map((item) => <p key={item.id || item.name}>{item.name || 'Order item'}</p>)}</div>
+      </div>
       <div><h3>Delivery address</h3><Address address={order?.shipTo} /></div>
       <div className="wrap-text"><h3>Delivery instructions</h3><p>{instructions.trim() || 'No instructions added.'}</p></div>
       {error && <p className="form-error" role="alert">{error}</p>}
@@ -43,6 +48,10 @@ export function ScheduleDeliveryDialog({ shipment, booking, onClose }) {
       {booking && <div className="review-panel">
         <h3>Current appointment</h3><AppointmentWindow>{formatWindow(booking, booking.timeZone || zone)}</AppointmentWindow>
       </div>}
+      <div className="request-product">
+        <ProductImage item={items[0]} size={72} />
+        <div><h3>{items[0]?.name || 'Freight delivery'}</h3>{items.length > 1 && <p className="muted meta">+ {items.length - 1} more</p>}</div>
+      </div>
       <div><h3>Delivery address</h3><Address address={order?.shipTo} /></div>
       {slots.length ? <fieldset className="choices">
         <legend>Available dates and times</legend>
@@ -56,7 +65,7 @@ export function ScheduleDeliveryDialog({ shipment, booking, onClose }) {
         <textarea value={instructions} maxLength={500} placeholder="Gate code, driveway or access details" onChange={(event) => setInstructions(event.currentTarget.value)} />
         <small className="muted">{instructions.length} / 500 characters</small>
       </label>
-      <DialogButtons onBack={onClose} backLabel="Close" submitLabel="Review appointment" disabled={!slots.length} />
+      <DialogButtons onBack={onClose} backLabel="Close" submitLabel="Review appointment" disabled={!slotId} />
     </form>}
   </Dialog>
 }
